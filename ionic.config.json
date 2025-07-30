@@ -1,0 +1,7 @@
+{
+  "name": "PflanzenABC",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
