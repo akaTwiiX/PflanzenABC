@@ -1,0 +1,24 @@
+:host {
+    width: 100%;
+}
+
+.range-slider-container {
+    width: 100%;
+    padding: 16px 0;
+}
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #2c3e50;
+}
+
+.custom-range {
+    --bar-background: #bdc3c7;
+    --bar-background-active: #1abc9c;
+    --knob-size: 24px;
+    --knob-background: #2ecc71;
+}

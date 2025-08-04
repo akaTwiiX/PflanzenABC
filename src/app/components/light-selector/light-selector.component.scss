@@ -1,0 +1,49 @@
+:host {
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: space-between;
+    margin: 16px 0;
+    flex-wrap: wrap;
+}
+
+.option {
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
+.selected {
+    background-color: #74b816;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0.3); // ähnliche Wirkung wie tintColor: '#444'
+}
+
+.icon-selected {
+    filter: brightness(1) invert(1); // weiße Farbe
+}
+
+.label {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #333;
+}
+
+.label-selected {
+    color: #fff;
+    font-weight: bold;
+}

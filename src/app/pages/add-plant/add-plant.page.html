@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pflanze hinzufügen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">addPlant</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>
+    <ion-list>
+      <ion-list>
+        <app-image-picker></app-image-picker>
+      </ion-list>
+      <ion-item>
+        <ion-input label="Lateinischer Name" labelPlacement="floating" placeholder="Enter text"
+          [value]="(plantForm$ | async)?.nameLatin" (ionChange)="updateField('nameLatin', $event.detail.value ?? '')" />
+      </ion-item>
+      <ion-item>
+        <ion-input label="Deutscher Name" labelPlacement="floating" placeholder="Enter text"
+          [value]="(plantForm$ | async)?.nameGerman"
+          (ionChange)="updateField('nameGerman', $event.detail.value ?? '')" />
+      </ion-item>
+
+      <ion-item>
+        <app-range-slider label="Blüte-/Erntezeit:" [range]="monthRange" [value]="(plantForm$ | async)?.bloomTime!"
+          (valueChange)="updateField('bloomTime', $event)" />
+      </ion-item>
+      <ion-item>
+        <app-range-slider label="Größe:" [range]="distanceRange" [value]="(plantForm$ | async)?.height!"
+          (valueChange)="updateField('height', $event)" />
+      </ion-item>
+      <ion-item>
+        <app-range-slider label="Abstand zu anderen:" [range]="distanceRange" [value]="(plantForm$ | async)?.distance!"
+          (valueChange)="updateField('distance', $event)" />
+      </ion-item>
+
+      <ion-item>
+        <app-light-selector [value]="(plantForm$ | async)?.light" (valueChange)="updateField('light', $event)" />
+      </ion-item>
+
+      @for( field of checkboxFields; track field){
+      <ion-item>
+        <ion-label>{{ checkboxLabels[field] }}</ion-label>
+        <ion-checkbox slot="end" [checked]="(plantForm$ | async)?.[field]"
+          (ionChange)="updateField(field, $event.detail.checked)">
+        </ion-checkbox>
+      </ion-item>
+      }
+
+    </ion-list>
+  </div>
+</ion-content>

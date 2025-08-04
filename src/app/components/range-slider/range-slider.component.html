@@ -1,0 +1,17 @@
+<!-- range-slider.component.html -->
+<div class="range-slider-container">
+  <ion-text>{{label}}</ion-text>
+  <div class="ion-margin-horizontal">
+    <ion-range [min]="min" [max]="max" [step]="1" [value]="{ lower: lower, upper: upper }" (ionInput)="onChange($event)"
+      dualKnobs="true" snaps="true" />
+
+    @if(range.length > 0){
+    <div class="range-labels">
+      <div class="label left">{{ range[lower] }}</div>
+      <div class="label right">{{ range[upper] }}</div>
+    </div>
+    }
+  </div>
+
+
+</div>

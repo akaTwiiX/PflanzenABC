@@ -1,0 +1,23 @@
+<div class="container">
+  <ion-accordion-group>
+    @for (letter of letters; track $index) {
+      <ion-accordion [value]="letter">
+        <ion-item
+          slot="header"
+          class="accordion-header"
+          [ngClass]="$index % 2 === 0 ? 'first' : 'second'"
+        >
+          <ion-label class="label">{{ letter }}</ion-label>
+          <ion-icon
+            class="ion-accordion-toggle-icon ion-margin-end"
+            name="chevron-down"
+            slot="end"
+            color="black"
+          >
+          </ion-icon>
+        </ion-item>
+        <div class="ion-padding" slot="content">First Content</div>
+      </ion-accordion>
+    }
+  </ion-accordion-group>
+</div>

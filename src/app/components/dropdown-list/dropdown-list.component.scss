@@ -1,0 +1,20 @@
+.container {
+  .accordion-header {
+    --inner-padding-end: 0;
+    --inner-padding-start: 0;
+    text-align: center;
+    --color: #000;
+
+    .label {
+      margin-left: 40px;
+    }
+  }
+
+  .first {
+    --background: #bec9b5;
+  }
+
+  .second {
+    --background: #d7dcd3ff;
+  }
+}

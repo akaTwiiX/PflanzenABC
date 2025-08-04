@@ -4,6 +4,19 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { addIcons } from 'ionicons';
+import { chevronDown, add, camera, close, image } from 'ionicons/icons';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
+addIcons({
+  'chevron-down': chevronDown,
+  'add': add,
+  'camera': camera,
+  'close': close,
+  'image': image
+});
+
+defineCustomElements(window);
 
 bootstrapApplication(AppComponent, {
   providers: [
