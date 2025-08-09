@@ -14,10 +14,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <div>
+  <div class="safe-area">
     <ion-list>
       <ion-list>
-        <app-image-picker></app-image-picker>
+        <app-image-picker [value]="(plantForm$ | async)?.imageUrl" (valueChange)="updateField('imageUrl', $event)" />
       </ion-list>
       <ion-item>
         <ion-input label="Lateinischer Name" labelPlacement="floating" placeholder="Enter text"
@@ -57,4 +57,5 @@
 
     </ion-list>
   </div>
+
 </ion-content>

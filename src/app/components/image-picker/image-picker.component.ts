@@ -1,64 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import {  ActionSheetController} from '@ionic/angular';
-import { IonButton, IonImg, IonText } from "@ionic/angular/standalone";
+import { IonButton, IonImg, IonText, IonActionSheet } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-image-picker',
-  template: `
-    <ion-button expand="block" (click)="presentImageSourceOptions()" class="container">
-      @if(imageUrl){
-        <ion-img [src]="imageUrl" style="width: 100%; height: 100%; border-radius: 8px;" ></ion-img>
-      }
-      @else {
-        <ion-text color="medium">Bild hinzufügen</ion-text>
-      }
-    </ion-button>
-  `,
-  styleUrl:'image-picker.component.scss',
-  imports: [ IonButton, IonImg, IonText],
+  templateUrl: 'image-picker.component.html',
+  styleUrl: 'image-picker.component.scss',
+  imports: [IonButton, IonImg, IonText, IonActionSheet],
 })
 export class ImagePickerComponent {
-  imageUrl?: string;
+  @Input() value!: string | undefined;
+  @Output() valueChange = new EventEmitter<string>();
 
-  constructor(private actionSheetCtrl: ActionSheetController) { }
+  constructor() {
 
-  async presentImageSourceOptions() {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Bildquelle wählen',
-      buttons: [
-        {
-          text: 'Kamera',
-          icon: 'camera',
-          handler: () => this.pickImage(CameraSource.Camera),
-        },
-        {
-          text: 'Galerie',
-          icon: 'image',
-          handler: () => this.pickImage(CameraSource.Photos),
-        },
-        {
-          text: 'Abbrechen',
-          icon: 'close',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    await actionSheet.present();
   }
 
+  public actionSheetButtons = [
+    {
+      text: 'Kamera',
+      icon: 'camera',
+      role: 'camera',
+      handler: () => this.pickImage(CameraSource.Camera),
+      data: {
+        action: 'camera',
+      },
+    },
+    {
+      text: 'Galerie',
+      icon: 'image',
+      role: 'gallery',
+      handler: () => this.pickImage(CameraSource.Photos),
+      data: {
+        action: 'gallery',
+      },
+    },
+    {
+      text: 'Abbrechen',
+      icon: 'close',
+      role: 'cancel',
+      data: {
+        action: 'cancel',
+      },
+    },
+  ];
+
   async pickImage(source: CameraSource) {
+    await Camera.requestPermissions({ permissions: ['camera', 'photos'] });
+
     try {
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
-        resultType: CameraResultType.DataUrl,
+        resultType: CameraResultType.Uri,
         source,
-        correctOrientation:true
       });
 
-      this.imageUrl = image.dataUrl ?? undefined;
+      this.value = image.webPath ?? undefined;
+      this.valueChange.emit(this.value)
     } catch (error) {
       console.error('Image pick failed:', error);
     }

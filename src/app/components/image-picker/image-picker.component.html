@@ -1,3 +1,9 @@
-<p>
-  image-picker works!
-</p>
+<ion-button expand="block" id="open-action-sheet" class="container">
+  @if(value){
+  <ion-img [src]="value" style="width: 100%; height: 100%; border-radius: 8px;"></ion-img>
+  }
+  @else {
+  <ion-text color="medium">Bild hinzufügen</ion-text>
+  }
+</ion-button>
+<ion-action-sheet trigger="open-action-sheet" header="Actions" [buttons]="actionSheetButtons"></ion-action-sheet>
