@@ -1,9 +1,12 @@
 .container {
-  padding: 8px 16px;
+  padding: 0 16px;
+  height: 100%;
+
 
   .button {
     position: sticky;
-    bottom: 8px;
+    bottom: var(--ion-safe-area-bottom);
     height: 48px;
+    margin-bottom: unset;
   }
 }

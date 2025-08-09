@@ -9,6 +9,13 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+.safe-area {
+    padding-bottom: var(--ion-safe-area-bottom, 24px);
+    // padding-top: var(--ion-safe-area-top, 0px);
+    padding-left: var(--ion-safe-area-left, 0px);
+    padding-right: var(--ion-safe-area-right, 0px);
+}
+
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
