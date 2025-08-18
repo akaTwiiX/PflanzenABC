@@ -17,40 +17,46 @@
   <div class="safe-area">
     <ion-list>
       <ion-list>
-        <app-image-picker [value]="(plantForm$ | async)?.imageUrl" (valueChange)="updateField('imageUrl', $event)" />
+        <app-image-picker [value]="(plantForm$ | async)?.imageUrl"
+          (valueChange)="plantFormService.update('imageUrl', $event)" />
       </ion-list>
       <ion-item>
         <ion-input label="Lateinischer Name" labelPlacement="floating" placeholder="Enter text"
-          [value]="(plantForm$ | async)?.nameLatin" (ionChange)="updateField('nameLatin', $event.detail.value ?? '')" />
+          [value]="(plantForm$ | async)?.nameLatin"
+          (ionChange)="plantFormService.update('nameLatin', $event.detail.value ?? '')" />
       </ion-item>
       <ion-item>
         <ion-input label="Deutscher Name" labelPlacement="floating" placeholder="Enter text"
           [value]="(plantForm$ | async)?.nameGerman"
-          (ionChange)="updateField('nameGerman', $event.detail.value ?? '')" />
+          (ionChange)="plantFormService.update('nameGerman', $event.detail.value ?? '')" />
+      </ion-item>
+      <ion-item>
+        <app-range-slider label="Größe:" [range]="distanceRange" [value]="(plantForm$ | async)?.height!"
+          (valueChange)="plantFormService.update('height', $event)" />
       </ion-item>
 
       <ion-item>
         <app-range-slider label="Blüte-/Erntezeit:" [range]="monthRange" [value]="(plantForm$ | async)?.bloomTime!"
-          (valueChange)="updateField('bloomTime', $event)" />
+          (valueChange)="plantFormService.update('bloomTime', $event)" />
       </ion-item>
       <ion-item>
-        <app-range-slider label="Größe:" [range]="distanceRange" [value]="(plantForm$ | async)?.height!"
-          (valueChange)="updateField('height', $event)" />
+        <app-soil />
       </ion-item>
       <ion-item>
         <app-range-slider label="Abstand zu anderen:" [range]="distanceRange" [value]="(plantForm$ | async)?.distance!"
-          (valueChange)="updateField('distance', $event)" />
+          (valueChange)="plantFormService.update('distance', $event)" />
       </ion-item>
 
       <ion-item>
-        <app-light-selector [value]="(plantForm$ | async)?.light" (valueChange)="updateField('light', $event)" />
+        <app-light-selector [value]="(plantForm$ | async)?.light"
+          (valueChange)="plantFormService.update('light', $event)" />
       </ion-item>
 
       @for( field of checkboxFields; track field){
       <ion-item>
         <ion-label>{{ checkboxLabels[field] }}</ion-label>
         <ion-checkbox slot="end" [checked]="(plantForm$ | async)?.[field]"
-          (ionChange)="updateField(field, $event.detail.checked)">
+          (ionChange)="plantFormService.update(field, $event.detail.checked)">
         </ion-checkbox>
       </ion-item>
       }

@@ -9,6 +9,7 @@ import { monthRange } from '@/consts/monthRange';
 import { RangeSliderComponent } from "src/app/components/range-slider/range-slider.component";
 import { distanceRange } from '@/consts/distanceRange';
 import { LightSelectorComponent } from "src/app/components/light-selector/light-selector.component";
+import { SoilComponent } from "src/app/components/soil/soil.component";
 
 @Component({
   selector: 'app-add-plant',
@@ -31,7 +32,8 @@ import { LightSelectorComponent } from "src/app/components/light-selector/light-
     RangeSliderComponent,
     IonLabel,
     IonCheckbox,
-    LightSelectorComponent
+    LightSelectorComponent,
+    SoilComponent
   ],
 })
 export class AddPlantPage implements OnInit {
@@ -67,7 +69,4 @@ export class AddPlantPage implements OnInit {
 
   ngOnInit() { }
 
-  updateField<K extends keyof Plant>(key: K, value: Plant[K]) {
-    this.plantFormService.setValue(key, value);
-  }
 }

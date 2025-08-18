@@ -12,8 +12,8 @@ export class PlantFormService {
   private initialState: Plant = {
     nameGerman: '',
     nameLatin: '',
-    pruning: '',
-    fertilization: '',
+    pruning: { enabled: false, time: '', amount: '' },
+    fertilization: { enabled: false, type: '', time: '' },
     soil: '',
     distance: { start: null, end: null },
     height: { start: null, end: null },
@@ -34,15 +34,23 @@ export class PlantFormService {
   };
 
   private state$ = new BehaviorSubject<Plant>(this.initialState);
-
   readonly plantForm$ = this.state$.asObservable();
 
-  setValue<K extends keyof Plant>(key: K, value: Plant[K]) {
-    const current = this.state$.value;
-    this.state$.next({ ...current, [key]: value });
+  update(path: string, value: any) {
+    const keys = path.split('.');
+    const current = structuredClone(this.state$.value);
+
+    let target: any = current;
+    while (keys.length > 1) {
+      const key = keys.shift()!;
+      target = target[key];
+    }
+    target[keys[0]] = value;
+
+    this.state$.next(current);
   }
 
   reset() {
-    this.state$.next({ ...this.initialState });
+    this.state$.next(structuredClone(this.initialState));
   }
 }
