@@ -1,14 +1,11 @@
-name: Android Build
+name: Build Android
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_call:
 
 jobs:
   build-android:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,20 +16,15 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Build Ionic App
-        run: npm run build
-
-      - name: Capacitor Sync
-        run: npx cap sync android
+      - run: npm ci
+      - run: npm run build
+      - run: npx cap sync android
 
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "21"
           cache: "gradle"
 
       - name: Build Android App
@@ -43,9 +35,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path:
+            android/app/build/outputs/apk/debug/app-debug.apk
 
-    #   - name: Setup JDK
+            #   - name: Setup JDK
     #     uses: actions/setup-java@v4
     #     with:
     #       distribution: 'temurin'
