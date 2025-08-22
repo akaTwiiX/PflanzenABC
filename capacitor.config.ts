@@ -1,4 +1,5 @@
 import type { CapacitorConfig } from '@capacitor/cli';
+import { KeyboardResize } from '@capacitor/keyboard';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
@@ -13,6 +14,10 @@ const config: CapacitorConfig = {
       navigationBarColor: '#000000',
       navigationBarContent: 'light',
       offset: 0,
+    },
+    Keyboard: {
+      resize: KeyboardResize.Body,
+      resizeOnFullScreen: true,
     },
   },
 };
