@@ -43,6 +43,9 @@
         <app-soil />
       </ion-item>
       <ion-item>
+        <app-fertilization />
+      </ion-item>
+      <ion-item>
         <app-range-slider label="Abstand zu anderen:" [range]="distanceRange" [value]="(plantForm$ | async)?.distance!"
           (valueChange)="plantFormService.update('distance', $event)" />
       </ion-item>

@@ -1,0 +1,33 @@
+<ion-item lines="none">
+  <ion-select [value]="selected" (ionChange)="onSelectChange($event.detail.value)" okText="OK" cancelText="Abbrechen"
+    placeholder="Auswahl" fill="solid">
+    <ion-select-option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </ion-select-option>
+  </ion-select>
+
+  <ion-button fill="clear" slot="end" (click)="openAddItemModal()" size="large">
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-button>
+</ion-item>
+
+
+
+<ion-modal [isOpen]="showAddModal" (didDismiss)="closeAddModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Neuen Eintrag hinzufügen</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeAddModal()">Abbrechen</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-item>
+        <ion-input placeholder="Neuen Wert eingeben" [(ngModel)]="newOption"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="addNewOption()">Hinzufügen</ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal>

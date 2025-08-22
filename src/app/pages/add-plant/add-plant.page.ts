@@ -10,6 +10,7 @@ import { RangeSliderComponent } from "src/app/components/range-slider/range-slid
 import { distanceRange } from '@/consts/distanceRange';
 import { LightSelectorComponent } from "src/app/components/light-selector/light-selector.component";
 import { SoilComponent } from "src/app/components/soil/soil.component";
+import { FertilizationComponent } from "src/app/components/fertilization/fertilization.component";
 
 @Component({
   selector: 'app-add-plant',
@@ -33,7 +34,8 @@ import { SoilComponent } from "src/app/components/soil/soil.component";
     IonLabel,
     IonCheckbox,
     LightSelectorComponent,
-    SoilComponent
+    SoilComponent,
+    FertilizationComponent
   ],
 })
 export class AddPlantPage implements OnInit {

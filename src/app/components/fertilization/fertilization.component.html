@@ -1,0 +1,15 @@
+<ion-item lines="none" class="ion-no-padding">
+
+  <ion-label>Dünger</ion-label>
+  <ion-checkbox slot="end" [checked]="(plantForm$ | async)?.fertilization?.enabled"
+    (ionChange)="plantFormService.update('fertilization.enabled', $event.detail.checked)" />
+
+</ion-item>
+
+@if((plantForm$ | async)?.fertilization?.enabled){
+<app-choices [options]="options" [selected]="(plantForm$ | async)?.fertilization?.type"
+  (selectedChange)="plantFormService.update('fertilization.type', $event)" (optionsChange)="options = $event" />
+<ion-input class="ion-padding-start" label="Zeitpunkt" placeholder="Enter text"
+  [value]="(plantForm$ | async)?.fertilization?.time"
+  (ionChange)="plantFormService.update('fertilization.time', $event.detail.value ?? '')" />
+}
