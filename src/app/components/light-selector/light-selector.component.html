@@ -1,11 +1,6 @@
-<div class="container">
-  @for(opt of options; track opt){
-  <div class="option" [class.selected]="value === opt.value" (click)="select(opt.value)">
-    <img [src]="opt.icon" class="icon" [class.icon-selected]="value === opt.value" alt="{{ opt.label }}" />
-    <span class="label" [class.label-selected]="value === opt.value">
-      {{ opt.label }}
-    </span>
-  </div>
-  }
+<ion-label class="ion-margin-top">
+  Standort
+</ion-label>
 
-</div>
+<app-selector [value]="(plantForm$ | async)?.light" (valueChange)="plantFormService.update('light', $event)"
+  [options]="options" />

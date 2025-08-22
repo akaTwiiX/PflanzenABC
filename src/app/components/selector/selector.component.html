@@ -1,0 +1,17 @@
+<div class="container">
+
+  @for(opt of options; track opt){
+  <div class="option" [class.selected]="value === opt.value" (click)="select(opt.value)">
+    @if(opt.icon){
+    <img [src]="opt.icon" class="icon" [class.icon-selected]="value === opt.value" alt="{{ opt.label }}" />
+    }
+    <span class="label" [ngClass]="{
+          'label-selected': value === opt.value,
+          'only-label': !opt.icon
+        }">
+      {{ opt.label }}
+    </span>
+
+  </div>
+  }
+</div>

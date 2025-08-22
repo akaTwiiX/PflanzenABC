@@ -51,8 +51,11 @@
       </ion-item>
 
       <ion-item>
-        <app-light-selector [value]="(plantForm$ | async)?.light"
-          (valueChange)="plantFormService.update('light', $event)" />
+        <app-water-selector />
+      </ion-item>
+
+      <ion-item>
+        <app-light-selector />
       </ion-item>
 
       @for( field of checkboxFields; track field){

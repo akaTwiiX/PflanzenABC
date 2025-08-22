@@ -11,6 +11,7 @@ import { distanceRange } from '@/consts/distanceRange';
 import { LightSelectorComponent } from "src/app/components/light-selector/light-selector.component";
 import { SoilComponent } from "src/app/components/soil/soil.component";
 import { FertilizationComponent } from "src/app/components/fertilization/fertilization.component";
+import { WaterSelectorComponent } from "src/app/components/water-selector/water-selector.component";
 
 @Component({
   selector: 'app-add-plant',
@@ -35,7 +36,8 @@ import { FertilizationComponent } from "src/app/components/fertilization/fertili
     IonCheckbox,
     LightSelectorComponent,
     SoilComponent,
-    FertilizationComponent
+    FertilizationComponent,
+    WaterSelectorComponent
   ],
 })
 export class AddPlantPage implements OnInit {

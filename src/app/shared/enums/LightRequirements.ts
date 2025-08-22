@@ -11,7 +11,7 @@ export const LightRequirementLabel: Record<LightRequirement, string> = {
 };
 
 export const icons = {
-  FULL_SUN: 'assets/icon/full-sun.png',
-  PARTIAL_SHADE: 'assets/icon/half-sun.png',
-  SHADE: 'assets/icon/shade.png',
+  FULL_SUN: 'assets/icons/full-sun.png',
+  PARTIAL_SHADE: 'assets/icons/half-sun.png',
+  SHADE: 'assets/icons/shade.png',
 };

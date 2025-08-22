@@ -1,23 +1,24 @@
-import { LightRequirement } from '@/enums/LightRequirements';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { icons, LightRequirement, LightRequirementLabel } from '@/enums/LightRequirements';
+import { Component, inject } from '@angular/core';
+import { SelectorComponent, SelectorOption } from "../selector/selector.component";
+import { PlantFormService } from '@/services/plant-form.service';
+import { CommonModule } from '@angular/common';
+import { IonItem, IonLabel } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-light-selector',
   templateUrl: './light-selector.component.html',
   styleUrls: ['./light-selector.component.scss'],
+  imports: [SelectorComponent, CommonModule, IonLabel],
 })
 export class LightSelectorComponent {
-  @Input() value!: LightRequirement | undefined;
-  @Output() valueChange = new EventEmitter<LightRequirement>();
+  plantFormService = inject(PlantFormService);
+  plantForm$ = this.plantFormService.plantForm$;
 
-  readonly options = [
-    { label: 'Sonne', value: LightRequirement.FULL_SUN, icon: 'assets/icons/full-sun.png' },
-    { label: 'Halbschatten', value: LightRequirement.PARTIAL_SHADE, icon: 'assets/icons/half-sun.png' },
-    { label: 'Schatten', value: LightRequirement.SHADE, icon: 'assets/icons/shade.png' },
-  ];
-
-  select(value: LightRequirement) {
-    this.valueChange.emit(value);
-  }
+  readonly options: SelectorOption[] = Object.values(LightRequirement).map(lr => ({
+    value: lr,
+    label: LightRequirementLabel[lr],
+    icon: icons[lr],
+  }));
 
 }
