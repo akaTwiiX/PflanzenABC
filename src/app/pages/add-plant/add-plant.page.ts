@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea } from '@ionic/angular/standalone';
 import { Plant } from 'src/app/shared/types/PlantType';
 import { PlantFormService } from 'src/app/shared/services/plant-form.service';
 import { ImagePickerComponent } from "src/app/components/image-picker/image-picker.component";
@@ -12,6 +12,9 @@ import { LightSelectorComponent } from "src/app/components/light-selector/light-
 import { SoilComponent } from "src/app/components/soil/soil.component";
 import { FertilizationComponent } from "src/app/components/fertilization/fertilization.component";
 import { WaterSelectorComponent } from "src/app/components/water-selector/water-selector.component";
+import { PlantTypeComponent } from "src/app/components/plant-type/plant-type.component";
+import { PruningComponent } from "src/app/components/pruning/pruning.component";
+import { FruitComponent } from "src/app/components/fruit/fruit.component";
 
 @Component({
   selector: 'app-add-plant',
@@ -37,7 +40,11 @@ import { WaterSelectorComponent } from "src/app/components/water-selector/water-
     LightSelectorComponent,
     SoilComponent,
     FertilizationComponent,
-    WaterSelectorComponent
+    WaterSelectorComponent,
+    PlantTypeComponent,
+    PruningComponent,
+    IonTextarea,
+    FruitComponent
   ],
 })
 export class AddPlantPage implements OnInit {
@@ -48,7 +55,6 @@ export class AddPlantPage implements OnInit {
 
   checkboxFields: (keyof Plant)[] = [
     'frostResistant',
-    'fruit',
     'leaf',
     'dryTolerance',
     'edible',
@@ -60,7 +66,6 @@ export class AddPlantPage implements OnInit {
 
   checkboxLabels: Partial<Record<keyof Plant, string>> = {
     frostResistant: 'Frosthart',
-    fruit: 'Frucht',
     leaf: 'Blätter',
     dryTolerance: 'Trockenresistent',
     edible: 'Essbar',

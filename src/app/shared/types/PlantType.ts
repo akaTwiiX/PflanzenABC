@@ -1,6 +1,7 @@
 import { LightRequirement } from '../enums/LightRequirements';
 import { PlantTypes } from '../enums/PlantTypes';
 import { WaterRequirement } from '../enums/WaterRequirements';
+import { Fruit } from './Fruit';
 import { RangeSliderType } from './RangeSliderType';
 
 export type ActionWithDetails = {
@@ -24,7 +25,7 @@ export type Plant = {
   light: LightRequirement;
   watering: WaterRequirement;
   frostResistant: boolean;
-  fruit: boolean;
+  fruit: Fruit;
   leaf: boolean;
   dryTolerance: boolean;
   edible: boolean;

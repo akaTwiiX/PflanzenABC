@@ -1,0 +1,15 @@
+<ion-item class="ion-no-padding" lines="none">
+  <ion-label>
+    Rückschnitt
+  </ion-label>
+
+  <ion-checkbox slot="end" [checked]="(plantForm$ | async)?.pruning?.enabled"
+    (ionChange)="plantFormService.update('pruning.enabled', $event.detail.checked)" />
+</ion-item>
+@if((plantForm$ | async)?.pruning?.enabled){
+<ion-input class="ion-padding-start" label="Wann" placeholder="Enter text" [value]="(plantForm$ | async)?.pruning?.time"
+  (ionChange)="plantFormService.update('pruning.time', $event.detail.value ?? '')" />
+<ion-input class="ion-padding-start" label="Wie viel" placeholder="Enter text"
+  [value]="(plantForm$ | async)?.pruning?.amount"
+  (ionChange)="plantFormService.update('pruning.amount', $event.detail.value ?? '')" />
+}

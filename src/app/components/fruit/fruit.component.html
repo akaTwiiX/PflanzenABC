@@ -1,0 +1,10 @@
+<ion-item lines="none" class="ion-no-padding">
+  <ion-label>Frucht</ion-label>
+  <ion-checkbox slot="end" [checked]="(plantForm$ | async)?.fruit?.enabled"
+    (ionChange)="plantFormService.update('fruit.enabled', $event.detail.checked)" />
+</ion-item>
+
+@if((plantForm$ | async)?.fruit?.enabled){
+<app-range-slider label="Zeitraum:" [range]="monthRange" [value]="(plantForm$ | async)?.fruit?.time!"
+  (valueChange)="plantFormService.update('fruit.time', $event)" />
+}

@@ -22,7 +22,7 @@ export class PlantFormService {
     light: LightRequirement.FULL_SUN,
     watering: WaterRequirement.MEDIUM,
     frostResistant: false,
-    fruit: false,
+    fruit: { enabled: false, time: { start: null, end: null } },
     leaf: false,
     dryTolerance: false,
     edible: false,
