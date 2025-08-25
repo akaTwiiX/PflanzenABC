@@ -30,11 +30,11 @@
 .icon {
     width: 32px;
     height: 32px;
-    filter: brightness(0.3); // ähnliche Wirkung wie tintColor: '#444'
+    filter: brightness(0.3);
 }
 
 .icon-selected {
-    filter: brightness(1) invert(1); // weiße Farbe
+    filter: brightness(1) invert(1);
 }
 
 .label {

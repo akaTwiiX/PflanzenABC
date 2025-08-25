@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
 import { IonButton, IonImg, IonText, IonActionSheet } from "@ionic/angular/standalone";
 
 @Component({
@@ -46,7 +47,9 @@ export class ImagePickerComponent {
   ];
 
   async pickImage(source: CameraSource) {
-    await Camera.requestPermissions({ permissions: ['camera', 'photos'] });
+    if (Capacitor.getPlatform() !== 'web') {
+      await Camera.requestPermissions({ permissions: ['camera', 'photos'] });
+    }
 
     try {
       const image = await Camera.getPhoto({
