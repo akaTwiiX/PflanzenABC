@@ -17,4 +17,19 @@
   .second {
     --background: #d7dcd3ff;
   }
+
+  .plant-list {
+    .plant-item {
+      margin: 0 12px;
+      // padding: 12px 0;
+      // border-bottom: 1px solid var(--ion-color-medium);
+      height: 50px;
+      display: flex;
+      align-items: center;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
 }

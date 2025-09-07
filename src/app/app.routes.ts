@@ -16,4 +16,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/add-plant/add-plant.page').then((m) => m.AddPlantPage),
   },
+  {
+    path: 'collection/:id',
+    loadComponent: () => import('./pages/collection/collection.page').then(m => m.CollectionPage)
+  },
 ];

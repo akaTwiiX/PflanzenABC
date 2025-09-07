@@ -9,6 +9,8 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+@use "theme/dialog" as *;
+
 .safe-area {
     padding-bottom: var(--ion-safe-area-bottom, 24px);
     // padding-top: var(--ion-safe-area-top, 0px);
