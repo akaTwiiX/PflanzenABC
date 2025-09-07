@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IonItem } from "@ionic/angular/standalone";
 
 export interface SelectorOption {
   label: string;
@@ -12,7 +11,7 @@ export interface SelectorOption {
   selector: 'app-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss'],
-  imports: [CommonModule, IonItem]
+  imports: [CommonModule]
 })
 export class SelectorComponent {
   @Input() value: any;
