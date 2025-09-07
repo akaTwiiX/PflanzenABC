@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonButton, IonIcon, IonContent, IonItem, IonModal, IonInput } from "@ionic/angular/standalone";
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,10 @@ import { getFirstLetter } from '@/utils/string.utils';
   imports: [IonButton, IonIcon, IonContent, IonItem, IonModal, IonInput, FormsModule],
 })
 export class AddButtonComponent implements OnInit {
+
+  @Input()
+  parentCollection?: number;
+
   newCollection: string = '';
   router = inject(Router);
   collectionStorageService = inject(CollectionStorageService);
@@ -22,20 +26,37 @@ export class AddButtonComponent implements OnInit {
   ngOnInit() { }
 
   navigateToAddPlant() {
-    this.router.navigate(['/add-plant']);
+    if (this.parentCollection) {
+      this.router.navigate(['/add-plant'], {
+        queryParams: { parentId: this.parentCollection }
+      });
+    } else {
+      this.router.navigate(['/add-plant']);
+    }
   }
 
-  addNewCollection() {
+
+  async addNewCollection() {
     const collection: Collection = {
       name: this.newCollection,
-      initialId: getFirstLetter(this.newCollection),
       description: '',
       plantIds: [],
       collectionIds: []
-    }
+    };
 
-    this.collectionStorageService.addCollection(collection).then((id) => {
+    if (!this.parentCollection)
+      collection.initialId = getFirstLetter(this.newCollection);
+
+    try {
+      const id = await this.collectionStorageService.addCollection(collection);
+
+      if (this.parentCollection)
+        await this.collectionStorageService.addChild(this.parentCollection, id, 'collection');
+
       this.router.navigate(['/collection', id]);
-    });
+    } catch (error) {
+      console.error('Failed to add new collection:', error);
+    }
   }
+
 }

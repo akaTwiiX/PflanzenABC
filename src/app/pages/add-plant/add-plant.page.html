@@ -8,12 +8,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">addPlant</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div class="safe-area">
     <ion-list>
       <ion-list>
@@ -89,3 +83,21 @@
   </div>
 
 </ion-content>
+
+<ion-modal id="dialog" #dialog>
+  <ng-template>
+    <div class="wrapper">
+      <h1>Was möchtest du machen?</h1>
+      <div class="button-row">
+        <ion-button class="ion-margin-bottom" expand="block" color="primary"
+          (click)="plantFormService.reset(); dialog.dismiss()">
+          Speichern und neue Pflanze hinzufügen
+        </ion-button>
+        <ion-button expand="block" color="primary"
+          (click)="router.navigate(['/plant', lastAddedPlantId]); plantFormService.reset(); dialog.dismiss()">
+          Speichern
+        </ion-button>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>

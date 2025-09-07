@@ -1,0 +1,30 @@
+<div class="plant-list" slot="content">
+  @if(isLoading) {
+  <ion-item class="plant-item" lines="none">
+    <ion-spinner></ion-spinner>
+  </ion-item>
+  }@else{
+  @if(plants.length === 0 && collections.length === 0) {
+  <ion-item class="plant-item" lines="none">
+    <span>
+      Keine Pflanzen
+    </span>
+  </ion-item>
+  }@else {
+  @for(collection of collections; track $index) {
+  <ion-item (click)="goTo('/collection', collection.id)">
+    <span>
+      {{ collection.name }} Sammlung
+    </span>
+  </ion-item>
+  }
+  @for (plant of plants; track $index) {
+  <ion-item (click)="goTo('/plant', plant.id)" class="plant-item">
+    <span>
+      - {{ plant.nameLatin }}
+    </span>
+  </ion-item>
+  }
+  }
+  }
+</div>

@@ -25,4 +25,13 @@ export class PlantStorageService {
   async queryBy(query: string, value: any): Promise<Plant[]> {
     return await this.table.where(query).equals(value).toArray();
   }
+
+  getPlant(id: number): Promise<Plant | undefined> {
+    return this.table.get(id);
+  }
+
+  async bulkGet(ids: number[]): Promise<Plant[]> {
+    const results = await this.table.bulkGet(ids);
+    return results.filter((c): c is Plant => !!c);
+  }
 }

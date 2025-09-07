@@ -13,6 +13,23 @@ export class CollectionStorageService {
     return await this.table.add(collection);
   }
 
+  async addChild(
+    parentId: number,
+    childId: number,
+    type: 'collection' | 'plant'
+  ) {
+    const parent = await this.table.get(parentId);
+    if (!parent) return;
+
+    if (type === 'collection') {
+      const updatedIds = [...(parent.collectionIds ?? []), childId];
+      await this.updateCollection(parentId, { collectionIds: updatedIds });
+    } else {
+      const updatedIds = [...(parent.plantIds ?? []), childId];
+      await this.updateCollection(parentId, { plantIds: updatedIds });
+    }
+  }
+
   async removeCollection(id: number) {
     await this.table.delete(id);
   }
@@ -23,5 +40,14 @@ export class CollectionStorageService {
 
   async queryBy(query: string, value: any): Promise<Collection[]> {
     return await this.table.where(query).equals(value).toArray();
+  }
+
+  async getCollection(id: number): Promise<Collection | undefined> {
+    return await this.table.get(id);
+  }
+
+  async bulkGet(ids: number[]): Promise<Collection[]> {
+    const results = await this.table.bulkGet(ids);
+    return results.filter((c): c is Collection => !!c);
   }
 }

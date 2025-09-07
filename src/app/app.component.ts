@@ -17,8 +17,6 @@ export class AppComponent {
         document.body.style.setProperty('--ion-safe-area-right', `${insets.right}px`);
         document.body.style.setProperty('--ion-safe-area-bottom', `${insets.bottom}px`);
         document.body.style.setProperty('--ion-safe-area-left', `${insets.left}px`);
-
-        // alert(JSON.stringify(insets));
       });
     });
   }

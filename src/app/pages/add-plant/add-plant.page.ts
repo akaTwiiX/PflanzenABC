@@ -1,7 +1,7 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton, IonModal } from '@ionic/angular/standalone';
 import { Plant } from 'src/app/shared/types/PlantType';
 import { PlantFormService } from 'src/app/shared/services/plant-form.service';
 import { ImagePickerComponent } from "src/app/components/image-picker/image-picker.component";
@@ -17,6 +17,8 @@ import { PruningComponent } from "src/app/components/pruning/pruning.component";
 import { FruitComponent } from "src/app/components/fruit/fruit.component";
 import { PlantStorageService } from '@/services/plant-storage.service';
 import { getFirstLetter } from '@/utils/string.utils';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CollectionStorageService } from '@/services/collection-storage.service';
 
 @Component({
   selector: 'app-add-plant',
@@ -47,15 +49,23 @@ import { getFirstLetter } from '@/utils/string.utils';
     PruningComponent,
     IonTextarea,
     FruitComponent,
-    IonButton
+    IonButton,
+    IonModal
   ],
 })
 export class AddPlantPage implements OnInit, OnDestroy {
   plantFormService = inject(PlantFormService);
   plantStorageService = inject(PlantStorageService);
+  collectionStorageService = inject(CollectionStorageService);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
   distanceRange = distanceRange;
+  parentId: number | null = null;
+
+  @ViewChild('dialog') modal!: IonModal;
+  lastAddedPlantId: number | null = null;
 
   checkboxFields: (keyof Plant)[] = [
     'frostResistant',
@@ -80,12 +90,32 @@ export class AddPlantPage implements OnInit, OnDestroy {
 
 
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const parentId = params['parentId'];
+      if (parentId) {
+        this.parentId = Number(parentId);
+      }
+    });
+  }
 
-  savePlant() {
+  async savePlant() {
     const plant = this.plantFormService.getPlant();
-    plant.initialId = getFirstLetter(plant.nameLatin);
-    this.plantStorageService.addPlant(plant).then(id => console.log(id));
+    if (!this.parentId)
+      plant.initialId = getFirstLetter(plant.nameLatin);
+
+    try {
+      const id = await this.plantStorageService.addPlant(plant);
+      if (this.parentId)
+        await this.collectionStorageService.addChild(this.parentId, id, 'plant');
+
+      this.lastAddedPlantId = id;
+
+      await this.modal.present();
+    } catch (error) {
+      console.error('Failed to add new plant:', error);
+    }
+
   }
 
   ngOnDestroy(): void {

@@ -1,37 +1,12 @@
 <div class="container">
-  <ion-accordion-group animated="false">
+  <ion-accordion-group (ionChange)="onAccordionChange($event)">
     @for (letter of letters; track $index) {
     <ion-accordion [value]="letter">
-      <ion-item slot="header" class="accordion-header" [ngClass]="$index % 2 === 0 ? 'first' : 'second'"
-        (click)="fetchPlants(letter)">
+      <ion-item slot="header" class="accordion-header" [ngClass]="$index % 2 === 0 ? 'first' : 'second'">
         <ion-label class="label">{{ letter }}</ion-label>
-        <ion-icon class="ion-accordion-toggle-icon ion-margin-end" name="chevron-down" slot="end" color="black">
-        </ion-icon>
+        <ion-icon class="ion-accordion-toggle-icon ion-margin-end" name="chevron-down" slot="end" color="black" />
       </ion-item>
-      <div class="plant-list" slot="content">
-        @if(plants.length === 0 && collections.length === 0) {
-        <ion-item class="plant-item" lines="none">
-          <span>
-            Keine Pflanzen
-          </span>
-        </ion-item>
-        }@else {
-        @for(collection of collections; track $index) {
-        <ion-item>
-          <span>
-            {{ collection.name }} Sammlung
-          </span>
-        </ion-item>
-        }
-        @for (plant of plants; track $index) {
-        <ion-item class="plant-item">
-          <span>
-            - {{ plant.nameLatin }}
-          </span>
-        </ion-item>
-        }
-        }
-      </div>
+      <app-plant-list [plants]="plants" [collections]="collections" [isLoading]="isLoading" slot="content" />
     </ion-accordion>
     }
   </ion-accordion-group>

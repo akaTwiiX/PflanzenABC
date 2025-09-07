@@ -20,4 +20,8 @@ export const routes: Routes = [
     path: 'collection/:id',
     loadComponent: () => import('./pages/collection/collection.page').then(m => m.CollectionPage)
   },
+  {
+    path: 'plant/:id',
+    loadComponent: () => import('./pages/plant/plant.page').then(m => m.PlantPage)
+  },
 ];
