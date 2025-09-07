@@ -50,6 +50,10 @@ export class PlantFormService {
     this.state$.next(current);
   }
 
+  getPlant() {
+    return structuredClone(this.state$.value);
+  }
+
   reset() {
     this.state$.next(structuredClone(this.initialState));
   }

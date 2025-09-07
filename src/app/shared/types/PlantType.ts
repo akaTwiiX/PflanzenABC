@@ -13,6 +13,7 @@ export type ActionWithDetails = {
 
 export type Plant = {
   id?: string;
+  initialId?: string;
   nameGerman: string;
   nameLatin: string;
   pruning: ActionWithDetails;

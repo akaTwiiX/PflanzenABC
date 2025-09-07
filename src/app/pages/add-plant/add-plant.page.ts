@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton } from '@ionic/angular/standalone';
 import { Plant } from 'src/app/shared/types/PlantType';
 import { PlantFormService } from 'src/app/shared/services/plant-form.service';
 import { ImagePickerComponent } from "src/app/components/image-picker/image-picker.component";
@@ -15,6 +15,8 @@ import { WaterSelectorComponent } from "src/app/components/water-selector/water-
 import { PlantTypeComponent } from "src/app/components/plant-type/plant-type.component";
 import { PruningComponent } from "src/app/components/pruning/pruning.component";
 import { FruitComponent } from "src/app/components/fruit/fruit.component";
+import { PlantStorageService } from '@/services/plant-storage.service';
+import { getFirstLetter } from '@/utils/string.utils';
 
 @Component({
   selector: 'app-add-plant',
@@ -44,11 +46,13 @@ import { FruitComponent } from "src/app/components/fruit/fruit.component";
     PlantTypeComponent,
     PruningComponent,
     IonTextarea,
-    FruitComponent
+    FruitComponent,
+    IonButton
   ],
 })
-export class AddPlantPage implements OnInit {
+export class AddPlantPage implements OnInit, OnDestroy {
   plantFormService = inject(PlantFormService);
+  plantStorageService = inject(PlantStorageService);
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
   distanceRange = distanceRange;
@@ -77,5 +81,15 @@ export class AddPlantPage implements OnInit {
 
 
   ngOnInit() { }
+
+  savePlant() {
+    const plant = this.plantFormService.getPlant();
+    plant.initialId = getFirstLetter(plant.nameLatin);
+    this.plantStorageService.addPlant(plant).then(id => console.log(id));
+  }
+
+  ngOnDestroy(): void {
+    this.plantFormService.reset();
+  }
 
 }
