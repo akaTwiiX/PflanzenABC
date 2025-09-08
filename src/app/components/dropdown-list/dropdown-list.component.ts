@@ -4,8 +4,7 @@ import { Collection } from '@/types/Collection';
 import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonIcon, IonSpinner } from '@ionic/angular/standalone';
+import { IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonIcon } from '@ionic/angular/standalone';
 import { PlantListComponent } from "../plant-list/plant-list.component";
 
 @Component({
@@ -19,7 +18,6 @@ import { PlantListComponent } from "../plant-list/plant-list.component";
     IonLabel,
     IonIcon,
     CommonModule,
-    IonSpinner,
     PlantListComponent
   ],
 })
@@ -38,6 +36,11 @@ export class DropdownListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
+
+  ionViewWillEnter() {
+    if (this.expandedLetter)
+      this.fetchPlants(this.expandedLetter);
+  }
 
   onAccordionChange(event: any) {
     const value = event.detail.value;

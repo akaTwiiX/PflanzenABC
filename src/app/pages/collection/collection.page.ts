@@ -32,6 +32,9 @@ export class CollectionPage implements OnInit {
 
   ngOnInit() {
     this.collectionId = Number(this.route.snapshot.paramMap.get('id'))!;
+  }
+
+  ionViewWillEnter() {
     this.fetchCollectionData(this.collectionId);
   }
 

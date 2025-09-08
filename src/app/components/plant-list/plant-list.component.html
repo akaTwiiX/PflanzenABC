@@ -4,25 +4,21 @@
     <ion-spinner></ion-spinner>
   </ion-item>
   }@else{
-  @if(plants.length === 0 && collections.length === 0) {
+  @if(mergedItems.length === 0) {
   <ion-item class="plant-item" lines="none">
-    <span>
+    <ion-text>
       Keine Pflanzen
-    </span>
+    </ion-text>
   </ion-item>
   }@else {
-  @for(collection of collections; track $index) {
-  <ion-item (click)="goTo('/collection', collection.id)">
-    <span>
-      {{ collection.name }} Sammlung
-    </span>
-  </ion-item>
-  }
-  @for (plant of plants; track $index) {
-  <ion-item (click)="goTo('/plant', plant.id)" class="plant-item">
-    <span>
-      - {{ plant.nameLatin }}
-    </span>
+  @for(item of mergedItems; track $index; let last = $last) {
+  <ion-item (click)="goTo(item.path, item.id)" [lines]="last ? 'none' : 'full'">
+    @if(item.type === 'collection'){
+    <ion-icon name="file-tray-full-outline" slot="end" />
+    }
+    <ion-text [ngClass]="{'bold': item.type === 'collection'}">
+      {{ item.displayName }}
+    </ion-text>
   </ion-item>
   }
   }
