@@ -18,7 +18,7 @@ export class PlantFormService {
     distance: { start: null, end: null },
     height: { start: null, end: null },
     bloomTime: { start: null, end: null },
-    type: PlantTypes.HERB,
+    type: '',
     light: LightRequirement.FULL_SUN,
     watering: WaterRequirement.MEDIUM,
     frostResistant: false,

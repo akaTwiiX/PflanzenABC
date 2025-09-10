@@ -22,7 +22,7 @@ export type Plant = {
   distance: RangeSliderType;
   height: RangeSliderType;
   bloomTime: RangeSliderType;
-  type: PlantTypes;
+  type: string;
   light: LightRequirement;
   watering: WaterRequirement;
   frostResistant: boolean;

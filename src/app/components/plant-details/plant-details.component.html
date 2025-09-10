@@ -1,0 +1,58 @@
+<ion-list>
+  <ion-item>
+    <ion-label>
+      <h2>{{ plant.nameLatin }}</h2>
+      <p>{{ plant.nameGerman }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-button expand="block" class="img-container">
+    @if(plant.imageUrl){
+    <ion-img [src]="plant.imageUrl" style="width: 100%; height: 100%; border-radius: 8px;"></ion-img>
+    } @else {
+    <ion-text color="medium">Kein Bild vorhanden</ion-text>
+    }
+  </ion-button>
+
+  <div>
+    <ion-img class="icon" [src]="lightIcons[plant.light]" />
+    <ion-img class="icon" [src]="waterIcons[plant.watering]" />
+    <ion-img class="icon" src="assets/icon/flower.svg" />
+    <ion-img class="icon" src="assets/icon/leaf.svg" />
+    <ion-img class="icon" src="assets/icon/cactus.svg" />
+    <ion-img class="icon" src="assets/icon/flower-pot.svg" />
+    <ion-img class="icon" src="assets/icon/snowflake.svg" />
+    <ion-img class="icon" src="assets/icon/eatable.svg" />
+    <ion-img class="icon" src="assets/icon/toxic.svg" />
+    <ion-img class="icon" src="assets/icon/nose.svg" />
+
+  </div>
+
+  <ion-item>
+    <strong>Abstand:</strong>
+    <ion-label slot="end">
+      {{ plant.distance.start }} – {{ plant.distance.end }} m
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <strong>Typ:</strong>
+    <ion-label slot="end">
+      {{ plant.type }}
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <strong>Höhe:</strong>
+    <ion-label slot="end">
+      {{ plant.height.start }} – {{ plant.height.end }} m
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <strong>Blütezeit:</strong>
+    <ion-label slot="end">
+      {{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}
+    </ion-label>
+  </ion-item>
+</ion-list>

@@ -1,13 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>plant</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">plant</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  @if(errorMsg){
+  <div class="container">
+    <ion-text color="danger">
+      {{errorMsg}}
+    </ion-text>
+  </div>
+  }@else if (isLoading) {
+  <div class="container">
+    <ion-spinner />
+  </div>
+  }@else {
+  <app-plant-details [plant]="plant!" />
+  }
 </ion-content>
