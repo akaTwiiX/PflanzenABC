@@ -2,9 +2,29 @@
     height: 200px;
     border-radius: 8px;
     --background: #e0e0e0;
+    margin: 0 12px;
+}
+
+.container {
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.icons-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
 }
 
 .icon {
     height: 50px;
     width: 50px;
+}
+
+.notice-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }

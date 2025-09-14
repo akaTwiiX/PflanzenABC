@@ -5,12 +5,13 @@ import { PlantFormService } from '@/services/plant-form.service';
 import { Plant } from '@/types/PlantType';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { IonImg, IonLabel, IonText, IonButton, IonItem, IonList } from "@ionic/angular/standalone";
+import { CommaDecimalPipe } from "@/pipes/comma-decimal.pipe";
 
 @Component({
   selector: 'app-plant-details',
   templateUrl: './plant-details.component.html',
   styleUrls: ['./plant-details.component.scss'],
-  imports: [IonImg, IonLabel, IonText, IonButton, IonItem, IonList],
+  imports: [IonImg, IonLabel, IonText, IonButton, IonItem, IonList, CommaDecimalPipe],
 })
 export class PlantDetailsComponent implements OnInit {
   @Input() plant!: Plant;
@@ -24,6 +25,30 @@ export class PlantDetailsComponent implements OnInit {
   waterRequirementLabel = WaterRequirementLabel;
   waterIcons = waterIcons;
 
-  ngOnInit() { }
+  icons: string[] = [];
+
+  ngOnInit() {
+    this.buildIcons();
+  }
+
+  buildIcons() {
+    const iconMap: { [key: string]: string } = {
+      leaf: 'leaf.png',
+      dryTolerance: 'cactus.png',
+      buckets: 'flower-pot.png',
+      frostResistant: 'snowflake.png',
+      edible: 'eatable.png',
+      toxic: 'skull.png',
+      fragrant: 'nose.png',
+    };
+
+    this.icons = Object.entries(iconMap)
+      .filter(([key]) => this.resolvePath(this.plant, key))
+      .map(([_, icon]) => icon);
+  }
+
+  private resolvePath(obj: any, path: string): any {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
 
 }

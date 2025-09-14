@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Pflanze hinzufügen</ion-title>
+    <ion-title>Pflanze {{isEditMode ? 'bearbeiten' : 'hinzufügen'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -89,12 +89,10 @@
     <div class="wrapper">
       <h1>Was möchtest du machen?</h1>
       <div class="button-row">
-        <ion-button class="ion-margin-bottom" expand="block" color="primary"
-          (click)="plantFormService.reset(); dialog.dismiss()">
+        <ion-button class="ion-margin-bottom" expand="block" color="primary" (click)="saveAndAddAnother()">
           Speichern und neue Pflanze hinzufügen
         </ion-button>
-        <ion-button expand="block" color="primary"
-          (click)="router.navigate(['/plant', lastAddedPlantId]); plantFormService.reset(); dialog.dismiss()">
+        <ion-button expand="block" color="primary" (click)="saveAndView()">
           Speichern
         </ion-button>
       </div>

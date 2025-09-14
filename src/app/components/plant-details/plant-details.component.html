@@ -1,8 +1,8 @@
-<ion-list>
+<ion-list class="container">
   <ion-item>
     <ion-label>
-      <h2>{{ plant.nameLatin }}</h2>
-      <p>{{ plant.nameGerman }}</p>
+      <h1 class="ion-text-center">{{ plant.nameLatin }}</h1>
+      <p class="ion-text-center">{{ plant.nameGerman }}</p>
     </ion-label>
   </ion-item>
 
@@ -14,26 +14,13 @@
     }
   </ion-button>
 
-  <div>
+  <div class="icons-container">
     <ion-img class="icon" [src]="lightIcons[plant.light]" />
     <ion-img class="icon" [src]="waterIcons[plant.watering]" />
-    <ion-img class="icon" src="assets/icon/flower.svg" />
-    <ion-img class="icon" src="assets/icon/leaf.svg" />
-    <ion-img class="icon" src="assets/icon/cactus.svg" />
-    <ion-img class="icon" src="assets/icon/flower-pot.svg" />
-    <ion-img class="icon" src="assets/icon/snowflake.svg" />
-    <ion-img class="icon" src="assets/icon/eatable.svg" />
-    <ion-img class="icon" src="assets/icon/toxic.svg" />
-    <ion-img class="icon" src="assets/icon/nose.svg" />
-
+    @for(icon of icons; track icon){
+    <ion-img class="icon" src="assets/icons/{{icon}}" />
+    }
   </div>
-
-  <ion-item>
-    <strong>Abstand:</strong>
-    <ion-label slot="end">
-      {{ plant.distance.start }} – {{ plant.distance.end }} m
-    </ion-label>
-  </ion-item>
 
   <ion-item>
     <strong>Typ:</strong>
@@ -42,12 +29,33 @@
     </ion-label>
   </ion-item>
 
+
+  @if(plant.fertilization.enabled){
   <ion-item>
-    <strong>Höhe:</strong>
+    <strong>Dünger:</strong>
     <ion-label slot="end">
-      {{ plant.height.start }} – {{ plant.height.end }} m
+      {{ plant.fertilization.type }} – {{ plant.fertilization.time }}
     </ion-label>
   </ion-item>
+  }
+
+  @if(plant.pruning.enabled){
+  <ion-item>
+    <strong>Beschneidung:</strong>
+    <ion-label slot="end">
+      {{ plant.pruning.amount }} – {{ plant.pruning.time }}
+    </ion-label>
+  </ion-item>
+  }
+
+  @if(plant.fruit.enabled){
+  <ion-item>
+    <strong>Früchte:</strong>
+    <ion-label slot="end">
+      {{ plant.fruit.time.start }} – {{ plant.fruit.time.end }}
+    </ion-label>
+  </ion-item>
+  }
 
   <ion-item>
     <strong>Blütezeit:</strong>
@@ -55,4 +63,31 @@
       {{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}
     </ion-label>
   </ion-item>
+
+  <ion-item>
+    <strong>Abstand:</strong>
+    <ion-label slot="end">
+      {{ plant.distance.start | commaDecimal }} –
+      {{ plant.distance.end | commaDecimal }} m
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <strong>Höhe:</strong>
+    <ion-label slot="end">
+      {{ plant.height.start | commaDecimal}} –
+      {{ plant.height.end | commaDecimal }} m
+    </ion-label>
+  </ion-item>
+
+  <ion-item lines="none">
+    <div class="notice-container ion-margin-vertical">
+      <strong>Notizen/Pflege/Schritt:</strong>
+      <ion-label>
+        {{ plant.notice }} ufbdsfbsdifihs fih dfh dhfsh fkd fhksdhf dhf dsh fhdfhdfh
+        hdfh adh fkh dfha dhhf fhf hd fhf h fj fh jhdf dj fjh fjh dfhjd fjh djh sdjhfjhf dsjh fj
+      </ion-label>
+    </div>
+  </ion-item>
+
 </ion-list>

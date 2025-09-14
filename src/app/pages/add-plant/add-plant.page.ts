@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton, IonModal } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton, IonModal, AlertController } from '@ionic/angular/standalone';
 import { Plant } from 'src/app/shared/types/PlantType';
 import { PlantFormService } from 'src/app/shared/services/plant-form.service';
 import { ImagePickerComponent } from "src/app/components/image-picker/image-picker.component";
@@ -59,10 +59,12 @@ export class AddPlantPage implements OnInit, OnDestroy {
   collectionStorageService = inject(CollectionStorageService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  alertCtrl = inject(AlertController);
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
   distanceRange = distanceRange;
   parentId: number | null = null;
+  isEditMode = false;
 
   @ViewChild('dialog') modal!: IonModal;
   lastAddedPlantId: number | null = null;
@@ -93,9 +95,14 @@ export class AddPlantPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const parentId = params['parentId'];
-      if (parentId) {
+      const editId = params['editId'];
+
+      if (parentId)
         this.parentId = Number(parentId);
-      }
+
+      if (editId)
+        this.isEditMode = true;
+
     });
   }
 
@@ -103,6 +110,19 @@ export class AddPlantPage implements OnInit, OnDestroy {
     const plant = this.plantFormService.getPlant();
     if (!this.parentId)
       plant.initialId = getFirstLetter(plant.nameLatin);
+
+    const errors = this.validatePlant(plant);
+    if (errors.length > 0) {
+      const alert = await this.alertCtrl.create({
+        header: 'Fehler',
+        message: errors.join('\n'),
+        cssClass: 'custom-alert',
+        buttons: ['OK']
+      });
+
+      await alert.present();
+      return;
+    }
 
     try {
       const id = await this.plantStorageService.addPlant(plant);
@@ -117,6 +137,52 @@ export class AddPlantPage implements OnInit, OnDestroy {
     }
 
   }
+
+  saveAndAddAnother() {
+    this.plantFormService.reset();
+    this.lastAddedPlantId = null;
+    this.modal.dismiss();
+  }
+
+  saveAndView() {
+    this.plantFormService.reset();
+    this.router.navigate(['/plant', this.lastAddedPlantId]);
+    this.lastAddedPlantId = null;
+    this.modal.dismiss();
+  }
+
+  private validatePlant(plant: Plant): string[] {
+    const errors: string[] = [];
+
+    if (!plant.nameLatin?.trim()) {
+      errors.push('Der lateinische Name darf nicht leer sein.');
+    }
+
+    if (!plant.nameGerman?.trim()) {
+      errors.push('Der deutsche Name darf nicht leer sein.');
+    }
+
+    if (plant.pruning.enabled) {
+      if (!plant.pruning.time?.trim()) {
+        errors.push('Zeit darf nicht leer sein, wenn Rückschnitt aktiviert ist.');
+      }
+      if (!plant.pruning.amount?.trim()) {
+        errors.push('Menge darf nicht leer sein, wenn Rückschnitt aktiviert ist.');
+      }
+    }
+
+    if (plant.fertilization.enabled) {
+      if (!plant.fertilization.type?.trim()) {
+        errors.push('Typ darf nicht leer sein, wenn Dünger aktiviert ist.');
+      }
+      if (!plant.fertilization.time?.trim()) {
+        errors.push('Zeit darf nicht leer sein, wenn Dünger aktiviert ist.');
+      }
+    }
+
+    return errors;
+  }
+
 
   ngOnDestroy(): void {
     this.plantFormService.reset();

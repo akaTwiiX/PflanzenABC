@@ -12,6 +12,7 @@ export class AppComponent {
   constructor(private platform: Platform) {
     this.platform.ready().then(() => {
       SafeArea.getSafeAreaInsets().then((data) => {
+        // document.documentElement.classList.toggle('ion-palette-dark', true);
         const { insets } = data;
         document.body.style.setProperty('--ion-safe-area-top', `${insets.top}px`);
         document.body.style.setProperty('--ion-safe-area-right', `${insets.right}px`);

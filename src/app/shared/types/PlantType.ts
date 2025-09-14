@@ -5,10 +5,10 @@ import { Fruit } from './Fruit';
 import { RangeSliderType } from './RangeSliderType';
 
 export type ActionWithDetails = {
-  enabled: boolean; // z. B. Checkbox an/aus
-  time: string;     // Zeitpunkt (z. B. "Frühjahr", "März", "alle 2 Wochen")
-  amount?: string;  // nur wenn relevant, z. B. "20g"
-  type?: string;    // z. B. Düngerart
+  enabled: boolean;
+  time: string;
+  amount?: string;
+  type?: string;
 };
 
 export type Plant = {

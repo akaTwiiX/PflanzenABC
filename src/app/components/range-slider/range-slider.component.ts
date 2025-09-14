@@ -1,12 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { RangeSliderType } from '@/types/RangeSliderType';
 import { IonRange, IonText } from '@ionic/angular/standalone';
+import { CommaDecimalPipe } from "@/pipes/comma-decimal.pipe";
 
 @Component({
   selector: 'app-range-slider',
   templateUrl: './range-slider.component.html',
   styleUrls: ['./range-slider.component.scss'],
-  imports: [IonRange, IonText]
+  imports: [IonRange, IonText, CommaDecimalPipe]
 })
 export class RangeSliderComponent<T extends string | number | null> implements OnChanges {
   @Input() label!: string;

@@ -6,8 +6,8 @@
 
     @if(range.length > 0){
     <div class="range-labels">
-      <div class="label left">{{ range[lower] }}</div>
-      <div class="label right">{{ range[upper] }}</div>
+      <div class="label left">{{ range[lower] | commaDecimal }}</div>
+      <div class="label right">{{ range[upper] | commaDecimal}}</div>
     </div>
     }
   </div>

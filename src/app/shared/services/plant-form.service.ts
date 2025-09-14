@@ -15,14 +15,14 @@ export class PlantFormService {
     pruning: { enabled: false, time: '', amount: '' },
     fertilization: { enabled: false, type: '', time: '' },
     soil: '',
-    distance: { start: null, end: null },
-    height: { start: null, end: null },
-    bloomTime: { start: null, end: null },
+    distance: { start: 0.5, end: 10 },
+    height: { start: 0.5, end: 10 },
+    bloomTime: { start: 'Januar', end: 'Dezember' },
     type: '',
     light: LightRequirement.FULL_SUN,
     watering: WaterRequirement.MEDIUM,
     frostResistant: false,
-    fruit: { enabled: false, time: { start: null, end: null } },
+    fruit: { enabled: false, time: { start: 'Januar', end: 'Dezember' } },
     leaf: false,
     dryTolerance: false,
     edible: false,
@@ -48,6 +48,10 @@ export class PlantFormService {
     target[keys[0]] = value;
 
     this.state$.next(current);
+  }
+
+  setPlant(plant: Plant) {
+    this.state$.next(structuredClone(plant));
   }
 
   getPlant() {
