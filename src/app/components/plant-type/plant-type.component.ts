@@ -3,6 +3,8 @@ import { IonLabel } from "@ionic/angular/standalone";
 import { ChoicesComponent } from "../choices/choices.component";
 import { PlantFormService } from '@/services/plant-form.service';
 import { CommonModule } from '@angular/common';
+import { ChoicesStorageService } from '@/services/choices-storage.service';
+import { ChoiceName } from '@/enums/ChoiceEntry';
 
 @Component({
   selector: 'app-plant-type',
@@ -13,8 +15,8 @@ import { CommonModule } from '@angular/common';
 export class PlantTypeComponent {
 
   plantFormService = inject(PlantFormService);
+  choiceStorageService = inject(ChoicesStorageService);
   plantForm$ = this.plantFormService.plantForm$;
-
-  options = ['Item A', 'Item B', 'Item C'];
+  ChoiceName = ChoiceName;
 
 }

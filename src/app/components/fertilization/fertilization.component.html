@@ -7,8 +7,8 @@
 </ion-item>
 
 @if((plantForm$ | async)?.fertilization?.enabled){
-<app-choices [options]="options" [selected]="(plantForm$ | async)?.fertilization?.type"
-  (selectedChange)="plantFormService.update('fertilization.type', $event)" (optionsChange)="options = $event" />
+<app-choices [choiceName]="ChoiceName.FertilizerType" [selected]="(plantForm$ | async)?.fertilization?.type"
+  (selectedChange)="plantFormService.update('fertilization.type', $event)" />
 <ion-input class="ion-padding-start" label="Zeitpunkt" placeholder="Enter text"
   [value]="(plantForm$ | async)?.fertilization?.time"
   (ionChange)="plantFormService.update('fertilization.time', $event.detail.value ?? '')" />

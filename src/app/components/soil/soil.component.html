@@ -1,5 +1,5 @@
 <div>
   <ion-label>Erde</ion-label>
-  <app-choices [options]="options" [selected]="(plantForm$ | async)?.soil"
-    (selectedChange)="plantFormService.update('soil', $event)" (optionsChange)="options = $event" />
+  <app-choices [choiceName]="ChoiceName.SoilType" [selected]="(plantForm$ | async)?.soil"
+    (selectedChange)="plantFormService.update('soil', $event)" />
 </div>

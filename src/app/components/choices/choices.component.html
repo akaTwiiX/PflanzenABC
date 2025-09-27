@@ -1,9 +1,12 @@
 <ion-item lines="none">
-  <ion-select [value]="selected" (ionChange)="onSelectChange($event.detail.value)" okText="OK" cancelText="Abbrechen"
-    placeholder="Auswahl" fill="solid">
-    <ion-select-option *ngFor="let option of options" [value]="option">
+  <ion-select [value]="selected" [disabled]="options.length === 0" (ionChange)="onSelectChange($event.detail.value)"
+    okText="OK" cancelText="Abbrechen" [placeholder]="options.length === 0 ? 'Typen hinzufügen' : 'Auswahl'"
+    fill="solid">
+    @for( option of options; track $index){
+    <ion-select-option [value]="option">
       {{ option }}
     </ion-select-option>
+    }
   </ion-select>
 
   <ion-button fill="clear" slot="end" (click)="openAddItemModal()" size="large">

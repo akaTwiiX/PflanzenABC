@@ -3,6 +3,6 @@
     Art
   </ion-label>
 
-  <app-choices [options]="options" [selected]="(plantForm$ | async)?.type"
-    (selectedChange)="plantFormService.update('type', $event)" (optionsChange)="options = $event" />
+  <app-choices [choiceName]="ChoiceName.PlantType" [selected]="(plantForm$ | async)?.type"
+    (selectedChange)="plantFormService.update('type', $event)" />
 </div>

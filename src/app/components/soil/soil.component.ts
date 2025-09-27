@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChoicesComponent } from "../choices/choices.component";
 import { PlantFormService } from '@/services/plant-form.service';
+import { ChoiceName } from '@/enums/ChoiceEntry';
 
 @Component({
   selector: 'app-soil',
@@ -11,14 +12,10 @@ import { PlantFormService } from '@/services/plant-form.service';
   styleUrls: ['./soil.component.scss'],
   imports: [CommonModule, FormsModule, IonLabel, ChoicesComponent],
 })
-export class SoilComponent implements OnInit {
+export class SoilComponent {
   plantFormService = inject(PlantFormService);
   plantForm$ = this.plantFormService.plantForm$;
+  ChoiceName = ChoiceName;
 
-  options = ['Item 1', 'Item 2', 'Item 3'];
-
-  ngOnInit(): void {
-
-  }
 
 }

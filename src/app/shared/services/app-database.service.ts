@@ -1,20 +1,24 @@
 import Dexie, { Table } from 'dexie';
 import { Plant } from '@/types/PlantType';
 import { Collection } from '@/types/Collection';
+import { ChoiceEntry } from '@/enums/ChoiceEntry';
 
 export class AppDatabase extends Dexie {
   plants!: Table<Plant, number>;
   collections!: Table<Collection, number>;
+  choices!: Table<ChoiceEntry, number>;
 
   constructor() {
     super('AppDatabase');
     this.version(1).stores({
       plants: '++id, initialId, nameGerman, nameLatin, light, type',
       collections: '++id, initialId, name',
+      choices: '++id, name'
     });
 
     this.plants = this.table('plants');
     this.collections = this.table('collections');
+    this.choices = this.table('choices');
   }
 }
 

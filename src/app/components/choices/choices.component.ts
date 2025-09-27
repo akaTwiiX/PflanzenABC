@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { IonItem, IonSelectOption, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonIcon, IonSelect, IonModal, IonInput, IonText, IonLabel } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ChoiceName } from '@/enums/ChoiceEntry';
+import { ChoicesStorageService } from '@/services/choices-storage.service';
 
 @Component({
   selector: 'app-choices',
@@ -9,20 +11,24 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./choices.component.scss'],
   imports: [CommonModule, IonItem, IonSelectOption, IonButton, IonIcon, IonSelect, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonInput, FormsModule],
 })
-export class ChoicesComponent {
+export class ChoicesComponent implements OnInit {
 
-  @Input() options: string[] = [];
+  choiceStorageService = inject(ChoicesStorageService);
 
-  /** Aktuell ausgewähltes Element */
+
   @Input() selected: string | undefined = undefined;
 
-  /** Emits Änderungen zurück an den Parent */
   @Output() selectedChange = new EventEmitter<string>();
-  @Output() optionsChange = new EventEmitter<string[]>();
 
-  // Modal / neuer Wert
+  @Input() choiceName!: ChoiceName;
+
+  options: string[] = [];
   showAddModal = false;
   newOption = '';
+
+  ngOnInit(): void {
+    this.getOptions();
+  }
 
   openAddItemModal() {
     this.showAddModal = true;
@@ -33,12 +39,11 @@ export class ChoicesComponent {
     this.showAddModal = false;
   }
 
-  addNewOption() {
+  async addNewOption() {
     if (this.newOption.trim()) {
-      this.options = [...this.options, this.newOption.trim()];
       this.selected = this.newOption.trim();
+      await this.choiceStorageService.addValue(this.choiceName, this.selected);
 
-      this.optionsChange.emit(this.options);
       this.selectedChange.emit(this.selected);
 
       this.closeAddModal();
@@ -48,6 +53,10 @@ export class ChoicesComponent {
   onSelectChange(value: string) {
     this.selected = value;
     this.selectedChange.emit(value);
+  }
+
+  async getOptions() {
+    this.options = await this.choiceStorageService.getChoicesByName(this.choiceName);
   }
 
 }
