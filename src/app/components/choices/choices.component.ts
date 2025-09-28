@@ -47,6 +47,7 @@ export class ChoicesComponent implements OnInit {
       this.selectedChange.emit(this.selected);
 
       this.closeAddModal();
+      this.getOptions();
     }
   }
 

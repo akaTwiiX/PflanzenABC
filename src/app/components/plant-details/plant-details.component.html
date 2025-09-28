@@ -7,9 +7,9 @@
   </ion-item>
 
   <ion-button expand="block" class="img-container">
-    @if(plant.imageUrl){
-    <ion-img [src]="plant.imageUrl" style="width: 100%; height: 100%; border-radius: 8px;"></ion-img>
-    } @else {
+    @if(imageSrc){
+    <ion-img [src]="imageSrc" style="width: 100%; height: 100%; border-radius: 8px;"></ion-img>
+    }@else{
     <ion-text color="medium">Kein Bild vorhanden</ion-text>
     }
   </ion-button>
@@ -84,8 +84,7 @@
     <div class="notice-container ion-margin-vertical">
       <strong>Notizen/Pflege/Schritt:</strong>
       <ion-label>
-        {{ plant.notice }} ufbdsfbsdifihs fih dfh dhfsh fkd fhksdhf dhf dsh fhdfhdfh
-        hdfh adh fkh dfha dhhf fhf hd fhf h fj fh jhdf dj fjh fjh dfhjd fjh djh sdjhfjhf dsjh fj
+        {{ plant.notice }}
       </ion-label>
     </div>
   </ion-item>

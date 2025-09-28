@@ -6,12 +6,17 @@ import { Plant } from '@/types/PlantType';
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { IonImg, IonLabel, IonText, IonButton, IonItem, IonList } from "@ionic/angular/standalone";
 import { CommaDecimalPipe } from "@/pipes/comma-decimal.pipe";
+import { loadNativeImage } from '@/utils/image.utils';
+import { Capacitor } from '@capacitor/core';
+import { BehaviorSubject } from 'rxjs';
+import { db } from '@/services/app-database.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-plant-details',
   templateUrl: './plant-details.component.html',
   styleUrls: ['./plant-details.component.scss'],
-  imports: [IonImg, IonLabel, IonText, IonButton, IonItem, IonList, CommaDecimalPipe],
+  imports: [IonImg, IonLabel, IonText, IonButton, IonItem, IonList, CommaDecimalPipe, CommonModule],
 })
 export class PlantDetailsComponent implements OnInit {
   @Input() plant!: Plant;
@@ -27,8 +32,19 @@ export class PlantDetailsComponent implements OnInit {
 
   icons: string[] = [];
 
-  ngOnInit() {
+  imageSrc: string | undefined = undefined
+
+  async ngOnInit() {
     this.buildIcons();
+    if (this.plant.imageUrl) {
+      if (Capacitor.getPlatform() === 'web') {
+        const entry = await db.images.get(Number(this.plant.imageUrl));
+        this.imageSrc = entry ? URL.createObjectURL(entry.data) : undefined;
+      } else {
+        const src = await loadNativeImage(this.plant.imageUrl);
+        this.imageSrc = src;
+      }
+    }
   }
 
   buildIcons() {

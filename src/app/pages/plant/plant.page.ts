@@ -7,6 +7,7 @@ import { PlantStorageService } from '@/services/plant-storage.service';
 import { Plant } from '@/types/PlantType';
 import { PlantDetailsComponent } from "src/app/components/plant-details/plant-details.component";
 import { PlantFormService } from '@/services/plant-form.service';
+import { loadNativeImage } from '@/utils/image.utils';
 
 @Component({
   selector: 'app-plant',

@@ -19,6 +19,11 @@ import { PlantStorageService } from '@/services/plant-storage.service';
 import { getFirstLetter } from '@/utils/string.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CollectionStorageService } from '@/services/collection-storage.service';
+import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { convertBlobToBase64, loadNativeImage } from '@/utils/image.utils';
+import { db } from '@/services/app-database.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-add-plant',
@@ -125,18 +130,44 @@ export class AddPlantPage implements OnInit, OnDestroy {
     }
 
     try {
-      const id = await this.plantStorageService.addPlant(plant);
-      if (this.parentId)
-        await this.collectionStorageService.addChild(this.parentId, id, 'plant');
-
-      this.lastAddedPlantId = id;
+      if (this.isEditMode) {
+        await this.updatePlant(plant);
+      } else {
+        await this.createPlant(plant);
+      }
 
       await this.modal.present();
     } catch (error) {
-      console.error('Failed to add new plant:', error);
+      console.error('Failed to save plant:', error);
+    }
+  }
+
+  private async createPlant(plant: Plant) {
+    if (plant.imageUrl) {
+      plant.imageUrl = await this.saveImageInStore(plant.imageUrl);
     }
 
+    const id = await this.plantStorageService.addPlant(plant);
+
+    if (this.parentId) {
+      await this.collectionStorageService.addChild(this.parentId, id, 'plant');
+    }
+
+    this.lastAddedPlantId = id;
   }
+
+  private async updatePlant(plant: Plant) {
+    const existing = await this.plantStorageService.getPlant(plant.id!);
+
+    if (plant.imageUrl && plant.imageUrl !== existing?.imageUrl) {
+      plant.imageUrl = await this.saveImageInStore(plant.imageUrl);
+    }
+
+    await this.plantStorageService.updatePlant(plant.id!, plant);
+
+    this.lastAddedPlantId = plant.id!;
+  }
+
 
   saveAndAddAnother() {
     this.plantFormService.reset();
@@ -183,6 +214,40 @@ export class AddPlantPage implements OnInit, OnDestroy {
     return errors;
   }
 
+  async saveImageInStore(imagePath: string) {
+    if (Capacitor.getPlatform() === 'web') {
+      const blob = await fetch(imagePath).then(r => r.blob());
+      const imageId = await db.images.add({
+        name: Date.now().toString(),
+        data: blob,
+      });
+      return String(imageId);
+    } else {
+      const fileName = `${Date.now()}.jpeg`;
+      const folderName = 'PflanzenABC';
+      const fullPath = `Pictures/${folderName}/${fileName}`;
+
+      if (imagePath.startsWith('file://')) {
+        await Filesystem.copy({
+          from: imagePath,
+          to: fullPath,
+          directory: Directory.ExternalStorage
+        });
+      } else {
+        const blob = await fetch(imagePath).then(r => r.blob());
+        const base64 = await convertBlobToBase64(blob) as string;
+
+        await Filesystem.writeFile({
+          path: fullPath,
+          data: base64.split(',')[1],
+          directory: Directory.ExternalStorage,
+          recursive: true
+        });
+      }
+
+      return fileName;
+    }
+  }
 
   ngOnDestroy(): void {
     this.plantFormService.reset();
