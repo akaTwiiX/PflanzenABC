@@ -1,90 +1,109 @@
-name: Build Android
+name: Build & Release Signed Ionic Android App (APK & AAB)
 
 on:
-  workflow_call:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
 
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: 22
 
-      - run: npm ci
-      - run: npm run build
-      - run: npx cap sync android
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Ionic app
+        run: npm run build
+
+      - name: Copy web assets to Android
+        run: npx cap sync android
 
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "21"
-          cache: "gradle"
+          cache: gradle
 
-      - name: Build Android App
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/my-release-key.jks
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG_NAME#v}
+          VERSION_CODE=$(echo $VERSION | awk -F. '{print $1*10000 + $2*100 + $3}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "Version: $VERSION, VersionCode: $VERSION_CODE"
+
+      - name: Set version in build.gradle
+        run: |
+          sed -i "s/versionName \".*\"/versionName \"${VERSION}\"/" android/app/build.gradle
+          sed -i "s/versionCode [0-9]\+/versionCode ${VERSION_CODE}/" android/app/build.gradle
+
+      - name: Configure signing in Gradle
+        run: |
+          echo "android {
+              signingConfigs {
+                  release {
+                      storeFile file('my-release-key.jks')
+                      storePassword System.getenv('KEYSTORE_PASSWORD')
+                      keyAlias System.getenv('KEY_ALIAS')
+                      keyPassword System.getenv('KEY_PASSWORD')
+                  }
+              }
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.release
+                      minifyEnabled false
+                      shrinkResources false
+                      debuggable false
+                  }
+              }
+          }" >> android/app/signing-config.gradle
+          echo "apply from: 'signing-config.gradle'" >> android/app/build.gradle
+
+      - name: Change wrapper permissions
+        run: chmod +x android/gradlew
+
+      - name: Build signed APK
         working-directory: android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleRelease
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Build signed AAB
+        working-directory: android
+        run: ./gradlew bundleRelease
+
+      - name: Rename build outputs
+        run: |
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-v${VERSION}.apk
+          mv android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/bundle/release/app-release-v${VERSION}.aab
 
       - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
-          files: android/app/build/outputs/apk/debug/app-debug.apk
+          tag_name: ${{ github.ref_name }}
+          name: "Release v${{ env.VERSION }}"
+          body: |
+            🚀 **Automatically created release for version v${{ env.VERSION }}**
+
+            **VersionCode:** ${{ env.VERSION_CODE }}
+            **Buildsystem:** Ionic + Capacitor + Gradle
+          files: |
+            android/app/build/outputs/apk/release/app-release-v${{ env.VERSION }}.apk
+            android/app/build/outputs/bundle/release/app-release-v${{ env.VERSION }}.aab
         env:
-          GITHUB_TOKEN:
-            ${{ secrets.GITHUB_TOKEN }}
-
-            #   - name: Setup JDK
-    #     uses: actions/setup-java@v4
-    #     with:
-    #       distribution: 'temurin'
-    #       java-version: '21'
-    #       cache: 'gradle'
-
-    #   # Keystore Datei wiederherstellen
-    #   - name: Decode Keystore
-    #     run: |
-    #       echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > android/app/my-release-key.jks
-
-    #   # Build Release AAB (Google Play Format)
-    #   - name: Build Release Bundle (AAB)
-    #     working-directory: android
-    #     run: ./gradlew bundleRelease \
-    #       -Pandroid.injected.signing.store.file=my-release-key.jks \
-    #       -Pandroid.injected.signing.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
-    #       -Pandroid.injected.signing.key.alias=${{ secrets.ANDROID_KEY_ALIAS }} \
-    #       -Pandroid.injected.signing.key.password=${{ secrets.ANDROID_KEY_PASSWORD }}
-
-    #   # Build Release APK (für Tests, direkte Installation)
-    #   - name: Build Release APK
-    #     working-directory: android
-    #     run: ./gradlew assembleRelease \
-    #       -Pandroid.injected.signing.store.file=my-release-key.jks \
-    #       -Pandroid.injected.signing.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
-    #       -Pandroid.injected.signing.key.alias=${{ secrets.ANDROID_KEY_ALIAS }} \
-    #       -Pandroid.injected.signing.key.password=${{ secrets.ANDROID_KEY_PASSWORD }}
-
-    #   # Artifacts hochladen
-    #   - name: Upload Release AAB
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       name: app-release-aab
-    #       path: android/app/build/outputs/bundle/release/app-release.aab
-
-    #   - name: Upload Release APK
-    #     uses: actions/upload-artifact@v4
-    #     with:
-    #       name: app-release-apk
-    #       path: android/app/build/outputs/apk/release/app-release.apk
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
