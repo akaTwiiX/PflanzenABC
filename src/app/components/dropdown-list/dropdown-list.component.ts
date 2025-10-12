@@ -38,6 +38,7 @@ export class DropdownListComponent implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {
+    console.log('Expanded letter on view enter:', this.expandedLetter);
     if (this.expandedLetter)
       this.fetchPlants(this.expandedLetter);
   }

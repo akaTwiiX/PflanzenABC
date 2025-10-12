@@ -3,12 +3,11 @@ import { PlantTypeLabel } from '@/enums/PlantTypes';
 import { icons as waterIcons, WaterRequirementLabel } from '@/enums/WaterRequirements';
 import { PlantFormService } from '@/services/plant-form.service';
 import { Plant } from '@/types/PlantType';
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { IonImg, IonLabel, IonText, IonButton, IonItem, IonList } from "@ionic/angular/standalone";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
+import { IonImg, IonLabel, IonText, IonItem, IonList, IonModal } from "@ionic/angular/standalone";
 import { CommaDecimalPipe } from "@/pipes/comma-decimal.pipe";
 import { loadNativeImage } from '@/utils/image.utils';
 import { Capacitor } from '@capacitor/core';
-import { BehaviorSubject } from 'rxjs';
 import { db } from '@/services/app-database.service';
 import { CommonModule } from '@angular/common';
 
@@ -16,7 +15,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-plant-details',
   templateUrl: './plant-details.component.html',
   styleUrls: ['./plant-details.component.scss'],
-  imports: [IonImg, IonLabel, IonText, IonButton, IonItem, IonList, CommaDecimalPipe, CommonModule],
+  imports: [IonImg, IonLabel, IonText, IonItem, IonList, CommaDecimalPipe, CommonModule, IonModal],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PlantDetailsComponent implements OnInit {
   @Input() plant!: Plant;
@@ -31,8 +31,9 @@ export class PlantDetailsComponent implements OnInit {
   waterIcons = waterIcons;
 
   icons: string[] = [];
-
+  
   imageSrc: string | undefined = undefined
+  isImageModalOpen = false;
 
   async ngOnInit() {
     this.buildIcons();
@@ -65,6 +66,15 @@ export class PlantDetailsComponent implements OnInit {
 
   private resolvePath(obj: any, path: string): any {
     return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
+
+
+  openImageModal() {
+    this.isImageModalOpen = true;
+  }
+
+  closeImageModal() {
+    this.isImageModalOpen = false;
   }
 
 }

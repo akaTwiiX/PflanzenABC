@@ -1,11 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-button (click)="goToHome()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="goToAddPlant()">
-        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      <ion-button (click)="openMenu()">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

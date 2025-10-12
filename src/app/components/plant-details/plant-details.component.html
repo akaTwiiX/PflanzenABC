@@ -1,18 +1,18 @@
 <ion-list class="container">
-  <ion-item>
+  <ion-item lines="none">
     <ion-label>
       <h1 class="ion-text-center">{{ plant.nameLatin }}</h1>
       <p class="ion-text-center">{{ plant.nameGerman }}</p>
     </ion-label>
   </ion-item>
 
-  <ion-button expand="block" class="img-container">
+  <div class="img-container">
     @if(imageSrc){
-    <ion-img [src]="imageSrc" style="width: 100%; height: 100%; border-radius: 8px;"></ion-img>
+    <ion-img [src]="imageSrc" class="image-preview" (click)="openImageModal()"/>
     }@else{
     <ion-text color="medium">Kein Bild vorhanden</ion-text>
     }
-  </ion-button>
+  </div>
 
   <div class="icons-container">
     <ion-img class="icon" [src]="lightIcons[plant.light]" />
@@ -82,7 +82,7 @@
 
   <ion-item lines="none">
     <div class="notice-container ion-margin-vertical">
-      <strong>Notizen/Pflege/Schritt:</strong>
+      <strong>Notizen:</strong>
       <ion-label>
         {{ plant.notice }}
       </ion-label>
@@ -90,3 +90,17 @@
   </ion-item>
 
 </ion-list>
+
+<ion-modal [isOpen]="isImageModalOpen" (didDismiss)="isImageModalOpen = false">
+  <ng-template>
+    <div class="modal-content">
+      <ion-icon name="close" class="close-icon" (click)="isImageModalOpen = false"/>
+
+      <swiper-container pagination="true" navigation="true" zoom="true" style="width:100%;height:100%;">
+        <swiper-slide>
+          <img [src]="imageSrc" style="width:100%;height:100%;object-fit:contain;" />
+        </swiper-slide>
+      </swiper-container>
+    </div>
+  </ng-template>
+</ion-modal>

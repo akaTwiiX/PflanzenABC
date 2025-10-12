@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -14,5 +14,10 @@ import { MainContentComponent } from './main-content/main-content.component';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, MainContentComponent],
 })
 export class HomePage {
+  @ViewChild('mainContent') mainContent!: MainContentComponent;
   constructor() {}
+
+  ionViewWillEnter(){
+    this.mainContent.enterPage();
+  }
 }

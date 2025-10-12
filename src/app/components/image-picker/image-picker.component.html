@@ -1,9 +1,12 @@
-<ion-button expand="block" id="open-action-sheet" class="container">
+<div id="open-action-sheet" class="img-container">
   @if(value){
-  <ion-img [src]="image" style="width: 100%; height: 100%; border-radius: 8px;"></ion-img>
+    <div class="image-wrapper">
+      <ion-img [src]="image" class="image-preview"></ion-img>
+      <ion-icon name="trash-outline" class="delete-icon" (click)="deleteImage($event)"></ion-icon>
+    </div>
   }
   @else {
   <ion-text color="medium">Bild hinzufügen</ion-text>
   }
-</ion-button>
+</div>
 <ion-action-sheet trigger="open-action-sheet" header="Actions" [buttons]="actionSheetButtons"></ion-action-sheet>

@@ -5,7 +5,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
-import { chevronDown, add, camera, close, image, addCircleOutline, fileTrayFullOutline, pencilOutline } from 'ionicons/icons';
+import { chevronDown, add, camera, close, image, addCircleOutline, fileTrayFullOutline, pencilOutline, arrowBackOutline, ellipsisVertical, trashOutline } from 'ionicons/icons';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 addIcons({
@@ -16,10 +16,13 @@ addIcons({
   'close': close,
   'image': image,
   'file-tray-full-outline': fileTrayFullOutline,
-  'pencil-outline': pencilOutline
+  'pencil-outline': pencilOutline,
+  'arrow-back-outline':arrowBackOutline,
+  'ellipsis-vertical': ellipsisVertical,
+  'trash-outline': trashOutline
 });
 
-defineCustomElements(window);
+defineCustomElements();
 
 bootstrapApplication(AppComponent, {
   providers: [

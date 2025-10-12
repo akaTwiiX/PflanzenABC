@@ -3,13 +3,13 @@ import { loadNativeImage } from '@/utils/image.utils';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
-import { IonButton, IonImg, IonText, IonActionSheet } from "@ionic/angular/standalone";
+import { IonIcon, IonImg, IonText, IonActionSheet } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-image-picker',
   templateUrl: 'image-picker.component.html',
   styleUrl: 'image-picker.component.scss',
-  imports: [IonButton, IonImg, IonText, IonActionSheet],
+  imports: [IonIcon, IonImg, IonText, IonActionSheet],
 })
 export class ImagePickerComponent implements OnChanges {
   @Input() value!: string | undefined;
@@ -98,5 +98,10 @@ export class ImagePickerComponent implements OnChanges {
     } catch (error) {
       console.error('Image pick failed:', error);
     }
+  }
+
+  deleteImage(event: Event){
+    event.stopPropagation();
+    this.valueChange.emit('');
   }
 }

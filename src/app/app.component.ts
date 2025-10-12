@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { SafeArea } from 'capacitor-plugin-safe-area';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-root',
