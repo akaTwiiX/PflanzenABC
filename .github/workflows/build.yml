@@ -36,11 +36,6 @@ jobs:
           find www -type f -exec chmod 644 {} \;
 
       - name: Upload built web assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
           path: www
-
-  web:
-    needs: build
-    uses: ./.github/workflows/web.yml

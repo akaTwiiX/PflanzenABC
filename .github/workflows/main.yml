@@ -16,6 +16,10 @@ jobs:
   build-deps:
     uses: ./.github/workflows/build.yml
 
+  web-deploy:
+    needs: build-deps
+    uses: ./.github/workflows/web.yml
+
   android-debug:
     if: startsWith(github.ref, 'refs/heads/')
     needs: build-deps
