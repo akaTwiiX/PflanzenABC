@@ -30,6 +30,11 @@ jobs:
           name: github-pages
           path: ./www
 
+      - name: Extract web artifact
+        run: |
+          tar -xf ./www/artifact.tar -C ./www
+          rm ./www/artifact.tar
+
       - name: Install Node.js dependencies
         run: npm ci
 
