@@ -1,36 +1,28 @@
-name: Deploy Web
+name: Deploy Web to GitHub Pages
 
 on:
   workflow_call:
 
 jobs:
-  build-web:
+  deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./www
-
-  deploy-web:
-    runs-on: ubuntu-latest
-    needs: build-web
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download built www/ from previous job
+        uses: actions/download-artifact@v4
+        with:
+          name: www
+          path: ./www
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

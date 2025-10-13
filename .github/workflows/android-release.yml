@@ -1,0 +1,95 @@
+name: Build & Release Signed Ionic Android App (APK & AAB)
+
+on:
+  workflow_call:
+    secrets:
+      ANDROID_KEYSTORE_BASE64:
+        required: true
+      KEYSTORE_PASSWORD:
+        required: true
+      KEY_ALIAS:
+        required: true
+      KEY_PASSWORD:
+        required: true
+      GITHUB_TOKEN:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download www artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: www
+          path: ./www
+
+      - name: Copy www assets to Android
+        run: npx cap copy android
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          cache: gradle
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG_NAME#v}
+          VERSION_CODE=$(echo $VERSION | awk -F. '{print $1*10000 + $2*100 + $3}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "Version: $VERSION, VersionCode: $VERSION_CODE"
+
+      - name: Set version in build.gradle
+        run: |
+          source $GITHUB_ENV
+          sed -i "s/versionName \".*\"/versionName \"${VERSION}\"/" android/app/build.gradle
+          sed -i "s/versionCode [0-9]\+/versionCode ${VERSION_CODE}/" android/app/build.gradle
+
+      - name: Decode keystore
+        run: |
+          mkdir -p android/app
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/my-release-key.jks
+
+      - name: Build signed Android app (APK & AAB)
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          for TYPE in APK AAB; do
+            npx cap build android \
+              --keystorepath android/app/my-release-key.jks \
+              --keystorepass "$KEYSTORE_PASSWORD" \
+              --keystorealias "$KEY_ALIAS" \
+              --keystorealiaspass "$KEY_PASSWORD" \
+              --androidreleasetype $TYPE
+          done
+
+      - name: Rename build outputs
+        run: |
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-v${VERSION}.apk
+          mv android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/bundle/release/app-release-v${VERSION}.aab
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Release v${{ env.VERSION }}"
+          body: |
+            🚀 **Automatically created release for version v${{ env.VERSION }}**
+
+            **VersionCode:** ${{ env.VERSION_CODE }}
+            **Buildsystem:** Ionic + Capacitor + Gradle
+          files: |
+            android/app/build/outputs/apk/release/app-release-v${{ env.VERSION }}.apk
+            android/app/build/outputs/bundle/release/app-release-v${{ env.VERSION }}.aab
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
