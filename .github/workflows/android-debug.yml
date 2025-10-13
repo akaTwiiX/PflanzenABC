@@ -21,6 +21,9 @@ jobs:
           name: github-pages
           path: ./www
 
+      - name: Install Node.js dependencies
+        run: npm ci
+
       - name: Sync Capacitor
         run: npx cap sync android
 
