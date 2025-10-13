@@ -19,11 +19,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Download www artifact
         uses: actions/download-artifact@v3
         with:
           name: www
           path: ./www
+
+      - name: Sync Capacitor
+        run: npx cap sync android
 
       - name: Copy www assets to Android
         run: npx cap copy android
