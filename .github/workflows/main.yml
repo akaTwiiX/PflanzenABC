@@ -24,7 +24,6 @@ jobs:
     if: startsWith(github.ref, 'refs/heads/')
     needs: build-deps
     uses: ./.github/workflows/android-debug.yml
-    secrets: inherit
 
   android-release:
     if: startsWith(github.ref, 'refs/tags/v')
