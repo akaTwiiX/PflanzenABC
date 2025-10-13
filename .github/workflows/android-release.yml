@@ -64,8 +64,7 @@ jobs:
 
       - name: Decode keystore
         run: |
-          mkdir -p android/app
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/my-release-key.jks
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/my-release-key.jks
 
       - name: Build signed Android app (APK & AAB)
         env:
@@ -75,7 +74,7 @@ jobs:
         run: |
           for TYPE in APK AAB; do
             npx cap build android \
-              --keystorepath android/app/my-release-key.jks \
+              --keystorepath my-release-key.jks \
               --keystorepass "$KEYSTORE_PASSWORD" \
               --keystorealias "$KEY_ALIAS" \
               --keystorealiaspass "$KEY_PASSWORD" \
