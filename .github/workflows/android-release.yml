@@ -81,10 +81,15 @@ jobs:
               --androidreleasetype $TYPE
           done
 
+      - name: List build outputs
+        run: |
+          ls -l android/app/build/outputs/apk/release/
+          ls -l android/app/build/outputs/bundle/release/
+
       - name: Rename build outputs
         run: |
-          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-v${VERSION}.apk
-          mv android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/bundle/release/app-release-v${VERSION}.aab
+          mv android/app/build/outputs/apk/release/app-release-signed.apk android/app/build/outputs/apk/release/app-release-v${VERSION}.apk
+          mv android/app/build/outputs/bundle/release/app-release-signed.aab android/app/build/outputs/bundle/release/app-release-v${VERSION}.aab
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
