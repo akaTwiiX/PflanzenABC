@@ -30,6 +30,11 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync
 
+      - name: Fix file permissions for GitHub Pages
+        run: |
+          find www -type d -exec chmod 755 {} \;
+          find www -type f -exec chmod 644 {} \;
+
       - name: Upload built web assets
         uses: actions/upload-artifact@v4
         with:
