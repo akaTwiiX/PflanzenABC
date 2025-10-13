@@ -38,7 +38,7 @@ jobs:
           cache: gradle
 
       - name: Build Debug APK
-        run: npx cap build android --androidreleasetype debug
+        run: npx cap build android
 
       - name: Upload Debug APK as Artifact
         uses: actions/upload-artifact@v4
