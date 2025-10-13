@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Update wird heruntergeladen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p>Bitte warte, während das Update geladen wird...</p>
+
+  <ion-progress-bar [value]="progress / 100"></ion-progress-bar>
+  <p>{{ progress }} %</p>
+
+  <ion-button expand="block" color="medium" (click)="cancel()" [disabled]="!downloading">
+    Abbrechen
+  </ion-button>
+</ion-content>

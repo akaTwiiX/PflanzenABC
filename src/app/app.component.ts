@@ -14,7 +14,12 @@ register();
 export class AppComponent {
   constructor(private platform: Platform) {
     this.platform.ready().then(() => {
-      SafeArea.getSafeAreaInsets().then((data) => {
+      this.setSafeArea();
+    });
+  }
+
+  setSafeArea(){
+    SafeArea.getSafeAreaInsets().then((data) => {
         // document.documentElement.classList.toggle('ion-palette-dark', true);
         const { insets } = data;
         document.body.style.setProperty('--ion-safe-area-top', `${insets.top}px`);
@@ -22,7 +27,6 @@ export class AppComponent {
         document.body.style.setProperty('--ion-safe-area-bottom', `${insets.bottom}px`);
         document.body.style.setProperty('--ion-safe-area-left', `${insets.left}px`);
       });
-    });
   }
 
 
