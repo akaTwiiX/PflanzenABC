@@ -20,7 +20,7 @@ jobs:
       - name: Download built www/ from previous job
         uses: actions/download-artifact@v4
         with:
-          name: www
+          name: github-pages
           path: ./www
 
       - name: Deploy to GitHub Pages
