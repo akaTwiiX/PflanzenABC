@@ -1,29 +1,22 @@
 name: Deploy Web to GitHub Pages
-
 on:
   workflow_call:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
       pages: write
-      contents: write
       id-token: write
-
+    environment:
+      name: github-pages
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Download built www/ from previous job
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: github-pages
-          path: ./www
-
-      - name: Deploy www/ to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: ./www
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+          path: ./build
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
