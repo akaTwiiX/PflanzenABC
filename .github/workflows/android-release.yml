@@ -69,32 +69,23 @@ jobs:
 
       - name: Decode keystore
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/my-release-key.jks
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/my-release-key.jks
 
-      - name: Build signed Android app (APK & AAB)
+      - name: Build signed Release APK
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          for TYPE in APK AAB; do
-            npx cap build android \
-              --keystorepath my-release-key.jks \
-              --keystorepass "$KEYSTORE_PASSWORD" \
-              --keystorealias "$KEY_ALIAS" \
-              --keystorealiaspass "$KEY_PASSWORD" \
-              --androidreleasetype $TYPE
-          done
-
-      - name: List build outputs
-        run: |
-          ls -l android/app/build/outputs/apk/release/
-          ls -l android/app/build/outputs/bundle/release/
-
-      - name: Rename build outputs
-        run: |
-          mv android/app/build/outputs/apk/release/app-release-signed.apk android/app/build/outputs/apk/release/app-release-v${VERSION}.apk
-          mv android/app/build/outputs/bundle/release/app-release-signed.aab android/app/build/outputs/bundle/release/app-release-v${VERSION}.aab
+          cd android
+          KEYSTORE_PATH="$(pwd)/app/my-release-key.jks"
+          echo "Using keystore at $KEYSTORE_PATH"
+          ./gradlew assembleRelease \
+            -Pandroid.injected.signing.store.file=$KEYSTORE_PATH \
+            -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+            -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+            -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+          cd ..
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -107,7 +98,6 @@ jobs:
             **VersionCode:** ${{ env.VERSION_CODE }}
             **Buildsystem:** Ionic + Capacitor + Gradle
           files: |
-            android/app/build/outputs/apk/release/app-release-v${{ env.VERSION }}.apk
-            android/app/build/outputs/bundle/release/app-release-v${{ env.VERSION }}.aab
+            android/app/build/outputs/apk/release/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
