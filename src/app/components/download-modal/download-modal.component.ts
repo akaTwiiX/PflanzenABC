@@ -1,7 +1,7 @@
 import { UpdaterService } from '@/services/updater.service';
 import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { IonProgressBar, IonButton, IonContent, IonHeader, IonToolbar, IonTitle} from "@ionic/angular/standalone";
+import { Capacitor } from '@capacitor/core';
+import { IonProgressBar, IonButton, IonContent, IonHeader, IonToolbar, IonTitle, ModalController} from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-download-modal',
@@ -21,8 +21,8 @@ export class DownloadModalComponent {
       await this.updater.downloadAndInstall(this.url, (p) => (this.progress = p));
       await this.modalCtrl.dismiss();
     } catch (e) {
-      console.error(e);
-      await this.modalCtrl.dismiss();
+      this.modalCtrl.dismiss();
+      console.error('ERROR: ',e);
     } finally {
       this.downloading = false;
     }

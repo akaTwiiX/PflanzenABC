@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { App } from '@capacitor/app';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { FileTransfer, DownloadFileOptions } from '@capacitor/file-transfer';
 import { FileOpener } from '@capacitor-community/file-opener';
 import { CapacitorHttp } from '@capacitor/core';
 
@@ -29,55 +30,40 @@ export class UpdaterService {
   }
 
   async downloadAndInstall(apkUrl: string, onProgress?: (percent: number) => void) {
-    this.abortController = new AbortController();
-    const { signal } = this.abortController;
+    const fileInfo = await Filesystem.getUri({
+      directory: Directory.Cache,
+      path: 'update.apk',
+    });
 
-    const response = await fetch(apkUrl, { signal });
-    const reader = response.body?.getReader();
-    if (!reader) throw new Error('Download Reader is not available.');
-
-    const contentLength = +response.headers.get('Content-Length')!;
-    let received = 0;
-    let chunks: Uint8Array[] = [];
+    const listener = await FileTransfer.addListener('progress', (progress) => {
+      if (onProgress && progress.contentLength) {
+        const percent = Math.round((progress.bytes / progress.contentLength) * 100);
+        onProgress(percent);
+      }
+    });
 
     try {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        if (value) {
-          chunks.push(value);
-          received += value.length;
-          const percent = Math.round((received / contentLength) * 100);
-          onProgress?.(percent);
-        }
+      const result = await FileTransfer.downloadFile({
+        url: apkUrl,
+        path: fileInfo.uri,
+      } as DownloadFileOptions);
+
+      if (!result.path) {
+        throw new Error('Downloaded file path is undefined.');
       }
-    } catch (err: any) {
-      if (err.name === 'AbortError') {
-        console.log('📴 Download canceled');
-        await Filesystem.deleteFile({ path: 'update.apk', directory: Directory.Cache }).catch(() => { });
-        return;
-      }
+
+      await FileOpener.open({
+        filePath: result.path,
+        contentType: 'application/vnd.android.package-archive',
+      });
+
+    } catch (err) {
+      console.error('❌ Download failed:', err);
+      FileTransfer.removeAllListeners();
       throw err;
+    } finally {
+      listener.remove();
     }
-
-    const blob = new Blob(chunks as BlobPart[]);
-    const base64 = await this.blobToBase64(blob);
-
-    await Filesystem.writeFile({
-      path: 'update.apk',
-      data: base64,
-      directory: Directory.Cache,
-    });
-
-    const uri = await Filesystem.getUri({
-      directory: Directory.Cache,
-      path: 'update.apk',
-    });
-
-    await FileOpener.open({
-      filePath: uri.uri,
-      contentType: 'application/vnd.android.package-archive',
-    });
   }
 
   cancelDownload() {
