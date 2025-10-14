@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package de.pflanzenabc.app;
 
 import com.getcapacitor.BridgeActivity;
 
