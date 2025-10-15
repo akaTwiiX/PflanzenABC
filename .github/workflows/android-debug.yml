@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Download www artifact
+      - name: Download web artifact
         uses: actions/download-artifact@v4
         with:
           name: github-pages
@@ -38,17 +38,36 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          distribution: "temurin"
-          java-version: "21"
+          distribution: temurin
+          java-version: 21
           cache: gradle
 
       - name: Build Debug APK
         run: |
           cd android
           ./gradlew assembleDebug
+          cd ..
+          TIMESTAMP=$(date +"%Y-%m-%d_%H-%M")
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          mv android/app/build/outputs/apk/debug/app-debug.apk "./PflanzenABC-debug-${TIMESTAMP}-${SHORT_SHA}.apk"
 
-      - name: Upload Debug APK as Artifact
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: PflanzenABC-debug
+          path: ./PflanzenABC-debug-*.apk
+
+      # - name: Create GitHub Pre-Release for Debug
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     tag_name: "debug-${{ github.run_number }}"
+      #     name: "Debug Build #${{ github.run_number }}"
+      #     body: |
+      #       🧪 **Automatisch erstellte Debug-APK**
+      #       - Branch: ${{ github.ref_name }}
+      #       - Commit: ${{ github.sha }}
+      #       - Zeit: ${{ github.run_started_at }}
+      #     files: ./PflanzenABC-debug-*.apk
+      #     prerelease: true
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

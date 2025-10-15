@@ -2,10 +2,6 @@ name: Build Ionic App
 
 on:
   workflow_call:
-    outputs:
-      www-path:
-        description: "Path to built web assets"
-        value: www
 
 jobs:
   build:

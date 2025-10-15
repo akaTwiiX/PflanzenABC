@@ -1,4 +1,4 @@
-name: Build & Release Signed Ionic Android App (APK & AAB)
+name: Build & Release Signed Ionic Android App (APK Format)
 
 on:
   workflow_call:
@@ -87,6 +87,11 @@ jobs:
             -Pandroid.injected.signing.key.password=$KEY_PASSWORD
           cd ..
 
+      - name: Rename build outputs
+        run: |
+          source $GITHUB_ENV
+          mv android/app/build/outputs/apk/release/app-release-signed.apk ./PflanzenABC-v${VERSION}.apk
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -98,6 +103,6 @@ jobs:
             **VersionCode:** ${{ env.VERSION_CODE }}
             **Buildsystem:** Ionic + Capacitor + Gradle
           files: |
-            android/app/build/outputs/apk/release/app-release.apk
+            ./PflanzenABC-v${VERSION}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
