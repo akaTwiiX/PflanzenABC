@@ -49,25 +49,12 @@ jobs:
           cd ..
           TIMESTAMP=$(date +"%Y-%m-%d_%H-%M")
           SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
-          mv android/app/build/outputs/apk/debug/app-debug.apk "./PflanzenABC-debug-${TIMESTAMP}-${SHORT_SHA}.apk"
+          TAG_NAME=${TIMESTAMP}-${SHORT_SHA}
+          mv android/app/build/outputs/apk/debug/app-debug.apk "./PflanzenABC-debug-${TAG_NAME}.apk"
+          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: PflanzenABC-debug
-          path: ./PflanzenABC-debug-*.apk
-
-      # - name: Create GitHub Pre-Release for Debug
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     tag_name: "debug-${{ github.run_number }}"
-      #     name: "Debug Build #${{ github.run_number }}"
-      #     body: |
-      #       🧪 **Automatisch erstellte Debug-APK**
-      #       - Branch: ${{ github.ref_name }}
-      #       - Commit: ${{ github.sha }}
-      #       - Zeit: ${{ github.run_started_at }}
-      #     files: ./PflanzenABC-debug-*.apk
-      #     prerelease: true
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: PflanzenABC-debug-${{ env.TAG_NAME }}
+          path: ./PflanzenABC-debug-${{ env.TAG_NAME }}.apk
