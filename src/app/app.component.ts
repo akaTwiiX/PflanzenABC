@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { SafeArea } from 'capacitor-plugin-safe-area';
@@ -15,6 +16,7 @@ export class AppComponent {
   constructor(private platform: Platform) {
     this.platform.ready().then(() => {
       this.setSafeArea();
+      this.clearCacheOnStartup();
     });
   }
 
@@ -27,6 +29,19 @@ export class AppComponent {
         document.body.style.setProperty('--ion-safe-area-bottom', `${insets.bottom}px`);
         document.body.style.setProperty('--ion-safe-area-left', `${insets.left}px`);
       });
+  }
+
+  private async clearCacheOnStartup() {
+    try {
+      await Filesystem.rmdir({
+        directory: Directory.Cache,
+        path: '',
+        recursive: true,
+      });
+      console.log('🧹 Cache cleared');
+    } catch (err) {
+      console.warn('⚠️ Cache cleared failed:', err);
+    }
   }
 
 
