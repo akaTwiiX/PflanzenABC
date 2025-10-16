@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">PflanzenABC DEBUG</string>
+    <string name="app_name">PflanzenDEBUG</string>
+    <string name="title_activity_main">PflanzenDEBUG</string>
 </resources>
