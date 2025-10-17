@@ -20,7 +20,7 @@ export class IncrementalBackupService {
     try {
       const file = await Filesystem.readFile({
         path: `${BACKUP_DIR}/${BACKUP_FILE_NAME}`,
-        directory: Directory.Documents,
+        directory: Directory.ExternalStorage,
         encoding: Encoding.UTF8,
       });
       const decrypted = await decryptData(file.data as string, SECRET_KEY);
@@ -69,7 +69,7 @@ export class IncrementalBackupService {
     try {
       const file = await Filesystem.readFile({
         path: `${BACKUP_DIR}/${BACKUP_FILE_NAME}`,
-        directory: Directory.Documents,
+        directory: Directory.ExternalStorage,
         encoding: Encoding.UTF8,
       });
 
