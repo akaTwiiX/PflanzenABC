@@ -48,15 +48,26 @@ export class AppComponent {
     }
   }
 
-  private setupBackupListeners() {
+  private async setupBackupListeners() {
     if (Capacitor.getPlatform() === 'web') {
       return;
     }
+    await this.requestStoragePermission();
 
     App.addListener('appStateChange', async (state: AppState) => {
         console.log('📴 Start backup...');
         await BackupStateService.performBackupIfNeeded();
     });
+  }
+
+  private async requestStoragePermission() {
+    try {
+      await Filesystem.requestPermissions();
+      const granted = await Filesystem.checkPermissions();
+      console.log('Storage permissions:', granted);
+    } catch (err) {
+      console.error('Permission request failed', err);
+    }
   }
 
 }
