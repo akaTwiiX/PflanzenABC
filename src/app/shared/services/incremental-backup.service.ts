@@ -15,61 +15,48 @@ export class IncrementalBackupService {
       console.warn('💻 Backup skipped: running on web');
       return;
     }
-    
-    let existingData: any = { plants: [], collections: [], choices: [], images: [] };
+
     try {
-      const file = await Filesystem.readFile({
+      const plants = await db.plants.toArray();
+      const collections = await db.collections.toArray();
+      const choices = await db.choices.toArray();
+      const images = await db.images.toArray();
+
+      const backupData = {
+        plants,
+        collections,
+        choices,
+        images,
+        createdAt: new Date().toISOString(),
+      };
+
+      await Filesystem.mkdir({
+        path: BACKUP_DIR,
+        directory: Directory.Documents,
+        recursive: true
+      });
+
+      const encrypted = await encryptData(backupData, SECRET_KEY);
+
+      await Filesystem.writeFile({
         path: `${BACKUP_DIR}/${BACKUP_FILE_NAME}`,
-        directory: Directory.ExternalStorage,
+        data: encrypted,
+        directory: Directory.Documents,
         encoding: Encoding.UTF8,
       });
-      const decrypted = await decryptData(file.data as string, SECRET_KEY);
-      existingData = JSON.parse(decrypted);
-    } catch {
-      console.log('⚠️ No existing backup, creating new one.');
+
+      console.log('✅ Full backup created/updated successfully');
+
+    } catch (e) {
+      console.error('❌ Error creating backup:', e);
     }
-
-    const plants = await db.plants.toArray();
-    const collections = await db.collections.toArray();
-    const choices = await db.choices.toArray();
-    const images = await db.images.toArray();
-
-    const updatedData = {
-      plants: plants.filter(p => !existingData.plants.some((ep: any) => ep.id === p.id && ep.updatedAt === p.updatedAt)),
-      collections: collections.filter(c => !existingData.collections.some((ec: any) => ec.id === c.id && ec.updatedAt === c.updatedAt)),
-      choices: choices.filter(ch => !existingData.choices.some((ec: any) => ec.id === ch.id && ec.updatedAt === ch.updatedAt)),
-      images: images.filter(i => !existingData.images.some((ei: any) => ei.id === i.id && ei.updatedAt === i.updatedAt)),
-      createdAt: new Date().toISOString(),
-    };
-
-    try {
-      await Filesystem.mkdir({ path: BACKUP_DIR, directory: Directory.Documents, recursive: true });
-    } catch { console.log('⚠️ Backup directory already exists.'); }
-
-    const mergedData = {
-      plants: [...existingData.plants, ...updatedData.plants],
-      collections: [...existingData.collections, ...updatedData.collections],
-      choices: [...existingData.choices, ...updatedData.choices],
-      images: [...existingData.images, ...updatedData.images],
-      createdAt: new Date().toISOString(),
-    };
-
-    const encrypted = await encryptData(mergedData, SECRET_KEY);
-    await Filesystem.writeFile({
-      path: `${BACKUP_DIR}/${BACKUP_FILE_NAME}`,
-      data: encrypted,
-      directory: Directory.Documents,
-      encoding: Encoding.UTF8,
-    });
-
-    console.log('✅ Incremental backup updated');
   }
 
   static async restoreBackup() {
     try {
       const file = await Filesystem.readFile({
         path: `${BACKUP_DIR}/${BACKUP_FILE_NAME}`,
-        directory: Directory.ExternalStorage,
+        directory: Directory.Documents,
         encoding: Encoding.UTF8,
       });
 
@@ -85,9 +72,14 @@ export class IncrementalBackupService {
         ]);
       });
 
-      console.log('✅ Backup restored incrementally');
-    } catch (err) {
-      console.warn('⚠️ No backup found to restore.');
+      console.log('✅ Backup restored successfully');
+
+    } catch (err: any) {
+      if (err.code === 'FILE_NOT_FOUND' || err.message?.includes('File does not exist')) {
+        console.warn('⚠️ No backup found to restore.');
+      } else {
+        console.error('❌ Error restoring backup:', err);
+      }
     }
   }
 }
