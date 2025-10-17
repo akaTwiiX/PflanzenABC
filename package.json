@@ -6,7 +6,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:web": "ng build --configuration web",
+    "build:android": "ng build --configuration android",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

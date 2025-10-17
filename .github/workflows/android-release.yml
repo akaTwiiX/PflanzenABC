@@ -27,13 +27,8 @@ jobs:
       - name: Download www artifact
         uses: actions/download-artifact@v4
         with:
-          name: github-pages
+          name: android-assets
           path: ./www
-
-      - name: Extract web artifact
-        run: |
-          tar -xf ./www/artifact.tar -C ./www
-          rm ./www/artifact.tar
 
       - name: Install Node.js dependencies
         run: npm ci

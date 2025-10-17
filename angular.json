@@ -67,6 +67,37 @@
               "sourceMap": true,
               "namedChunks": true
             },
+            "web": {
+              "outputPath": { 
+                "base": "dist/web",
+                "browser": ""
+               },
+              "baseHref": "/PflanzenABC/",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "aot": true,
+              "outputHashing": "all"
+            },
+            "android": {
+              "outputPath": { 
+                "base": "dist/android",
+                "browser": ""
+               },
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "aot": true,
+              "outputHashing": "all"
+            },
             "ci": {
               "progress": false
             }
