@@ -220,6 +220,7 @@ export class AddPlantPage implements OnInit, OnDestroy {
       const imageId = await db.images.add({
         name: Date.now().toString(),
         data: blob,
+        updatedAt: new Date().toISOString()
       });
       return String(imageId);
     } else {

@@ -41,7 +41,8 @@ export class AddButtonComponent implements OnInit {
       name: this.newCollection,
       description: '',
       plantIds: [],
-      collectionIds: []
+      collectionIds: [],
+      updatedAt: new Date().toISOString()
     };
 
     if (!this.parentCollection)

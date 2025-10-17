@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { db } from './app-database.service';
-import { ChoiceName } from '@/enums/ChoiceEntry';
+import { ChoiceEntry, ChoiceName } from '@/enums/ChoiceEntry';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { ChoiceName } from '@/enums/ChoiceEntry';
 export class ChoicesStorageService {
   private table = db.choices;
 
-  async addChoices(value: { name: ChoiceName, value: string[] }): Promise<number> {
+  async addChoices(value: ChoiceEntry): Promise<number> {
     return await this.table.add(value);
   }
 
@@ -18,7 +18,7 @@ export class ChoicesStorageService {
       return entry.value;
     }
 
-    await this.table.add({ name, value: [] });
+    await this.table.add({ name, value: [], updatedAt: new Date().toISOString() });
     return [];
   }
 
@@ -27,10 +27,10 @@ export class ChoicesStorageService {
     if (entry) {
       if (!entry.value.includes(newValue)) {
         entry.value.push(newValue);
-        await this.table.update(entry.id!, { value: entry.value });
+        await this.table.update(entry.id!, { value: entry.value, updatedAt: new Date().toISOString() });
       }
     } else {
-      await this.table.add({ name, value: [newValue] });
+      await this.table.add({ name, value: [newValue], updatedAt: new Date().toISOString() });
     }
   }
 

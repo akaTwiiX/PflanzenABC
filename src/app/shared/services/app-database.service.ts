@@ -3,6 +3,7 @@ import { Plant } from '@/types/PlantType';
 import { Collection } from '@/types/Collection';
 import { ChoiceEntry } from '@/enums/ChoiceEntry';
 import { ImageEntry } from '@/enums/ImageEntry';
+import { BackupStateService } from './backup-state.service';
 
 export class AppDatabase extends Dexie {
   plants!: Table<Plant, number>;
@@ -22,6 +23,14 @@ export class AppDatabase extends Dexie {
     this.plants = this.table('plants');
     this.collections = this.table('collections');
     this.choices = this.table('choices');
+
+    for (const tableName of ['plants', 'collections', 'choices', 'images']) {
+      const table = this.table(tableName);
+
+      table.hook('creating', () => BackupStateService.markChanged());
+      table.hook('updating', () => BackupStateService.markChanged());
+      table.hook('deleting', () => BackupStateService.markChanged());
+    }
   }
 }
 

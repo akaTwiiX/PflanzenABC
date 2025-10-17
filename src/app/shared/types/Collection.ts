@@ -5,4 +5,5 @@ export type Collection = {
     description?: string;
     plantIds: number[];
     collectionIds: number[];
+    updatedAt: string;
 };

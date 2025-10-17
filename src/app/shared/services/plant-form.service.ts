@@ -31,6 +31,7 @@ export class PlantFormService {
     buckets: false,
     notice: '',
     imageUrl: '',
+    updatedAt: '',
   };
 
   private state$ = new BehaviorSubject<Plant>(this.initialState);

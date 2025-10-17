@@ -7,10 +7,10 @@ import {
   ModalController,
   AlertController
 } from '@ionic/angular/standalone';
-import { Platform } from '@ionic/angular';
 import { MainContentComponent } from './main-content/main-content.component';
 import { UpdaterService } from '@/services/updater.service';
 import { DownloadModalComponent } from 'src/app/components/download-modal/download-modal.component';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +21,13 @@ import { DownloadModalComponent } from 'src/app/components/download-modal/downlo
 export class HomePage {
   @ViewChild('mainContent') mainContent!: MainContentComponent;
   constructor(
-    private platform: Platform,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private updater: UpdaterService) {}
 
   ionViewWillEnter(){
     this.mainContent.enterPage();
-    if(this.platform.is('android')) {
+    if(Capacitor.getPlatform() !== 'web'){
       this.checkForUpdates();
     }
   }

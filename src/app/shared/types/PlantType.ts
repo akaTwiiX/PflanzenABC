@@ -35,4 +35,6 @@ export type Plant = {
   buckets: boolean;
   notice?: string;
   imageUrl?: string;
+  updatedAt: string;
+  createdAt?: string;
 };

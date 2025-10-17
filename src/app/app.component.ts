@@ -1,4 +1,7 @@
+import { BackupStateService } from '@/services/backup-state.service';
 import { Component } from '@angular/core';
+import { App, AppState } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
@@ -17,6 +20,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.setSafeArea();
       this.clearCacheOnStartup();
+      this.setupBackupListeners();
     });
   }
 
@@ -44,5 +48,15 @@ export class AppComponent {
     }
   }
 
+  private setupBackupListeners() {
+    if (Capacitor.getPlatform() === 'web') {
+      return;
+    }
+
+    App.addListener('appStateChange', async (state: AppState) => {
+        console.log('📴 Start backup...');
+        await BackupStateService.performBackupIfNeeded();
+    });
+  }
 
 }

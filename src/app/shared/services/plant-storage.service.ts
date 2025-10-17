@@ -11,10 +11,13 @@ export class PlantStorageService {
   private table = db.plants;
 
   async addPlant(plant: Plant): Promise<number> {
+    plant.updatedAt = new Date().toISOString();
+    plant.createdAt = new Date().toISOString();
     return await this.table.add(plant);
   }
 
   async updatePlant(id: number, plant: Partial<Plant>) {
+    plant.updatedAt = new Date().toISOString();
     await this.table.update(id, plant);
   }
 

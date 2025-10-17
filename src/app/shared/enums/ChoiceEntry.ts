@@ -9,4 +9,5 @@ export interface ChoiceEntry {
     id?: number;
     name: ChoiceName;
     value: string[];
+    updatedAt: string;
 }
