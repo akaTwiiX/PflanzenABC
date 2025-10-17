@@ -30,12 +30,6 @@ export class IncrementalBackupService {
         createdAt: new Date().toISOString(),
       };
 
-      await Filesystem.mkdir({
-        path: BACKUP_DIR,
-        directory: Directory.Documents,
-        recursive: true
-      });
-
       const encrypted = await encryptData(backupData, SECRET_KEY);
 
       await Filesystem.writeFile({
@@ -43,6 +37,7 @@ export class IncrementalBackupService {
         data: encrypted,
         directory: Directory.Documents,
         encoding: Encoding.UTF8,
+        recursive: true
       });
 
       console.log('✅ Full backup created/updated successfully');
