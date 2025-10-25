@@ -37,6 +37,10 @@ jobs:
           java-version: 21
           cache: gradle
 
+      - name: Decode Firebase service
+        run: |
+          echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > android/app/google-services.json
+
       - name: Build Debug APK
         run: |
           cd android

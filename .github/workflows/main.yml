@@ -18,10 +18,10 @@ jobs:
     secrets:
       BACKUP_SECRET_KEY: ${{ secrets.BACKUP_SECRET_KEY }}
 
-  web-deploy:
-    if: github.ref_type == 'branch'
-    needs: build-deps
-    uses: ./.github/workflows/web.yml
+  # web-deploy:
+  #   if: github.ref_type == 'branch'
+  #   needs: build-deps
+  #   uses: ./.github/workflows/web.yml
 
   android-debug:
     if: github.ref_type == 'branch'

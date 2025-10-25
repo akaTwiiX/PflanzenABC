@@ -1,4 +1,5 @@
 import { BackupStateService } from '@/services/backup-state.service';
+import { IncrementalBackupService } from '@/services/incremental-backup.service';
 import { Component } from '@angular/core';
 import { App, AppState } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
@@ -20,7 +21,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.setSafeArea();
       this.clearCacheOnStartup();
-      this.setupBackupListeners();
     });
   }
 
@@ -45,28 +45,6 @@ export class AppComponent {
       console.log('🧹 Cache cleared');
     } catch (err) {
       console.warn('⚠️ Cache cleared failed:', err);
-    }
-  }
-
-  private async setupBackupListeners() {
-    if (Capacitor.getPlatform() === 'web') {
-      return;
-    }
-    await this.requestStoragePermission();
-
-    App.addListener('appStateChange', async (state: AppState) => {
-        console.log('📴 Start backup...');
-        await BackupStateService.performBackupIfNeeded();
-    });
-  }
-
-  private async requestStoragePermission() {
-    try {
-      await Filesystem.requestPermissions();
-      const granted = await Filesystem.checkPermissions();
-      console.log('Storage permissions:', granted);
-    } catch (err) {
-      console.error('Permission request failed', err);
     }
   }
 

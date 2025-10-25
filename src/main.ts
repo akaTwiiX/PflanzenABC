@@ -5,7 +5,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { addIcons } from 'ionicons';
-import { chevronDown, add, camera, close, image, addCircleOutline, fileTrayFullOutline, pencilOutline, arrowBackOutline, ellipsisVertical, trashOutline } from 'ionicons/icons';
+import { chevronDown, add, camera, close, image, addCircleOutline, fileTrayFullOutline, pencilOutline, arrowBackOutline, ellipsisVertical, trashOutline, closeCircle, checkmarkCircle, personCircleOutline, logOutOutline, cloudUploadOutline, logInOutline } from 'ionicons/icons';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 addIcons({
@@ -19,7 +19,13 @@ addIcons({
   'pencil-outline': pencilOutline,
   'arrow-back-outline':arrowBackOutline,
   'ellipsis-vertical': ellipsisVertical,
-  'trash-outline': trashOutline
+  'trash-outline': trashOutline,
+  'close-circle': closeCircle,
+  'checkmark-circle': checkmarkCircle,
+  'person-circle-outline': personCircleOutline,
+  'log-out-outline': logOutOutline,
+  'cloud-upload-outline': cloudUploadOutline,
+  'log-in-outline': logInOutline
 });
 
 defineCustomElements();

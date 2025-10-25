@@ -66,6 +66,10 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/my-release-key.jks
 
+      - name: Decode Firebase service
+        run: |
+          echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > android/app/google-services.json
+
       - name: Build signed Release APK
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
