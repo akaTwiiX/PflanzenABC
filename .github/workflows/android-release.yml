@@ -11,6 +11,8 @@ on:
         required: true
       KEY_PASSWORD:
         required: true
+      FIREBASE_JSON:
+        required: true
 
 jobs:
   build:

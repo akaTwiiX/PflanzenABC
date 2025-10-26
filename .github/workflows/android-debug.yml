@@ -2,6 +2,9 @@ name: Build Debug Android App (APK)
 
 on:
   workflow_call:
+    secrets:
+      FIREBASE_JSON:
+        required: true
 
 jobs:
   build:
