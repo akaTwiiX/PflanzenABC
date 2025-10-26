@@ -35,7 +35,7 @@ jobs:
     needs: build-deps
     uses: ./.github/workflows/android-debug.yml
     secrets:
-      FIREBASE_JSON: ${{ secrets.FIREBASE_JSON }}
+      FIREBASE_JSON: ${{ secrets.FIREBASE_JSON_DEBUG }}
 
   android-release:
     if: github.ref_type == 'tag'
