@@ -6,15 +6,13 @@ import { IncrementalBackupService } from './incremental-backup.service';
 })
 export class BackupStateService {
   private static backupPending = false;
-  private static lastBackup = 0;
 
   static markChanged() {
     this.backupPending = true;
   }
 
   static needsBackup(): boolean {
-    const now = Date.now();
-    return this.backupPending || (now - this.lastBackup > 6 * 60 * 60 * 1000);
+    return this.backupPending;
   }
 
   static async performBackupIfNeeded() {
@@ -23,6 +21,5 @@ export class BackupStateService {
     console.log('💾 Performing scheduled backup...');
     await IncrementalBackupService.createEncryptedBackup();
     this.backupPending = false;
-    this.lastBackup = Date.now();
   }
 }

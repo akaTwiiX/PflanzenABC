@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonItem, IonSpinner, IonIcon, IonText } from "@ionic/angular/standalone";
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-plant-list',
   templateUrl: './plant-list.component.html',
   styleUrls: ['./plant-list.component.scss'],
-  imports: [IonItem, IonSpinner, IonIcon, CommonModule, IonText],
+  imports: [IonItem, IonSpinner, IonIcon, CommonModule, IonText, ScrollingModule],
 })
 export class PlantListComponent implements OnChanges {
   @Input() plants: Plant[] = [];
@@ -21,10 +22,21 @@ export class PlantListComponent implements OnChanges {
 
   mergedItems: ListItem[] = [];
 
+  get viewportHeight() {
+    const itemHeight = 50; 
+    const totalHeight = this.mergedItems.length * itemHeight;
+    return totalHeight + 'px';
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['plants'] || changes['collections']) {
+
       this.mergeAndSort();
     }
+  }
+
+  trackByItem(_: number, item: ListItem) {
+    return item.id;
   }
 
   private mergeAndSort() {

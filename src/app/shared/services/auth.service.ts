@@ -18,21 +18,7 @@ export class AuthService {
   currentUser = signal<User | null>(null);
 
   constructor(private toastCtrl: ToastController) {
-    onAuthStateChanged(auth, (user) => {
-      this.currentUser.set(user);
-      if (user) {
-        if (!user.emailVerified) {
-          console.warn('⚠️ Email not verified');
-          return;
-        }
-
-        console.log('✅ User logged in:', user.email);
-        IncrementalBackupService.restoreBackup();
-        this.setupBackupListeners();
-      } else {
-        console.log('🚪 User logged out');
-      }
-    });
+    
   }
 
   async register(email: string, password: string): Promise<{ success: boolean; message: string }> {
@@ -108,12 +94,5 @@ export class AuthService {
       default:
         return 'Ein unbekannter Fehler ist aufgetreten.';
     }
-  }
-
-  private async setupBackupListeners() {
-    App.addListener('appStateChange', async (state: AppState) => {
-      console.log('📴 Start backup...');
-      await BackupStateService.performBackupIfNeeded();
-    });
   }
 }

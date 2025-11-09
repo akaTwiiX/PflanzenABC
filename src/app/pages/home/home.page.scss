@@ -25,3 +25,9 @@
 #container a {
   text-decoration: none;
 }
+
+.button {
+  position: sticky;
+  bottom: var(--ion-safe-area-bottom);
+  margin-bottom: unset;
+}

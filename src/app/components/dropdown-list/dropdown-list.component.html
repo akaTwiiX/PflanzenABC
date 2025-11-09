@@ -1,13 +1,42 @@
-<div class="container">
-  <ion-accordion-group (ionChange)="onAccordionChange($event)">
-    @for (letter of letters; track $index) {
-    <ion-accordion [value]="letter">
-      <ion-item slot="header" class="accordion-header" [ngClass]="$index % 2 === 0 ? 'first' : 'second'">
-        <ion-label class="label">{{ letter }}</ion-label>
-        <ion-icon class="ion-accordion-toggle-icon ion-margin-end" name="chevron-down" slot="end" color="black" />
-      </ion-item>
-      <app-plant-list [plants]="plants" [collections]="collections" [isLoading]="isLoading" slot="content" />
-    </ion-accordion>
+@if (isInitialLoading()) {
+<ion-spinner name="crescent" class="ion-padding"></ion-spinner>
+} @else {
+<ion-content #content>
+  <div class="scroll-content">
+    @for( group of dataByLetter(); track group.letter){
+    <ng-container>
+      <div #letterSection class="letter-section ion-padding" [attr.data-letter]="group.letter">
+        <div class="title-bg">
+          <h2 class="ion-text-uppercase ion-margin-top">{{ group.letter }}</h2>
+        </div>
+
+        @if (group.isLoading) {
+        <ion-spinner name="crescent" class="ion-padding"></ion-spinner>
+        } @else {
+        <app-plant-list [plants]="group.plants || []" [collections]="group.collections || []"></app-plant-list>
+        }
+      </div>
+    </ng-container>
     }
-  </ion-accordion-group>
-</div>
+  </div>
+  <ion-fab class="fab" slot="fixed" vertical="top" horizontal="end">
+    <ion-fab-button class="fab-button">
+      <!-- <ion-icon name="add"></ion-icon> -->
+       <span>A - Z</span>
+    </ion-fab-button>
+    <ion-fab-list>
+
+      <div class="fab-letter-container">
+        @for (group of dataByLetter(); track group.letter) {
+        <div class="fab-letter" (click)="scrollToLetter(group.letter)"
+          [ngClass]="{'active':activeLetter() === group.letter}">
+          {{ group.letter }}
+        </div>
+        }
+      </div>
+    </ion-fab-list>
+
+  </ion-fab>
+
+</ion-content>
+}

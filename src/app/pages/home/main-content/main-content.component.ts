@@ -15,6 +15,6 @@ export class MainContentComponent {
 
 
   enterPage(){
-    this.dropdown.ionViewWillEnter();
+    // this.dropdown.ionViewWillEnter();
   }
 }

@@ -1,34 +1,118 @@
-.container {
-  .accordion-header {
-    --inner-padding-end: 0;
-    --inner-padding-start: 0;
-    text-align: center;
-    --color: #000;
+// .container {
+//   .accordion-header {
+//     --inner-padding-end: 0;
+//     --inner-padding-start: 0;
+//     text-align: center;
+//     --color: #000;
 
-    .label {
-      margin-left: 40px;
-    }
+//     .label {
+//       margin-left: 40px;
+//     }
+//   }
+
+//   .first {
+//     --background: #bec9b5;
+//   }
+
+// .second {
+//   --background: #d7dcd3ff;
+// }
+
+//   .plant-list {
+//     .plant-item {
+//       // padding: 12px 0;
+//       // border-bottom: 1px solid var(--ion-color-medium);
+//       height: 50px;
+//       display: flex;
+//       align-items: center;
+
+//       &:last-child {
+//         border-bottom: none;
+//       }
+//     }
+//   }
+// }
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+ion-content,
+.virtual-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+}
+
+.title-bg{
+  background: #d7dcd3ff;
+}
+
+/* FAB-Letter-Container ersetzt ion-fab-list */
+.fab-letter-container {
+  width: 100%;
+  padding: 4px 0;
+  border-radius: 0 0 8px 8px;
+  background: #d7dcd3ff;
+  z-index: 11;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  scrollbar-width: none;
+  height: 100%;
+}
+
+.fab-letter {
+  flex: 1;
+  // color: var(--ion-color-light);
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  // border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s, transform 0.1s;
+
+  // &:last-child {
+  //   border-radius: 0 0 50% 50%;
+  // }
+  &.active {
+    padding: 6px 0;
+    background: #bec9b5;
+    transform: scale(1.05);
   }
 
-  .first {
+}
+
+.fab {
+  height: calc(100% - 20px);
+
+  ion-fab-list {
+    margin: calc(100% + 0px) 0px !important;
+    height: calc(100% - 56px);
+  }
+}
+
+
+
+ion-fab-button {
+  transition: border-radius 0.25s ease, transform 0.2s ease;
+  --border-radius: 50%;
+
+  &.fab-button {
     --background: #bec9b5;
+    --background-activated: #bec9b5;
+    --color: #000;
   }
 
-  .second {
-    --background: #d7dcd3ff;
-  }
-
-  .plant-list {
-    .plant-item {
-      // padding: 12px 0;
-      // border-bottom: 1px solid var(--ion-color-medium);
-      height: 50px;
-      display: flex;
-      align-items: center;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
+  &.fab-button-close-active {
+    --border-radius: 50% 50% 0 0;
+    transform: translateY(2px);
   }
 }

@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" >
+      <app-add-button [parentCollection]="collectionId"  />
+    </ion-buttons>
     <ion-title>{{collection?.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,6 +15,5 @@
     <ion-list>
       <app-plant-list [plants]="plants" [collections]="collections" [isLoading]="isLoading" />
     </ion-list>
-    <app-add-button [parentCollection]="collectionId" class="button" />
   </div>
 </ion-content>
