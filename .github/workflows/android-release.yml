@@ -60,9 +60,11 @@ jobs:
 
       - name: Set version in build.gradle
         run: |
-          source $GITHUB_ENV
           sed -i "s/versionName \".*\"/versionName \"${VERSION}\"/" android/app/build.gradle
           sed -i "s/versionCode [0-9]\+/versionCode ${VERSION_CODE}/" android/app/build.gradle
+        env:
+          VERSION: ${{ env.VERSION }}
+          VERSION_CODE: ${{ env.VERSION_CODE }}
 
       - name: Decode keystore
         run: |
@@ -89,9 +91,9 @@ jobs:
           cd ..
 
       - name: Rename build outputs
-        run: |
-          source $GITHUB_ENV
-          mv android/app/build/outputs/apk/release/app-release-signed.apk ./PflanzenABC-v${VERSION}.apk
+        run: mv android/app/build/outputs/apk/release/app-release*.apk ./PflanzenABC-v${VERSION}.apk
+        env:
+          VERSION: ${{ env.VERSION }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -104,6 +106,8 @@ jobs:
             **VersionCode:** ${{ env.VERSION_CODE }}
             **Buildsystem:** Ionic + Capacitor + Gradle
           files: |
-            ./PflanzenABC-v${VERSION}.apk
+            ./PflanzenABC-v${{ env.VERSION }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ env.VERSION }}
+          VERSION_CODE: ${{ env.VERSION_CODE }}
