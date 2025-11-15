@@ -19,7 +19,7 @@ export class PlantFormService {
     height: { start: 0.5, end: 10 },
     bloomTime: { start: 'Januar', end: 'Dezember' },
     type: '',
-    light: LightRequirement.FULL_SUN,
+    light: [LightRequirement.FULL_SUN],
     watering: WaterRequirement.MEDIUM,
     frostResistant: false,
     fruit: { enabled: false, time: { start: 'Januar', end: 'Dezember' } },

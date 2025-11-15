@@ -15,7 +15,9 @@
   </div>
 
   <div class="icons-container">
-    <ion-img class="icon" [src]="lightIcons[plant.light]" />
+    @for(light of plant.light; track $index){
+    <ion-img  class="icon {{light}}" [src]="lightIcons[light]" />
+    }
     <ion-img class="icon" [src]="waterIcons[plant.watering]" />
     @for(icon of icons; track icon){
     <ion-img class="icon" src="assets/icons/{{icon}}" />

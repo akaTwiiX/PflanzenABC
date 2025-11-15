@@ -21,4 +21,11 @@ export class LightSelectorComponent {
     icon: icons[lr],
   }));
 
+  onChange(value: string[]) {
+    
+    if(value.length === 0) return
+
+    this.plantFormService.update('light', [...value]);
+  }
+
 }

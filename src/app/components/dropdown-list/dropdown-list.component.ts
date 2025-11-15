@@ -13,7 +13,7 @@ import {
   inject,
   ViewChild,
 } from '@angular/core';
-import { IonSpinner, IonContent, IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/angular/standalone';
+import { IonSpinner, IonContent, IonFab, IonFabButton, IonFabList } from '@ionic/angular/standalone';
 import { PlantListComponent } from '../plant-list/plant-list.component';
 import { Collection } from '@/types/Collection';
 import { Plant } from '@/types/PlantType';
@@ -39,7 +39,6 @@ interface LetterGroup {
     IonFab,
     IonFabButton,
     IonFabList,
-    IonIcon
 ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

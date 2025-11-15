@@ -14,13 +14,29 @@ export interface SelectorOption {
   imports: [CommonModule]
 })
 export class SelectorComponent {
-  @Input() value: any;
+  @Input() value: string | string[] | undefined;
   @Output() valueChange = new EventEmitter<any>();
 
-  // Optionen jetzt von außen gesetzt
   @Input() options: SelectorOption[] = [];
 
+  isSelected(option: SelectorOption) {
+    if (Array.isArray(this.value))
+      return this.value.includes(option.value);
+    else
+      return option.value === this.value;
+  }
+
   select(optionValue: string) {
-    this.valueChange.emit(optionValue);
+    let value = this.value;
+    if(Array.isArray(value)){
+      if(value.includes(optionValue))
+        value = value.filter(v => v !== optionValue);
+      else
+      value = [...value, optionValue];
+    }
+    else
+      value = optionValue;
+
+    this.valueChange.emit(value);
   }
 }

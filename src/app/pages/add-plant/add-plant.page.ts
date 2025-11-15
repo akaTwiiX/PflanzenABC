@@ -24,6 +24,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { convertBlobToBase64, loadNativeImage } from '@/utils/image.utils';
 import { db } from '@/services/app-database.service';
 import { BehaviorSubject } from 'rxjs';
+import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config';
 
 @Component({
   selector: 'app-add-plant',
@@ -74,26 +75,10 @@ export class AddPlantPage implements OnInit, OnDestroy {
   @ViewChild('dialog') modal!: IonModal;
   lastAddedPlantId: number | null = null;
 
-  checkboxFields: (keyof Plant)[] = [
-    'frostResistant',
-    'leaf',
-    'dryTolerance',
-    'edible',
-    'toxic',
-    'fragrant',
-    'buckets'
-  ];
+  checkboxFields = CHECKBOX_FIELDS;
 
 
-  checkboxLabels: Partial<Record<keyof Plant, string>> = {
-    frostResistant: 'Frosthart',
-    leaf: 'Blätter',
-    dryTolerance: 'Trockenresistent',
-    edible: 'Essbar',
-    toxic: 'Giftig',
-    fragrant: 'Duftend',
-    buckets: 'Topfgeeignet'
-  };
+  checkboxLabels = CHECKBOX_LABELS;
 
 
 

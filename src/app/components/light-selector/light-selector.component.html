@@ -2,5 +2,5 @@
   Standort
 </ion-label>
 
-<app-selector [value]="(plantForm$ | async)?.light" (valueChange)="plantFormService.update('light', $event)"
+<app-selector [value]="(plantForm$ | async)?.light" (valueChange)="onChange($event)"
   [options]="options" />
