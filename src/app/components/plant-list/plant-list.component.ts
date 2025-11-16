@@ -17,6 +17,7 @@ export class PlantListComponent implements OnChanges {
   @Input() plants: Plant[] = [];
   @Input() collections: Collection[] = [];
   @Input() isLoading = false;
+  @Input() filter: Partial<Plant> = {};
 
   router = inject(Router);
 
@@ -60,7 +61,11 @@ export class PlantListComponent implements OnChanges {
   }
 
   goTo(page: string, id: number | undefined) {
-    this.router.navigate([page, id]);
+    this.router.navigate([page, id], {
+      queryParams: {
+        filter: JSON.stringify(this.filter)
+      }
+    });
   }
 
 }

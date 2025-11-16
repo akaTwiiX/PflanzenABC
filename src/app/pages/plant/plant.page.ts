@@ -63,8 +63,11 @@ export class PlantPage implements OnInit {
     });
   }
 
-  goToHome(){
-    this.router.navigate(['/home']);
+  goToHomeOrCollection() {
+    if (this.plant!.collectionId)
+      this.router.navigate(['/collection', this.plant!.collectionId]);
+    else
+      this.router.navigate(['/home']);
   }
 
   async openDialog() {
@@ -87,9 +90,9 @@ export class PlantPage implements OnInit {
     await alert.present();
   }
 
-  deletePlant(){
+  deletePlant() {
     this.plantStorageService.removePlant(this.plantId);
-    this.goToHome();
+    this.goToHomeOrCollection();
   }
 
   async openMenu() {

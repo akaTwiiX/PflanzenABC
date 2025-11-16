@@ -28,10 +28,11 @@ export class AddButtonComponent implements OnInit {
   navigateToAddPlant() {
     if (this.parentCollection) {
       this.router.navigate(['/add-plant'], {
-        queryParams: { parentId: this.parentCollection }
+        queryParams: { parentId: this.parentCollection },
+        replaceUrl: true
       });
     } else {
-      this.router.navigate(['/add-plant']);
+      this.router.navigate(['/add-plant'], { replaceUrl: true });
     }
   }
 

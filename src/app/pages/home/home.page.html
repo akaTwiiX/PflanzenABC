@@ -2,7 +2,7 @@
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <app-filter-button/>
+        <app-filter-button (applyFiltersFn)="onApplyFilter($event)" (resetFiltersFn)="onResetFilter()"/>
       </ion-buttons>
       <ion-title> PflanzenABC </ion-title>
       <ion-buttons slot="end">

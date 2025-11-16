@@ -13,7 +13,7 @@
         @if (group.isLoading) {
         <ion-spinner name="crescent" class="ion-padding"></ion-spinner>
         } @else {
-        <app-plant-list [plants]="group.plants || []" [collections]="group.collections || []"></app-plant-list>
+        <app-plant-list [plants]="group.plants || []" [collections]="group.collections || []" [filter]="activeFilter"></app-plant-list>
         }
       </div>
     </ng-container>

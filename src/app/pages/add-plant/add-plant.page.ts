@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton, IonModal, AlertController } from '@ionic/angular/standalone';
@@ -23,7 +23,7 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { convertBlobToBase64, loadNativeImage } from '@/utils/image.utils';
 import { db } from '@/services/app-database.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config';
 
 @Component({
@@ -59,7 +59,7 @@ import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config
     IonModal
   ],
 })
-export class AddPlantPage implements OnInit, OnDestroy {
+export class AddPlantPage implements OnInit {
   plantFormService = inject(PlantFormService);
   plantStorageService = inject(PlantStorageService);
   collectionStorageService = inject(CollectionStorageService);
@@ -80,10 +80,13 @@ export class AddPlantPage implements OnInit, OnDestroy {
 
   checkboxLabels = CHECKBOX_LABELS;
 
+  private destroy$ = new Subject<void>();
 
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(params => {
       const parentId = params['parentId'];
       const editId = params['editId'];
 
@@ -100,6 +103,8 @@ export class AddPlantPage implements OnInit, OnDestroy {
     const plant = this.plantFormService.getPlant();
     if (!this.parentId)
       plant.initialId = getFirstLetter(plant.nameLatin);
+    else
+      plant.collectionId = this.parentId;
 
     const errors = this.validatePlant(plant);
     if (errors.length > 0) {
@@ -235,8 +240,9 @@ export class AddPlantPage implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  ionViewWillLeave() {
     this.plantFormService.reset();
+    this.destroy$.next();
   }
 
 }

@@ -4,8 +4,14 @@
 
 <ion-modal id="dialog" #dialog>
   <ng-template>
-      <div class="wrapper">
+    <div class="wrapper">
+      <ion-item>
         <h1>Filter</h1>
+        
+        @if(isChecked){
+          <ion-button slot="end" fill="clear" (click)="resetFilters()">Zurücksetzen</ion-button>
+        }
+        </ion-item>
         <div class="scroll-area">
           <ion-list>
             <ion-item>
@@ -30,7 +36,7 @@
               <div class="height">
                 <ion-item class="ion-no-padding" lines="none">
                   <ion-label>
-                    Blütezeit:
+                    Blüte-/Erntezeit:
                   </ion-label>
 
                   <ion-checkbox slot="end" [(ngModel)]="bloomTime.checked" />
@@ -52,7 +58,7 @@
         </div>
         <div class="footer-buttons">
           <ion-button fill="clear" (click)="dialog.dismiss()">Schließen</ion-button>
-          <ion-button (click)="applyFilters()">Filtern</ion-button>
+          <ion-button [disabled]="!isChecked" (click)="applyFilters(); dialog.dismiss()">Filtern</ion-button>
         </div>
       </div>
   </ng-template>

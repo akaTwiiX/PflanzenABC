@@ -37,4 +37,8 @@ export class PlantStorageService {
     const results = await this.table.bulkGet(ids);
     return results.filter((c): c is Plant => !!c);
   }
+
+  async bulkDelete(ids: number[]) {
+    await this.table.bulkDelete(ids);
+  }
 }

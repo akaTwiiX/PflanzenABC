@@ -17,6 +17,9 @@ import { IonSpinner, IonContent, IonFab, IonFabButton, IonFabList } from '@ionic
 import { PlantListComponent } from '../plant-list/plant-list.component';
 import { Collection } from '@/types/Collection';
 import { Plant } from '@/types/PlantType';
+import { monthRange } from '@/consts/monthRange';
+import { distanceRange } from '@/consts/distanceRange';
+import { Subject, takeUntil } from 'rxjs';
 
 interface LetterGroup {
   letter: string;
@@ -39,14 +42,16 @@ interface LetterGroup {
     IonFab,
     IonFabButton,
     IonFabList,
-],
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownListComponent implements AfterViewInit {
   @ViewChild(IonContent) content!: IonContent;
 
   alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  
+  activeFilter: Partial<Plant> = {};
+
+
   private plantStorageService = inject(PlantStorageService);
   private collectionStorageService = inject(CollectionStorageService);
 
@@ -67,11 +72,15 @@ export class DropdownListComponent implements AfterViewInit {
 
   private observer!: IntersectionObserver;
   private activeObserver!: IntersectionObserver;
+  private destroy$ = new Subject<void>();
+
 
   ngAfterViewInit() {
     this.initObservers();
 
-    this.sections.changes.subscribe(() => {
+    this.sections.changes
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(() => {
       this.reconnectObservers();
     });
   }
@@ -94,7 +103,8 @@ export class DropdownListComponent implements AfterViewInit {
     this.observeActiveLetter();
   }
 
-  resetData() {
+  resetData(filter: Partial<Plant>) {
+    this.activeFilter = filter;
     const reset = this.alphabet.map((l) => ({
       letter: l,
       isLoading: false,
@@ -133,31 +143,51 @@ export class DropdownListComponent implements AfterViewInit {
 
     if (!entry || entry.loaded || entry.isLoading) return;
 
-    // console.log('[loadDataForLetter]', letter);
-
     const updated = [...currentData];
     updated[index] = { ...entry, isLoading: true };
     this.dataByLetter.set(updated);
 
     try {
-      const [plants, collections] = await Promise.all([
+      const filter = this.activeFilter;
+      const hasFilter = Object.keys(filter).length > 0;
+
+      const [plantsRaw, collectionsRaw] = await Promise.all([
         this.plantStorageService.queryBy('initialId', letter),
         this.collectionStorageService.queryBy('initialId', letter),
       ]);
 
-      // console.log(`[${letter}] loaded:`, { plants, collections });
+      const filteredPlants = hasFilter ? this.filterPlants(plantsRaw, filter) : plantsRaw;
+
+      let filteredCollections = [];
+
+      if (hasFilter) {
+        for (const col of collectionsRaw) {
+          const collectionPlants = await this.plantStorageService.bulkGet(col.plantIds);
+          const filteredCollectionPlants = this.filterPlants(collectionPlants, filter);
+          if (filteredCollectionPlants.length > 0) {
+            filteredCollections.push({
+              ...col,
+              filter,
+            });
+          }
+        }
+      } else {
+        filteredCollections = collectionsRaw
+      }
 
       const done = [...this.dataByLetter()];
       done[index] = {
         ...done[index],
         isLoading: false,
         loaded: true,
-        plants,
-        collections,
+        plants: filteredPlants,
+        collections: filteredCollections,
       };
       this.dataByLetter.set(done);
+
     } catch (err) {
       console.error(`Error loading ${letter}:`, err);
+
       const done = [...this.dataByLetter()];
       done[index] = {
         ...done[index],
@@ -169,6 +199,50 @@ export class DropdownListComponent implements AfterViewInit {
       this.dataByLetter.set(done);
     }
   }
+
+  public filterPlants(plants: Plant[], filter: Partial<Plant>): Plant[] {
+    return plants.filter(plant => {
+      return Object.entries(filter).every(([key, value]) => {
+        const plantValue = (plant as any)[key];
+
+        if (value === undefined) return true;
+
+        if (typeof value === 'object' && value !== null && 'start' in value && value.start && 'end' in value && value.end) {
+          if (!plantValue) return false;
+
+          const rangeArray = this.getRangeArrayForKey(key);
+          if (!rangeArray) return false;
+
+          const filterStart = rangeArray.indexOf(value.start);
+          const filterEnd = rangeArray.indexOf(value.end);
+
+          const plantStart = rangeArray.indexOf(plantValue.start);
+          const plantEnd = rangeArray.indexOf(plantValue.end);
+
+          if (filterStart < 0 || filterEnd < 0 || plantStart < 0 || plantEnd < 0) return false;
+          return plantStart >= filterStart && plantEnd <= filterEnd;
+        }
+
+        if (Array.isArray(value)) {
+          return Array.isArray(plantValue) && plantValue.some((v) => value.includes(v));
+        }
+
+        return plantValue === value;
+      });
+    });
+  }
+
+  private getRangeArrayForKey(key: string): (string | number)[] | null {
+    switch (key) {
+      case 'height':
+        return distanceRange;
+      case 'bloomTime':
+        return monthRange;
+      default:
+        return null;
+    }
+  }
+
 
   private observeActiveLetter() {
     if (!this.content) {
@@ -226,4 +300,9 @@ export class DropdownListComponent implements AfterViewInit {
   trackByLetter(_: number, item: LetterGroup) {
     return item.letter;
   }
+
+  ionViewWillLeave() {
+    this.destroy$.next();
+  }
+
 }
