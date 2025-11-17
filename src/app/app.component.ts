@@ -1,6 +1,6 @@
 import { BackupStateService } from '@/services/backup-state.service';
 import { IncrementalBackupService } from '@/services/incremental-backup.service';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { App, AppState } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
@@ -22,32 +22,31 @@ register();
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
+  private platform = inject(Platform);
+  private updater = inject(UpdaterService);
+  private alertCtrl = inject(AlertController);
+  private modalCtrl = inject(ModalController);
+  private authService = inject(AuthService);
 
-  constructor(
-    private platform: Platform,
-    private updater: UpdaterService,
-    private alertCtrl: AlertController,
-    private modalCtrl: ModalController,
-    private authService: AuthService
-  ) {
+  constructor() {
     this.platform.ready().then(() => {
       this.setSafeArea();
 
       onAuthStateChanged(auth, (user) => {
-            this.authService.currentUser.set(user);
-            if (user) {
-              if (!user.emailVerified) {
-                console.warn('⚠️ Email not verified');
-                return;
-              }
-      
-              console.log('✅ User logged in:', user.email);
-              IncrementalBackupService.restoreBackup();
-              this.setupBackupListeners();
-            } else {
-              console.log('🚪 User logged out');
-            }
-          });
+        this.authService.currentUser.set(user);
+        if (user) {
+          if (!user.emailVerified) {
+            console.warn('⚠️ Email not verified');
+            return;
+          }
+
+          console.log('✅ User logged in:', user.email);
+          IncrementalBackupService.restoreBackup();
+          this.setupBackupListeners();
+        } else {
+          console.log('🚪 User logged out');
+        }
+      });
 
       if (Capacitor.getPlatform() !== 'web') {
         this.clearCacheOnStartup();

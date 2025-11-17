@@ -1,7 +1,7 @@
 import { UpdaterService } from '@/services/updater.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import { IonProgressBar, IonButton, IonContent, IonHeader, IonToolbar, IonTitle, ModalController, AlertController} from "@ionic/angular/standalone";
+import { IonProgressBar, IonButton, IonContent, IonHeader, IonToolbar, IonTitle, ModalController, AlertController } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-download-modal',
@@ -9,11 +9,13 @@ import { IonProgressBar, IonButton, IonContent, IonHeader, IonToolbar, IonTitle,
   imports: [IonProgressBar, IonButton, IonContent, IonHeader, IonToolbar, IonTitle],
 })
 export class DownloadModalComponent {
+  private updater = inject(UpdaterService);
+  private modalCtrl = inject(ModalController);
+  private alertCtrl = inject(AlertController);
+
   @Input() url!: string;
   progress = 0;
   downloading = false;
-
-  constructor(private updater: UpdaterService, private modalCtrl: ModalController, private alertCtrl: AlertController) { }
 
   async ionViewDidEnter() {
     this.downloading = true;
@@ -28,7 +30,7 @@ export class DownloadModalComponent {
       await alert.present();
     } catch (e) {
       this.modalCtrl.dismiss();
-      console.error('ERROR: ',e);
+      console.error('ERROR: ', e);
       const alert = await this.alertCtrl.create({
         header: 'Fehler beim Update',
         message: 'Das Update konnte nicht installiert werden.',

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonButton, IonIcon, IonContent, IonItem, IonModal, IonInput } from "@ionic/angular/standalone";
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { getFirstLetter } from '@/utils/string.utils';
   styleUrls: ['./add-button.component.scss'],
   imports: [IonButton, IonIcon, IonContent, IonItem, IonModal, IonInput, FormsModule],
 })
-export class AddButtonComponent implements OnInit {
+export class AddButtonComponent {
 
   @Input()
   parentCollection?: number;
@@ -20,10 +20,6 @@ export class AddButtonComponent implements OnInit {
   newCollection: string = '';
   router = inject(Router);
   collectionStorageService = inject(CollectionStorageService);
-
-
-
-  ngOnInit() { }
 
   navigateToAddPlant() {
     if (this.parentCollection) {

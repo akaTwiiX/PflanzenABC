@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons } from '@ionic/angular/standalone';
 import { AuthService } from '@/services/auth.service';
 import { DropdownListComponent } from "src/app/components/dropdown-list/dropdown-list.component";
@@ -13,15 +13,11 @@ import { Plant } from '@/types/PlantType';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, DropdownListComponent, AddButtonComponent, FilterButtonComponent],
 })
 export class HomePage {
+  authService = inject(AuthService);
+
   @ViewChild('dropdownList') dropdownList!: DropdownListComponent;
 
   filter: Partial<Plant> = {};
-
-  constructor(
-    public authService: AuthService
-  ) { }
-
-
 
   ionViewWillEnter() {
     this.dropdownList.resetData(this.filter);

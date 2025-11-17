@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -15,11 +15,9 @@ import { ToastController } from '@ionic/angular/standalone';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  currentUser = signal<User | null>(null);
+  private toastCtrl = inject(ToastController);
 
-  constructor(private toastCtrl: ToastController) {
-    
-  }
+  currentUser = signal<User | null>(null);
 
   async register(email: string, password: string): Promise<{ success: boolean; message: string }> {
     try {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '@/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -19,19 +19,17 @@ import {
   ],
 })
 export class AuthenticationModalComponent {
+  private modalCtrl = inject(ModalController);
+  private authService = inject(AuthService);
+  private alertCtrl = inject(AlertController);
+  private toastCtrl = inject(ToastController);
+
 
   mode: 'login' | 'register' = 'login';
   email = '';
   password = '';
   confirmPassword = '';
   loading = false;
-
-  constructor(
-    private modalCtrl: ModalController,
-    private authService: AuthService,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController
-  ) { }
 
   dismiss() {
     this.modalCtrl.dismiss();
@@ -66,7 +64,7 @@ export class AuthenticationModalComponent {
 
         if (result.success) {
           await this.showAlert('Bestätigung erforderlich', result.message);
-          this.toggleMode(); 
+          this.toggleMode();
           return;
         }
       }

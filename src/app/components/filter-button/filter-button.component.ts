@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { IonButton, IonIcon, IonModal, IonItem, IonList, IonLabel, IonCheckbox } from "@ionic/angular/standalone";
 import { SelectorComponent, SelectorOption } from "../selector/selector.component";
 import { icons, LightRequirement, LightRequirementLabel } from '@/enums/LightRequirements';
@@ -21,7 +21,7 @@ type rangeFilter = {
   styleUrls: ['./filter-button.component.scss'],
   imports: [IonButton, IonIcon, IonModal, SelectorComponent, IonItem, IonList, IonCheckbox, IonLabel, FormsModule, RangeSliderComponent],
 })
-export class FilterButtonComponent implements OnInit {
+export class FilterButtonComponent {
   @Output() applyFiltersFn = new EventEmitter<Partial<Plant>>();
   @Output() resetFiltersFn = new EventEmitter<void>();
 
@@ -55,16 +55,10 @@ export class FilterButtonComponent implements OnInit {
   };
 
   get isChecked() {
-    return this.selected.length > 0|| this.checkboxArray.some(box => box.checked) || this.height.checked || this.bloomTime.checked;
+    return this.selected.length > 0 || this.checkboxArray.some(box => box.checked) || this.height.checked || this.bloomTime.checked;
   }
 
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  resetFilters(){
+  resetFilters() {
     this.selected = [];
     this.checkboxArray.forEach(box => box.checked = false);
     this.height.checked = false;

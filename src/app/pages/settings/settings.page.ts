@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonList, IonLabel, IonIcon, MenuController, ModalController } from '@ionic/angular/standalone';
@@ -14,10 +14,10 @@ import { AuthService } from '@/services/auth.service';
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonList, IonIcon, IonLabel]
 })
 export class SettingsPage implements OnInit {
+  private menuCtrl = inject(MenuController);
+  private modalCtrl = inject(ModalController);
+  authService = inject(AuthService);
 
-  constructor(private menuCtrl: MenuController, 
-              private modalCtrl: ModalController, 
-              public authService: AuthService) { }
 
   ngOnInit() {
     console.log('SettingsPage initialized');

@@ -15,9 +15,9 @@
         [color]="backupAvailable ? 'success' : 'danger'">
       </ion-icon>
     </ion-item>
-  
+
   </ion-list>
-  
+
   <ion-list lines="none" class="auth-section">
     @if(authService.currentUser(); as user) {
     <ion-item>
@@ -27,7 +27,7 @@
         <p>Eingeloggt</p>
       </ion-label>
     </ion-item>
-  
+
     <ion-item button (click)="logout()">
       <ion-icon slot="start" name="log-out-outline" color="danger"></ion-icon>
       <ion-label color="danger">Logout</ion-label>
@@ -38,8 +38,8 @@
       <ion-label>Login / Registrieren</ion-label>
     </ion-item>
     }
-  
-  
-  
+
+
+
   </ion-list>
 </ion-content>
