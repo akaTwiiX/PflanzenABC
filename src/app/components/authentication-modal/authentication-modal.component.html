@@ -1,7 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>{{ mode === 'login' ? 'Login' : 'Registrieren' }}</ion-title>
-    <ion-button fill="clear" slot="end" (click)="dismiss()">
+    <ion-button
+      fill="clear"
+      slot="end"
+      (click)="dismiss()"
+    >
       <ion-icon name="close"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -11,35 +15,53 @@
   <ion-list>
     <ion-item>
       <ion-label position="stacked">E-Mail</ion-label>
-      <ion-input [(ngModel)]="email" type="email" placeholder="E-Mail-Adresse"></ion-input>
+      <ion-input
+        [(ngModel)]="email"
+        type="email"
+        placeholder="E-Mail-Adresse"
+      ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="stacked">Passwort</ion-label>
-      <ion-input [(ngModel)]="password" type="password" placeholder="••••••••"></ion-input>
+      <ion-input
+        [(ngModel)]="password"
+        type="password"
+        placeholder="••••••••"
+      ></ion-input>
     </ion-item>
 
-    @if(mode === 'register'){
+    @if (mode === 'register') {
       <ion-item [color]="password !== confirmPassword && confirmPassword ? 'danger' : ''">
         <ion-label position="stacked">Passwort wiederholen</ion-label>
-        <ion-input [(ngModel)]="confirmPassword" type="password" placeholder="••••••••"></ion-input>
+        <ion-input
+          [(ngModel)]="confirmPassword"
+          type="password"
+          placeholder="••••••••"
+        ></ion-input>
       </ion-item>
     }
   </ion-list>
 
-  <ion-button expand="block" (click)="submit()" [disabled]="loading">
-    {{ loading ? 'Bitte warten...' : (mode === 'login' ? 'Einloggen' : 'Registrieren') }}
+  <ion-button
+    expand="block"
+    (click)="submit()"
+    [disabled]="loading"
+  >
+    {{ loading ? 'Bitte warten...' : mode === 'login' ? 'Einloggen' : 'Registrieren' }}
   </ion-button>
 
   <div class="switch-container">
     <ion-text>
       <small>
-        {{ mode === 'login'
-        ? 'Noch kein Konto?'
-        : 'Bereits registriert?' }}
+        {{ mode === 'login' ? 'Noch kein Konto?' : 'Bereits registriert?' }}
       </small>
     </ion-text>
-    <ion-button fill="clear" size="small" (click)="toggleMode()">
+    <ion-button
+      fill="clear"
+      size="small"
+      (click)="toggleMode()"
+    >
       {{ mode === 'login' ? 'Registrieren' : 'Login' }}
     </ion-button>
   </div>
@@ -47,6 +69,11 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-title size="small" class="ion-text-center">🌱 PflanzenABC</ion-title>
+    <ion-title
+      size="small"
+      class="ion-text-center"
+    >
+      🌱 PflanzenABC
+    </ion-title>
   </ion-toolbar>
 </ion-footer>

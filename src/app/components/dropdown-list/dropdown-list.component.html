@@ -1,42 +1,61 @@
 @if (isInitialLoading()) {
-<ion-spinner name="crescent" class="ion-padding"></ion-spinner>
+  <ion-spinner
+    name="crescent"
+    class="ion-padding"
+  ></ion-spinner>
 } @else {
-<ion-content #content>
-  <div class="scroll-content">
-    @for( group of dataByLetter(); track group.letter){
-    <ng-container>
-      <div #letterSection class="letter-section ion-padding" [attr.data-letter]="group.letter">
-        <div class="title-bg">
-          <h2 class="ion-text-uppercase ion-margin-top">{{ group.letter }}</h2>
+  <ion-content #content>
+    <div class="scroll-content">
+      @for (group of dataByLetter(); track group.letter) {
+        <ng-container>
+          <div
+            #letterSection
+            class="letter-section ion-padding"
+            [attr.data-letter]="group.letter"
+          >
+            <div class="title-bg">
+              <h2 class="ion-text-uppercase ion-margin-top">{{ group.letter }}</h2>
+            </div>
+
+            @if (group.isLoading) {
+              <ion-spinner
+                name="crescent"
+                class="ion-padding"
+              ></ion-spinner>
+            } @else {
+              <app-plant-list
+                [plants]="group.plants || []"
+                [collections]="group.collections || []"
+                [filter]="activeFilter"
+              ></app-plant-list>
+            }
+          </div>
+        </ng-container>
+      }
+    </div>
+    <ion-fab
+      class="fab"
+      slot="fixed"
+      vertical="top"
+      horizontal="end"
+    >
+      <ion-fab-button class="fab-button">
+        <!-- <ion-icon name="add"></ion-icon> -->
+        <span>A - Z</span>
+      </ion-fab-button>
+      <ion-fab-list>
+        <div class="fab-letter-container">
+          @for (group of dataByLetter(); track group.letter) {
+            <div
+              class="fab-letter"
+              (click)="scrollToLetter(group.letter)"
+              [ngClass]="{ active: activeLetter() === group.letter }"
+            >
+              {{ group.letter }}
+            </div>
+          }
         </div>
-
-        @if (group.isLoading) {
-        <ion-spinner name="crescent" class="ion-padding"></ion-spinner>
-        } @else {
-        <app-plant-list [plants]="group.plants || []" [collections]="group.collections || []" [filter]="activeFilter"></app-plant-list>
-        }
-      </div>
-    </ng-container>
-    }
-  </div>
-  <ion-fab class="fab" slot="fixed" vertical="top" horizontal="end">
-    <ion-fab-button class="fab-button">
-      <!-- <ion-icon name="add"></ion-icon> -->
-       <span>A - Z</span>
-    </ion-fab-button>
-    <ion-fab-list>
-
-      <div class="fab-letter-container">
-        @for (group of dataByLetter(); track group.letter) {
-        <div class="fab-letter" (click)="scrollToLetter(group.letter)"
-          [ngClass]="{'active':activeLetter() === group.letter}">
-          {{ group.letter }}
-        </div>
-        }
-      </div>
-    </ion-fab-list>
-
-  </ion-fab>
-
-</ion-content>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-content>
 }

@@ -9,8 +9,8 @@ describe('SelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectorComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SelectorComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SelectorComponent);

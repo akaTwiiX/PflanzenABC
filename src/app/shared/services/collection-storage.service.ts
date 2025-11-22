@@ -4,7 +4,7 @@ import Dexie from 'dexie';
 import { db } from './app-database.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CollectionStorageService {
   private table = db.collections;
@@ -13,11 +13,7 @@ export class CollectionStorageService {
     return await this.table.add(collection);
   }
 
-  async addChild(
-    parentId: number,
-    childId: number,
-    type: 'collection' | 'plant'
-  ) {
+  async addChild(parentId: number, childId: number, type: 'collection' | 'plant') {
     const parent = await this.table.get(parentId);
     if (!parent) return;
 

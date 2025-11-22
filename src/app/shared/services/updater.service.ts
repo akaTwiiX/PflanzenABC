@@ -59,7 +59,6 @@ export class UpdaterService {
         filePath: result.path,
         contentType: 'application/vnd.android.package-archive',
       });
-
     } catch (err) {
       console.error('❌ Download/Install failed:', err);
       throw err;

@@ -2,64 +2,105 @@
   <ion-icon name="filter-outline"></ion-icon>
 </ion-button>
 
-<ion-modal id="dialog" #dialog>
+<ion-modal
+  id="dialog"
+  #dialog
+>
   <ng-template>
     <div class="wrapper">
       <ion-item>
         <h1>Filter</h1>
-        
-        @if(isChecked){
-          <ion-button slot="end" fill="clear" (click)="resetFilters()">Zurücksetzen</ion-button>
+
+        @if (isChecked) {
+          <ion-button
+            slot="end"
+            fill="clear"
+            (click)="resetFilters()"
+          >
+            Zurücksetzen
+          </ion-button>
         }
-        </ion-item>
-        <div class="scroll-area">
-          <ion-list>
-            <ion-item>
-              <app-selector [options]="options" [value]="selected" (valueChange)="selected = $event" />
-            </ion-item>
-            <ion-item>
-              <div class="height">
-                <ion-item class="ion-no-padding" lines="none">
-                  <ion-label>
-                    Größe:
-                  </ion-label>
+      </ion-item>
+      <div class="scroll-area">
+        <ion-list>
+          <ion-item>
+            <app-selector
+              [options]="options"
+              [value]="selected"
+              (valueChange)="selected = $event"
+            />
+          </ion-item>
+          <ion-item>
+            <div class="height">
+              <ion-item
+                class="ion-no-padding"
+                lines="none"
+              >
+                <ion-label>Größe:</ion-label>
 
-                  <ion-checkbox slot="end" [(ngModel)]="height.checked" />
-                </ion-item>
-                @if(height.checked){
-                <app-range-slider label="" [range]="distanceRange" [value]="height.range"
-                  (valueChange)="height.range = $event" />
-                }
-              </div>
-            </ion-item>
-            <ion-item>
-              <div class="height">
-                <ion-item class="ion-no-padding" lines="none">
-                  <ion-label>
-                    Blüte-/Erntezeit:
-                  </ion-label>
+                <ion-checkbox
+                  slot="end"
+                  [(ngModel)]="height.checked"
+                />
+              </ion-item>
+              @if (height.checked) {
+                <app-range-slider
+                  label=""
+                  [range]="distanceRange"
+                  [value]="height.range"
+                  (valueChange)="height.range = $event"
+                />
+              }
+            </div>
+          </ion-item>
+          <ion-item>
+            <div class="height">
+              <ion-item
+                class="ion-no-padding"
+                lines="none"
+              >
+                <ion-label>Blüte-/Erntezeit:</ion-label>
 
-                  <ion-checkbox slot="end" [(ngModel)]="bloomTime.checked" />
-                </ion-item>
-                @if(bloomTime.checked){
-                <app-range-slider label="" [range]="monthRange" [value]="bloomTime.range"
-                  (valueChange)="bloomTime.range = $event" />
-                }
-              </div>
-            </ion-item>
-            @for (box of checkboxArray; track box.name) {
+                <ion-checkbox
+                  slot="end"
+                  [(ngModel)]="bloomTime.checked"
+                />
+              </ion-item>
+              @if (bloomTime.checked) {
+                <app-range-slider
+                  label=""
+                  [range]="monthRange"
+                  [value]="bloomTime.range"
+                  (valueChange)="bloomTime.range = $event"
+                />
+              }
+            </div>
+          </ion-item>
+          @for (box of checkboxArray; track box.name) {
             <ion-item>
               <ion-label>{{ box.label }}</ion-label>
-              <ion-checkbox slot="end" [(ngModel)]="box.checked">
-              </ion-checkbox>
+              <ion-checkbox
+                slot="end"
+                [(ngModel)]="box.checked"
+              ></ion-checkbox>
             </ion-item>
-            }
-          </ion-list>
-        </div>
-        <div class="footer-buttons">
-          <ion-button fill="clear" (click)="dialog.dismiss()">Schließen</ion-button>
-          <ion-button [disabled]="!isChecked" (click)="applyFilters(); dialog.dismiss()">Filtern</ion-button>
-        </div>
+          }
+        </ion-list>
       </div>
+      <div class="footer-buttons">
+        <ion-button
+          fill="clear"
+          (click)="dialog.dismiss()"
+        >
+          Schließen
+        </ion-button>
+        <ion-button
+          [disabled]="!isChecked"
+          (click)="applyFilters(); dialog.dismiss()"
+        >
+          Filtern
+        </ion-button>
+      </div>
+    </div>
   </ng-template>
 </ion-modal>

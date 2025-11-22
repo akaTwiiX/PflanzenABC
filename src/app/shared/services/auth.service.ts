@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   User,
-  sendEmailVerification
+  sendEmailVerification,
 } from 'firebase/auth';
 import { auth } from './firebase';
 import { BackupStateService } from './backup-state.service';
@@ -29,7 +29,8 @@ export class AuthService {
 
       return {
         success: true,
-        message: 'Registrierung erfolgreich! Bitte überprüfe deine E-Mail und bestätige dein Konto.'
+        message:
+          'Registrierung erfolgreich! Bitte überprüfe deine E-Mail und bestätige dein Konto.',
       };
     } catch (error: any) {
       console.error('❌ Registration failed:', error);
@@ -39,7 +40,10 @@ export class AuthService {
     }
   }
 
-  async login(email: string, password: string): Promise<{ success: boolean; message: string, code?: string }> {
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; message: string; code?: string }> {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const user = result.user;
@@ -51,7 +55,7 @@ export class AuthService {
         return {
           success: false,
           code: 'unverified',
-          message: 'Bitte bestätige zuerst deine E-Mail-Adresse, bevor du dich einloggst.'
+          message: 'Bitte bestätige zuerst deine E-Mail-Adresse, bevor du dich einloggst.',
         };
       }
 

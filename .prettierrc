@@ -3,5 +3,6 @@
   "singleQuote": true,
   "printWidth": 100,
   "bracketSameLine": false,
-  "htmlWhitespaceSensitivity": "ignore"
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleAttributePerLine": true
 }

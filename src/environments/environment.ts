@@ -4,7 +4,16 @@
 
 export const environment = {
   production: false,
-  BACKUP_SECRET_KEY: 'your-development-secret-key',
+  BACKUP_SECRET_KEY: '!DsPfdcn@112',
+  firebaseConfig: {
+    apiKey: 'AIzaSyCVDsNxpbUG4YSJrThOr7kb8VNPnh9fH1U',
+    authDomain: 'planzenlexikon.firebaseapp.com',
+    projectId: 'planzenlexikon',
+    storageBucket: 'planzenlexikon.firebasestorage.app',
+    messagingSenderId: '365185781279',
+    appId: '1:365185781279:web:6c7196ac0ceb191f7f4f2a',
+    measurementId: 'G-JX1B1Z8MYV',
+  },
 };
 
 /*

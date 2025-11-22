@@ -1,17 +1,27 @@
 <div class="container">
-
-  @for(opt of options; track opt){
-  <div class="option" [class.selected]="isSelected(opt)" (click)="select(opt.value)">
-    @if(opt.icon){
-    <img [src]="opt.icon" class="icon" [class.icon-selected]="isSelected(opt)" alt="{{ opt.label }}" />
-    }
-    <span class="label" [ngClass]="{
+  @for (opt of options; track opt) {
+    <div
+      class="option"
+      [class.selected]="isSelected(opt)"
+      (click)="select(opt.value)"
+    >
+      @if (opt.icon) {
+        <img
+          [src]="opt.icon"
+          class="icon"
+          [class.icon-selected]="isSelected(opt)"
+          alt="{{ opt.label }}"
+        />
+      }
+      <span
+        class="label"
+        [ngClass]="{
           'label-selected': isSelected(opt),
-          'only-label': !opt.icon
-        }">
-      {{ opt.label }}
-    </span>
-
-  </div>
+          'only-label': !opt.icon,
+        }"
+      >
+        {{ opt.label }}
+      </span>
+    </div>
   }
 </div>

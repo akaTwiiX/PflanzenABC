@@ -2,7 +2,10 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="goToHomeOrCollection()">
-        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+        <ion-icon
+          slot="icon-only"
+          name="arrow-back-outline"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
@@ -16,9 +19,7 @@
 <ion-content [fullscreen]="true">
   @if(errorMsg){
   <div class="container">
-    <ion-text color="danger">
-      {{errorMsg}}
-    </ion-text>
+    <ion-text color="danger">{{errorMsg}}</ion-text>
   </div>
   }@else if (isLoading) {
   <div class="container">

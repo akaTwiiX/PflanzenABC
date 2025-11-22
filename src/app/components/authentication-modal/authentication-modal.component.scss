@@ -1,15 +1,15 @@
 .switch-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 16px;
-    gap: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  gap: 4px;
 }
 
 ion-content {
-    --background: var(--ion-color-light);
+  --background: var(--ion-color-light);
 }
 
 ion-title {
-    font-weight: 600;
+  font-weight: 600;
 }

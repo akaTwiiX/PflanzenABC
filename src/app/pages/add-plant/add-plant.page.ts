@@ -1,20 +1,36 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonItem, IonInput, IonLabel, IonCheckbox, IonTextarea, IonButton, IonModal, AlertController } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonList,
+  IonItem,
+  IonInput,
+  IonLabel,
+  IonCheckbox,
+  IonTextarea,
+  IonButton,
+  IonModal,
+  AlertController,
+} from '@ionic/angular/standalone';
 import { Plant } from 'src/app/shared/types/PlantType';
 import { PlantFormService } from 'src/app/shared/services/plant-form.service';
-import { ImagePickerComponent } from "src/app/components/image-picker/image-picker.component";
+import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
 import { monthRange } from '@/consts/monthRange';
-import { RangeSliderComponent } from "src/app/components/range-slider/range-slider.component";
+import { RangeSliderComponent } from 'src/app/components/range-slider/range-slider.component';
 import { distanceRange } from '@/consts/distanceRange';
-import { LightSelectorComponent } from "src/app/components/light-selector/light-selector.component";
-import { SoilComponent } from "src/app/components/soil/soil.component";
-import { FertilizationComponent } from "src/app/components/fertilization/fertilization.component";
-import { WaterSelectorComponent } from "src/app/components/water-selector/water-selector.component";
-import { PlantTypeComponent } from "src/app/components/plant-type/plant-type.component";
-import { PruningComponent } from "src/app/components/pruning/pruning.component";
-import { FruitComponent } from "src/app/components/fruit/fruit.component";
+import { LightSelectorComponent } from 'src/app/components/light-selector/light-selector.component';
+import { SoilComponent } from 'src/app/components/soil/soil.component';
+import { FertilizationComponent } from 'src/app/components/fertilization/fertilization.component';
+import { WaterSelectorComponent } from 'src/app/components/water-selector/water-selector.component';
+import { PlantTypeComponent } from 'src/app/components/plant-type/plant-type.component';
+import { PruningComponent } from 'src/app/components/pruning/pruning.component';
+import { FruitComponent } from 'src/app/components/fruit/fruit.component';
 import { PlantStorageService } from '@/services/plant-storage.service';
 import { getFirstLetter } from '@/utils/string.utils';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,6 +41,10 @@ import { convertBlobToBase64, loadNativeImage } from '@/utils/image.utils';
 import { db } from '@/services/app-database.service';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config';
+import { requiredArea } from '@/consts/requiredArea';
+import { RootSystemComponent } from 'src/app/components/root-system/root-system.component';
+
+import { ColorChoicesComponent } from 'src/app/components/color-choices/color-choices.component';
 
 @Component({
   selector: 'app-add-plant',
@@ -56,7 +76,9 @@ import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config
     IonTextarea,
     FruitComponent,
     IonButton,
-    IonModal
+    IonModal,
+    RootSystemComponent,
+    ColorChoicesComponent,
   ],
 })
 export class AddPlantPage implements OnInit {
@@ -69,6 +91,7 @@ export class AddPlantPage implements OnInit {
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
   distanceRange = distanceRange;
+  requiredArea = requiredArea;
   parentId: number | null = null;
   isEditMode = false;
 
@@ -77,34 +100,25 @@ export class AddPlantPage implements OnInit {
 
   checkboxFields = CHECKBOX_FIELDS;
 
-
   checkboxLabels = CHECKBOX_LABELS;
 
   private destroy$ = new Subject<void>();
 
-
   ngOnInit() {
-    this.route.queryParams
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(params => {
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
       const parentId = params['parentId'];
       const editId = params['editId'];
 
-      if (parentId)
-        this.parentId = Number(parentId);
+      if (parentId) this.parentId = Number(parentId);
 
-      if (editId)
-        this.isEditMode = true;
-
+      if (editId) this.isEditMode = true;
     });
   }
 
   async savePlant() {
     const plant = this.plantFormService.getPlant();
-    if (!this.parentId)
-      plant.initialId = getFirstLetter(plant.nameLatin);
-    else
-      plant.collectionId = this.parentId;
+    if (!this.parentId) plant.initialId = getFirstLetter(plant.nameLatin);
+    else plant.collectionId = this.parentId;
 
     const errors = this.validatePlant(plant);
     if (errors.length > 0) {
@@ -112,7 +126,7 @@ export class AddPlantPage implements OnInit {
         header: 'Fehler',
         message: errors.join('\n'),
         cssClass: 'custom-alert',
-        buttons: ['OK']
+        buttons: ['OK'],
       });
 
       await alert.present();
@@ -157,7 +171,6 @@ export class AddPlantPage implements OnInit {
 
     this.lastAddedPlantId = plant.id!;
   }
-
 
   saveAndAddAnother() {
     this.plantFormService.reset();
@@ -206,11 +219,11 @@ export class AddPlantPage implements OnInit {
 
   async saveImageInStore(imagePath: string) {
     if (Capacitor.getPlatform() === 'web') {
-      const blob = await fetch(imagePath).then(r => r.blob());
+      const blob = await fetch(imagePath).then((r) => r.blob());
       const imageId = await db.images.add({
         name: Date.now().toString(),
         data: blob,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       });
       return String(imageId);
     } else {
@@ -222,17 +235,17 @@ export class AddPlantPage implements OnInit {
         await Filesystem.copy({
           from: imagePath,
           to: fullPath,
-          directory: Directory.ExternalStorage
+          directory: Directory.ExternalStorage,
         });
       } else {
-        const blob = await fetch(imagePath).then(r => r.blob());
-        const base64 = await convertBlobToBase64(blob) as string;
+        const blob = await fetch(imagePath).then((r) => r.blob());
+        const base64 = (await convertBlobToBase64(blob)) as string;
 
         await Filesystem.writeFile({
           path: fullPath,
           data: base64.split(',')[1],
           directory: Directory.ExternalStorage,
-          recursive: true
+          recursive: true,
         });
       }
 
@@ -244,5 +257,4 @@ export class AddPlantPage implements OnInit {
     this.plantFormService.reset();
     this.destroy$.next();
   }
-
 }

@@ -1,5 +1,20 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { IonItem, IonSelectOption, IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonIcon, IonSelect, IonModal, IonInput, IonText, IonLabel } from "@ionic/angular/standalone";
+import {
+  IonItem,
+  IonSelectOption,
+  IonButton,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonContent,
+  IonIcon,
+  IonSelect,
+  IonModal,
+  IonInput,
+  IonText,
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChoiceName } from '@/enums/ChoiceEntry';
@@ -9,12 +24,25 @@ import { ChoicesStorageService } from '@/services/choices-storage.service';
   selector: 'app-choices',
   templateUrl: './choices.component.html',
   styleUrls: ['./choices.component.scss'],
-  imports: [CommonModule, IonItem, IonSelectOption, IonButton, IonIcon, IonSelect, IonModal, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonInput, FormsModule],
+  imports: [
+    CommonModule,
+    IonItem,
+    IonSelectOption,
+    IonButton,
+    IonIcon,
+    IonSelect,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonContent,
+    IonInput,
+    FormsModule,
+  ],
 })
 export class ChoicesComponent implements OnInit {
-
   choiceStorageService = inject(ChoicesStorageService);
-
 
   @Input() selected: string | undefined = undefined;
 
@@ -59,5 +87,4 @@ export class ChoicesComponent implements OnInit {
   async getOptions() {
     this.options = await this.choiceStorageService.getChoicesByName(this.choiceName);
   }
-
 }

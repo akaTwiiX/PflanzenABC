@@ -8,9 +8,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule],
 })
-export class SearchPage {
-
-
-}
+export class SearchPage {}

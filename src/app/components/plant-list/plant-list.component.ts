@@ -4,7 +4,7 @@ import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonItem, IonSpinner, IonIcon, IonText } from "@ionic/angular/standalone";
+import { IonItem, IonSpinner, IonIcon, IonText } from '@ionic/angular/standalone';
 import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
@@ -24,14 +24,13 @@ export class PlantListComponent implements OnChanges {
   mergedItems: ListItem[] = [];
 
   get viewportHeight() {
-    const itemHeight = 50; 
+    const itemHeight = 50;
     const totalHeight = this.mergedItems.length * itemHeight;
     return totalHeight + 'px';
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['plants'] || changes['collections']) {
-
       this.mergeAndSort();
     }
   }
@@ -56,16 +55,15 @@ export class PlantListComponent implements OnChanges {
     }));
 
     this.mergedItems = [...mappedCollections, ...mappedPlants].sort((a, b) =>
-      a.displayName.localeCompare(b.displayName)
+      a.displayName.localeCompare(b.displayName),
     );
   }
 
   goTo(page: string, id: number | undefined) {
     this.router.navigate([page, id], {
       queryParams: {
-        filter: JSON.stringify(this.filter)
-      }
+        filter: JSON.stringify(this.filter),
+      },
     });
   }
-
 }

@@ -9,8 +9,8 @@ describe('RangeSliderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RangeSliderComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RangeSliderComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RangeSliderComponent);

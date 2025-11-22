@@ -5,7 +5,12 @@ import { App, AppState } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
-import { IonApp, IonRouterOutlet, AlertController, ModalController } from '@ionic/angular/standalone';
+import {
+  IonApp,
+  IonRouterOutlet,
+  AlertController,
+  ModalController,
+} from '@ionic/angular/standalone';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { register } from 'swiper/element/bundle';
 import { DownloadModalComponent } from './components/download-modal/download-modal.component';
@@ -51,7 +56,7 @@ export class AppComponent {
       if (Capacitor.getPlatform() !== 'web') {
         this.clearCacheOnStartup();
         this.checkForUpdates();
-      };
+      }
     });
   }
 
@@ -116,5 +121,4 @@ export class AppComponent {
       await BackupStateService.performBackupIfNeeded();
     });
   }
-
 }

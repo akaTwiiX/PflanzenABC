@@ -1,8 +1,9 @@
 <div>
-  <ion-label class="ion-margin-top">
-    Gießen
-  </ion-label>
+  <ion-label class="ion-margin-top">Gießen</ion-label>
 
-  <app-selector [value]="(plantForm$ | async)?.watering" (valueChange)="plantFormService.update('watering', $event)"
-    [options]="options" />
+  <app-selector
+    [value]="(plantForm$ | async)?.watering"
+    (valueChange)="plantFormService.update('watering', $event)"
+    [options]="options"
+  />
 </div>

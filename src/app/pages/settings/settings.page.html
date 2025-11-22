@@ -7,39 +7,59 @@
 <ion-content [fullscreen]="true">
   <ion-list lines="full">
     <ion-item button>
-      <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+      <ion-icon
+        slot="start"
+        name="cloud-upload-outline"
+      ></ion-icon>
       <ion-label>
         <h2>Backup</h2>
       </ion-label>
-      <ion-icon slot="end" [name]="backupAvailable ? 'checkmark-circle' : 'close-circle'"
-        [color]="backupAvailable ? 'success' : 'danger'">
-      </ion-icon>
+      <ion-icon
+        slot="end"
+        [name]="backupAvailable ? 'checkmark-circle' : 'close-circle'"
+        [color]="backupAvailable ? 'success' : 'danger'"
+      ></ion-icon>
     </ion-item>
-
   </ion-list>
 
-  <ion-list lines="none" class="auth-section">
+  <ion-list
+    lines="none"
+    class="auth-section"
+  >
     @if(authService.currentUser(); as user) {
     <ion-item>
-      <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+      <ion-icon
+        slot="start"
+        name="person-circle-outline"
+      ></ion-icon>
       <ion-label>
         <h3>{{ user.email }}</h3>
         <p>Eingeloggt</p>
       </ion-label>
     </ion-item>
 
-    <ion-item button (click)="logout()">
-      <ion-icon slot="start" name="log-out-outline" color="danger"></ion-icon>
+    <ion-item
+      button
+      (click)="logout()"
+    >
+      <ion-icon
+        slot="start"
+        name="log-out-outline"
+        color="danger"
+      ></ion-icon>
       <ion-label color="danger">Logout</ion-label>
     </ion-item>
     }@else {
-    <ion-item button (click)="openAuthModal()">
-      <ion-icon slot="start" name="log-in-outline"></ion-icon>
+    <ion-item
+      button
+      (click)="openAuthModal()"
+    >
+      <ion-icon
+        slot="start"
+        name="log-in-outline"
+      ></ion-icon>
       <ion-label>Login / Registrieren</ion-label>
     </ion-item>
     }
-
-
-
   </ion-list>
 </ion-content>

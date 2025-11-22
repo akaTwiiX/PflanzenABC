@@ -9,8 +9,8 @@ describe('SoilComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SoilComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SoilComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SoilComponent);

@@ -13,7 +13,13 @@ import {
   inject,
   ViewChild,
 } from '@angular/core';
-import { IonSpinner, IonContent, IonFab, IonFabButton, IonFabList } from '@ionic/angular/standalone';
+import {
+  IonSpinner,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonFabList,
+} from '@ionic/angular/standalone';
 import { PlantListComponent } from '../plant-list/plant-list.component';
 import { Collection } from '@/types/Collection';
 import { Plant } from '@/types/PlantType';
@@ -51,7 +57,6 @@ export class DropdownListComponent implements AfterViewInit {
   alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   activeFilter: Partial<Plant> = {};
 
-
   private plantStorageService = inject(PlantStorageService);
   private collectionStorageService = inject(CollectionStorageService);
 
@@ -60,12 +65,14 @@ export class DropdownListComponent implements AfterViewInit {
       letter: l,
       isLoading: false,
       loaded: false,
-    }))
+    })),
   );
   activeLetter = signal<string | null>(null);
 
   isAnyLoading = computed(() => this.dataByLetter().some((l) => l.isLoading));
-  isInitialLoading = computed(() => this.isAnyLoading() && this.dataByLetter().every((l) => !l.loaded));
+  isInitialLoading = computed(
+    () => this.isAnyLoading() && this.dataByLetter().every((l) => !l.loaded),
+  );
 
   @ViewChildren('letterSection', { read: ElementRef })
   sections!: QueryList<ElementRef>;
@@ -74,22 +81,19 @@ export class DropdownListComponent implements AfterViewInit {
   private activeObserver!: IntersectionObserver;
   private destroy$ = new Subject<void>();
 
-
   ngAfterViewInit() {
     this.initObservers();
 
-    this.sections.changes
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(() => {
+    this.sections.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.reconnectObservers();
     });
   }
 
   private initObservers() {
-    this.observer = new IntersectionObserver(
-      (entries) => this.onIntersect(entries),
-      { rootMargin: '100px', threshold: 0.2 }
-    );
+    this.observer = new IntersectionObserver((entries) => this.onIntersect(entries), {
+      rootMargin: '100px',
+      threshold: 0.2,
+    });
 
     this.observeSections();
     this.observeActiveLetter();
@@ -120,9 +124,8 @@ export class DropdownListComponent implements AfterViewInit {
     });
   }
 
-
   private observeSections() {
-    this.sections.forEach(section => {
+    this.sections.forEach((section) => {
       this.observer.observe(section.nativeElement);
     });
   }
@@ -172,7 +175,7 @@ export class DropdownListComponent implements AfterViewInit {
           }
         }
       } else {
-        filteredCollections = collectionsRaw
+        filteredCollections = collectionsRaw;
       }
 
       const done = [...this.dataByLetter()];
@@ -184,7 +187,6 @@ export class DropdownListComponent implements AfterViewInit {
         collections: filteredCollections,
       };
       this.dataByLetter.set(done);
-
     } catch (err) {
       console.error(`Error loading ${letter}:`, err);
 
@@ -201,13 +203,20 @@ export class DropdownListComponent implements AfterViewInit {
   }
 
   public filterPlants(plants: Plant[], filter: Partial<Plant>): Plant[] {
-    return plants.filter(plant => {
+    return plants.filter((plant) => {
       return Object.entries(filter).every(([key, value]) => {
         const plantValue = (plant as any)[key];
 
         if (value === undefined) return true;
 
-        if (typeof value === 'object' && value !== null && 'start' in value && value.start && 'end' in value && value.end) {
+        if (
+          typeof value === 'object' &&
+          value !== null &&
+          'start' in value &&
+          value.start &&
+          'end' in value &&
+          value.end
+        ) {
           if (!plantValue) return false;
 
           const rangeArray = this.getRangeArrayForKey(key);
@@ -243,24 +252,23 @@ export class DropdownListComponent implements AfterViewInit {
     }
   }
 
-
   private observeActiveLetter() {
     if (!this.content) {
       console.warn('IonContent not yet available');
       return;
     }
 
-    this.content.getScrollElement().then(root => {
+    this.content.getScrollElement().then((root) => {
       this.activeObserver = new IntersectionObserver(
         (entries) => this.updateActiveLetter(entries),
         {
           root,
           rootMargin: '0px 0px -90%',
           threshold: 0,
-        }
+        },
       );
 
-      this.sections.forEach(section => {
+      this.sections.forEach((section) => {
         this.activeObserver.observe(section.nativeElement);
       });
     });
@@ -280,7 +288,7 @@ export class DropdownListComponent implements AfterViewInit {
 
   scrollToLetter(letter: string) {
     const target = this.sections.find(
-      (el) => el.nativeElement.getAttribute('data-letter') === letter
+      (el) => el.nativeElement.getAttribute('data-letter') === letter,
     );
 
     if (!target) return;
@@ -304,5 +312,4 @@ export class DropdownListComponent implements AfterViewInit {
   ionViewWillLeave() {
     this.destroy$.next();
   }
-
 }

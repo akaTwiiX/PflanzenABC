@@ -1,12 +1,25 @@
-<div id="open-action-sheet" class="img-container">
-  @if(value){
+<div
+  id="open-action-sheet"
+  class="img-container"
+>
+  @if (value) {
     <div class="image-wrapper">
-      <ion-img [src]="image" class="image-preview"></ion-img>
-      <ion-icon name="trash-outline" class="delete-icon" (click)="deleteImage($event)"></ion-icon>
+      <ion-img
+        [src]="image"
+        class="image-preview"
+      ></ion-img>
+      <ion-icon
+        name="trash-outline"
+        class="delete-icon"
+        (click)="deleteImage($event)"
+      ></ion-icon>
     </div>
-  }
-  @else {
-  <ion-text color="medium">Bild hinzufügen</ion-text>
+  } @else {
+    <ion-text color="medium">Bild hinzufügen</ion-text>
   }
 </div>
-<ion-action-sheet trigger="open-action-sheet" header="Actions" [buttons]="actionSheetButtons"></ion-action-sheet>
+<ion-action-sheet
+  trigger="open-action-sheet"
+  header="Actions"
+  [buttons]="actionSheetButtons"
+></ion-action-sheet>
