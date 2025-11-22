@@ -1,0 +1,19 @@
+:host {
+    margin-top: 16px;
+    width: 100%;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+ion-checkbox {
+    --size: 32px;
+
+    &::part(container) {
+        border-radius: 6px;
+        border: 2px solid grey;
+    }
+}

@@ -1,0 +1,21 @@
+<ion-text>
+  {{ title }}
+</ion-text>
+
+@let plant = plantFormService.plantForm$ | async;
+@if (plant) {
+  <div class="checkbox-container">
+    @for (color of colors; track $index) {
+      <ion-checkbox
+        [checked]="isSelected(getColors(plant), color)"
+        (ionChange)="toggleColor(color, getColors(plant))"
+        [value]="color"
+        [style.--checkbox-background]="color"
+        [style.--checkbox-background-checked]="color"
+        [style.--border-color]="color"
+        [style.--border-color-checked]="color"
+        [style.--checkmark-color]="color === 'black' ? 'white' : 'black'"
+      />
+    }
+  </div>
+}

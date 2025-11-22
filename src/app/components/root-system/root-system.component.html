@@ -1,0 +1,9 @@
+<div>
+  <ion-label>Wurzelsystem:</ion-label>
+
+  <app-choices
+    [choiceName]="ChoiceName.RootSystem"
+    [selected]="(plantForm$ | async)?.rootSystem"
+    (selectedChange)="plantFormService.update('rootSystem', $event)"
+  />
+</div>
