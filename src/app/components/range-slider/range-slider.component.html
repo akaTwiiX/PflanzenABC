@@ -1,16 +1,21 @@
 <div class="range-slider-container">
-  <ion-text>{{label}}</ion-text>
+  <ion-text>{{ label }}</ion-text>
   <div class="ion-margin-horizontal">
-    <ion-range [min]="min" [max]="max" [step]="1" [value]="{ lower: lower, upper: upper }" (ionInput)="onChange($event)"
-      dualKnobs="true" snaps="true" />
+    <ion-range
+      [min]="min"
+      [max]="max"
+      [step]="1"
+      [value]="{ lower: lower, upper: upper }"
+      (ionInput)="onChange($event)"
+      dualKnobs="true"
+      snaps="true"
+    />
 
-    @if(range.length > 0){
-    <div class="range-labels">
-      <div class="label left">{{ range[lower] | commaDecimal }}</div>
-      <div class="label right">{{ range[upper] | commaDecimal}}</div>
-    </div>
+    @if (range.length > 0) {
+      <div class="range-labels">
+        <div class="label left">{{ range[lower] | commaDecimal }}</div>
+        <div class="label right">{{ range[upper] | commaDecimal }}</div>
+      </div>
     }
   </div>
-
-
 </div>

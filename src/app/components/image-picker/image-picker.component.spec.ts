@@ -9,8 +9,8 @@ describe('ImagePickerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImagePickerComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ImagePickerComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ImagePickerComponent);

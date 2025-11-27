@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { IonItem, IonLabel, IonCheckbox } from "@ionic/angular/standalone";
-import { RangeSliderComponent } from "../range-slider/range-slider.component";
+import { IonItem, IonLabel, IonCheckbox } from '@ionic/angular/standalone';
+import { RangeSliderComponent } from '../range-slider/range-slider.component';
 import { PlantFormService } from '@/services/plant-form.service';
 import { monthRange } from '@/consts/monthRange';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,4 @@ export class FruitComponent {
   plantFormService = inject(PlantFormService);
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
-
-
 }

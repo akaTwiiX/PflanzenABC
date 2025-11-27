@@ -17,7 +17,7 @@ export class AppDatabase extends Dexie {
       plants: '++id, initialId, nameGerman, nameLatin, light, type',
       collections: '++id, initialId, name',
       choices: '++id, name',
-      images: '++id, name'
+      images: '++id, name',
     });
 
     this.plants = this.table('plants');

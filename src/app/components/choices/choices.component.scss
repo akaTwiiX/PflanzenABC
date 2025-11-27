@@ -1,18 +1,17 @@
 ion-select::part(icon) {
-    position: absolute;
-    right: 16px;
+  position: absolute;
+  right: 16px;
 }
 
 ion-select::part(text) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 
-
 div {
-    display: flex;
-    flex-direction: row;
-    padding-top: 16px;
+  display: flex;
+  flex-direction: row;
+  padding-top: 16px;
 }

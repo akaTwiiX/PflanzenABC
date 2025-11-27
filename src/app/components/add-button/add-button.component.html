@@ -1,17 +1,35 @@
-<ion-button fill="clear" (click)="dialog.present()">
-  <ion-icon slot="icon-only" size="large" name="add"></ion-icon>
+<ion-button
+  fill="clear"
+  (click)="dialog.present()"
+>
+  <ion-icon
+    slot="icon-only"
+    size="large"
+    name="add"
+  ></ion-icon>
 </ion-button>
 
-<ion-modal id="dialog" #dialog>
+<ion-modal
+  id="dialog"
+  #dialog
+>
   <ng-template>
     <div class="wrapper">
       <h1>Was möchtest du hinzufügen?</h1>
       <div class="button-row">
-        <ion-button class="ion-margin-bottom" expand="block" color="primary"
-          (click)="collectionDialog.present(); dialog.dismiss()">
+        <ion-button
+          class="ion-margin-bottom"
+          expand="block"
+          color="primary"
+          (click)="collectionDialog.present(); dialog.dismiss()"
+        >
           Sammlung
         </ion-button>
-        <ion-button expand="block" color="primary" (click)="navigateToAddPlant(); dialog.dismiss()">
+        <ion-button
+          expand="block"
+          color="primary"
+          (click)="navigateToAddPlant(); dialog.dismiss()"
+        >
           Pflanze
         </ion-button>
       </div>
@@ -19,14 +37,25 @@
   </ng-template>
 </ion-modal>
 
-<ion-modal #collectionDialog [initialBreakpoint]="0.3" (didDismiss)="newCollection = ''">
+<ion-modal
+  #collectionDialog
+  [initialBreakpoint]="0.3"
+  (didDismiss)="newCollection = ''"
+>
   <ng-template>
     <ion-content class="ion-padding-top">
       <ion-item>
-        <ion-input placeholder="Neue Sammlung eingeben" [(ngModel)]="newCollection"></ion-input>
+        <ion-input
+          placeholder="Neue Sammlung eingeben"
+          [(ngModel)]="newCollection"
+        ></ion-input>
       </ion-item>
-      <ion-button class="ion-margin-top" expand="block" (click)="addNewCollection(); collectionDialog.dismiss()"
-        [disabled]="!newCollection">
+      <ion-button
+        class="ion-margin-top"
+        expand="block"
+        (click)="addNewCollection(); collectionDialog.dismiss()"
+        [disabled]="!newCollection"
+      >
         Hinzufügen
       </ion-button>
     </ion-content>

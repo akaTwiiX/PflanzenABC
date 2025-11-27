@@ -10,7 +10,12 @@
   <ion-progress-bar [value]="progress / 100"></ion-progress-bar>
   <p>{{ progress }} %</p>
 
-  <ion-button expand="block" color="medium" (click)="cancel()" [disabled]="!downloading">
+  <ion-button
+    expand="block"
+    color="medium"
+    (click)="cancel()"
+    [disabled]="!downloading"
+  >
     Abbrechen
   </ion-button>
 </ion-content>

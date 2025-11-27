@@ -1,8 +1,9 @@
 <div>
-  <ion-label>
-    Art
-  </ion-label>
+  <ion-label>Art</ion-label>
 
-  <app-choices [choiceName]="ChoiceName.PlantType" [selected]="(plantForm$ | async)?.type"
-    (selectedChange)="plantFormService.update('type', $event)" />
+  <app-choices
+    [choiceName]="ChoiceName.PlantType"
+    [selected]="(plantForm$ | async)?.type"
+    (selectedChange)="plantFormService.update('type', $event)"
+  />
 </div>

@@ -1,6 +1,7 @@
-<ion-label class="ion-margin-top">
-  Standort
-</ion-label>
+<ion-label class="ion-margin-top">Standort</ion-label>
 
-<app-selector [value]="(plantForm$ | async)?.light" (valueChange)="onChange($event)"
-  [options]="options" />
+<app-selector
+  [value]="(plantForm$ | async)?.light"
+  (valueChange)="onChange($event)"
+  [options]="options"
+/>

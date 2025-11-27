@@ -3,10 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end" >
-       <ion-button (click)="onDelete()" >
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-       </ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="onDelete()">
+        <ion-icon
+          slot="icon-only"
+          name="trash-outline"
+        ></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>{{collection?.name}}</ion-title>
   </ion-toolbar>
@@ -15,8 +18,18 @@
 <ion-content [fullscreen]="true">
   <div class="container">
     <ion-list>
-      <app-plant-list [plants]="plants" [collections]="collections" [isLoading]="isLoading" />
-      <ion-button expand="block" color="primary" (click)="onAddPlant()">Pflanze hinzufügen</ion-button>
+      <app-plant-list
+        [plants]="plants"
+        [collections]="collections"
+        [isLoading]="isLoading"
+      />
+      <ion-button
+        expand="block"
+        color="primary"
+        (click)="onAddPlant()"
+      >
+        Pflanze hinzufügen
+      </ion-button>
     </ion-list>
   </div>
 </ion-content>

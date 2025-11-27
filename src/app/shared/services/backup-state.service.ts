@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IncrementalBackupService } from './incremental-backup.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BackupStateService {
   private static backupPending = false;

@@ -9,8 +9,8 @@ describe('DownloadModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DownloadModalComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [DownloadModalComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DownloadModalComponent);

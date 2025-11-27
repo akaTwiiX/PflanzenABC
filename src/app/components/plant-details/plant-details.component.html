@@ -7,20 +7,33 @@
   </ion-item>
 
   <div class="img-container">
-    @if(imageSrc){
-    <ion-img [src]="imageSrc" class="image-preview" (click)="openImageModal()"/>
-    }@else{
-    <ion-text color="medium">Kein Bild vorhanden</ion-text>
+    @if (imageSrc) {
+      <ion-img
+        [src]="imageSrc"
+        class="image-preview"
+        (click)="openImageModal()"
+      />
+    } @else {
+      <ion-text color="medium">Kein Bild vorhanden</ion-text>
     }
   </div>
 
   <div class="icons-container">
-    @for(light of plant.light; track $index){
-    <ion-img  class="icon {{light}}" [src]="lightIcons[light]" />
+    @for (light of plant.light; track $index) {
+      <ion-img
+        class="icon {{ light }}"
+        [src]="lightIcons[light]"
+      />
     }
-    <ion-img class="icon" [src]="waterIcons[plant.watering]" />
-    @for(icon of icons; track icon){
-    <ion-img class="icon" src="assets/icons/{{icon}}" />
+    <ion-img
+      class="icon"
+      [src]="waterIcons[plant.watering]"
+    />
+    @for (icon of icons; track icon) {
+      <ion-img
+        class="icon"
+        src="assets/icons/{{ icon }}"
+      />
     }
   </div>
 
@@ -31,54 +44,45 @@
     </ion-label>
   </ion-item>
 
-
-  @if(plant.fertilization.enabled){
-  <ion-item>
-    <strong>Dünger:</strong>
-    <ion-label slot="end">
-      {{ plant.fertilization.type }} – {{ plant.fertilization.time }}
-    </ion-label>
-  </ion-item>
+  @if (plant.fertilization.enabled) {
+    <ion-item>
+      <strong>Dünger:</strong>
+      <ion-label slot="end">
+        {{ plant.fertilization.type }} – {{ plant.fertilization.time }}
+      </ion-label>
+    </ion-item>
   }
 
-  @if(plant.pruning.enabled){
-  <ion-item>
-    <strong>Beschneidung:</strong>
-    <ion-label slot="end">
-      {{ plant.pruning.amount }} – {{ plant.pruning.time }}
-    </ion-label>
-  </ion-item>
+  @if (plant.pruning.enabled) {
+    <ion-item>
+      <strong>Beschneidung:</strong>
+      <ion-label slot="end">{{ plant.pruning.amount }} – {{ plant.pruning.time }}</ion-label>
+    </ion-item>
   }
 
-  @if(plant.fruit.enabled){
-  <ion-item>
-    <strong>Früchte:</strong>
-    <ion-label slot="end">
-      {{ plant.fruit.time.start }} – {{ plant.fruit.time.end }}
-    </ion-label>
-  </ion-item>
+  @if (plant.fruit.enabled) {
+    <ion-item>
+      <strong>Früchte:</strong>
+      <ion-label slot="end">{{ plant.fruit.time.start }} – {{ plant.fruit.time.end }}</ion-label>
+    </ion-item>
   }
 
   <ion-item>
     <strong>Blütezeit:</strong>
-    <ion-label slot="end">
-      {{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}
-    </ion-label>
+    <ion-label slot="end">{{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}</ion-label>
   </ion-item>
 
   <ion-item>
     <strong>Abstand:</strong>
     <ion-label slot="end">
-      {{ plant.distance.start | commaDecimal }} –
-      {{ plant.distance.end | commaDecimal }} m
+      {{ plant.distance.start | commaDecimal }} – {{ plant.distance.end | commaDecimal }} m
     </ion-label>
   </ion-item>
 
   <ion-item>
     <strong>Höhe:</strong>
     <ion-label slot="end">
-      {{ plant.height.start | commaDecimal}} –
-      {{ plant.height.end | commaDecimal }} m
+      {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
     </ion-label>
   </ion-item>
 
@@ -90,17 +94,31 @@
       </ion-label>
     </div>
   </ion-item>
-
 </ion-list>
 
-<ion-modal [isOpen]="isImageModalOpen" (didDismiss)="isImageModalOpen = false">
+<ion-modal
+  [isOpen]="isImageModalOpen"
+  (didDismiss)="isImageModalOpen = false"
+>
   <ng-template>
     <div class="modal-content">
-      <ion-icon name="close" class="close-icon" (click)="isImageModalOpen = false"/>
+      <ion-icon
+        name="close"
+        class="close-icon"
+        (click)="isImageModalOpen = false"
+      />
 
-      <swiper-container pagination="true" navigation="true" zoom="true" style="width:100%;height:100%;">
+      <swiper-container
+        pagination="true"
+        navigation="true"
+        zoom="true"
+        style="width: 100%; height: 100%"
+      >
         <swiper-slide>
-          <img [src]="imageSrc" style="width:100%;height:100%;object-fit:contain;" />
+          <img
+            [src]="imageSrc"
+            style="width: 100%; height: 100%; object-fit: contain"
+          />
         </swiper-slide>
       </swiper-container>
     </div>

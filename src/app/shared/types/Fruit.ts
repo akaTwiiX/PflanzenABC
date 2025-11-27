@@ -1,6 +1,6 @@
-import { RangeSliderType } from "./RangeSliderType";
+import { RangeSliderType } from './RangeSliderType';
 
 export type Fruit = {
-    enabled: boolean;
-    time: RangeSliderType;
-}
+  enabled: boolean;
+  time: RangeSliderType;
+};

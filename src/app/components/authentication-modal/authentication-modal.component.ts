@@ -3,9 +3,22 @@ import { AuthService } from '@/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
-  IonContent, IonButton, IonInput, IonLabel, IonItem, IonIcon,
-  IonList, IonText, IonHeader, IonToolbar, IonTitle, IonFooter, IonToggle,
-  ModalController, AlertController, ToastController
+  IonContent,
+  IonButton,
+  IonInput,
+  IonLabel,
+  IonItem,
+  IonIcon,
+  IonList,
+  IonText,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonFooter,
+  IonToggle,
+  ModalController,
+  AlertController,
+  ToastController,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -13,9 +26,20 @@ import {
   templateUrl: './authentication-modal.component.html',
   styleUrls: ['./authentication-modal.component.scss'],
   imports: [
-    CommonModule, FormsModule,
-    IonContent, IonButton, IonInput, IonLabel, IonItem,
-    IonList, IonText, IonHeader, IonToolbar, IonTitle, IonFooter, IonIcon
+    CommonModule,
+    FormsModule,
+    IonContent,
+    IonButton,
+    IonInput,
+    IonLabel,
+    IonItem,
+    IonList,
+    IonText,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonFooter,
+    IonIcon,
   ],
 })
 export class AuthenticationModalComponent {
@@ -23,7 +47,6 @@ export class AuthenticationModalComponent {
   private authService = inject(AuthService);
   private alertCtrl = inject(AlertController);
   private toastCtrl = inject(ToastController);
-
 
   mode: 'login' | 'register' = 'login';
   email = '';
@@ -48,7 +71,7 @@ export class AuthenticationModalComponent {
       return this.showToast('Die Passwörter stimmen nicht überein.', 'danger');
     }
 
-    let result: { success: boolean; message: string, code?: string };
+    let result: { success: boolean; message: string; code?: string };
 
     try {
       if (this.mode === 'login') {
@@ -58,7 +81,6 @@ export class AuthenticationModalComponent {
           await this.showAlert('E-Mail-Bestätigung erforderlich', result.message);
           return;
         }
-
       } else {
         result = await this.authService.register(this.email, this.password);
 
@@ -100,5 +122,4 @@ export class AuthenticationModalComponent {
     });
     await alert.present();
   }
-
 }

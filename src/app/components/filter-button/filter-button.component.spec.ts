@@ -9,8 +9,8 @@ describe('FilterButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterButtonComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [FilterButtonComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FilterButtonComponent);

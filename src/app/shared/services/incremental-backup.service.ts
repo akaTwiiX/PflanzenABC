@@ -13,7 +13,6 @@ const BACKUP_FILE_NAME = 'PflanzenABC-backup.json';
 const BACKUP_DIR = 'PflanzenABC/Backups';
 
 export class IncrementalBackupService {
-
   static backupAvailable = signal(false);
 
   static async createEncryptedBackup() {
@@ -36,7 +35,6 @@ export class IncrementalBackupService {
       this.createOrUpdateBackup(encrypted);
       this.backupAvailable.set(true);
       console.log('✅ Full backup created/updated successfully');
-
     } catch (e) {
       console.error('❌ Error creating backup:', e);
     }
@@ -44,7 +42,6 @@ export class IncrementalBackupService {
 
   static async restoreBackup() {
     try {
-
       const file = await this.getBackup();
       if (!file || !file['data']) {
         console.warn('⚠️ No backup data found to restore.');
@@ -64,7 +61,6 @@ export class IncrementalBackupService {
 
       console.log('✅ Backup restored successfully');
       this.backupAvailable.set(true);
-
     } catch (err: any) {
       if (err.code === 'FILE_NOT_FOUND' || err.message?.includes('File does not exist')) {
         console.warn('⚠️ No backup found to restore.');

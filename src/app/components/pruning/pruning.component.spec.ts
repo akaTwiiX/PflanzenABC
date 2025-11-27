@@ -9,8 +9,8 @@ describe('PruningComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PruningComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [PruningComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PruningComponent);

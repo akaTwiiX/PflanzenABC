@@ -3,7 +3,7 @@ import { loadNativeImage } from '@/utils/image.utils';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
-import { IonIcon, IonImg, IonText, IonActionSheet } from "@ionic/angular/standalone";
+import { IonIcon, IonImg, IonText, IonActionSheet } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-image-picker',
@@ -47,9 +47,7 @@ export class ImagePickerComponent implements OnChanges {
     return 'temporary';
   }
 
-  constructor() {
-
-  }
+  constructor() {}
 
   public actionSheetButtons = [
     {
@@ -94,13 +92,13 @@ export class ImagePickerComponent implements OnChanges {
       });
 
       this.value = photo.webPath!;
-      this.valueChange.emit(this.value)
+      this.valueChange.emit(this.value);
     } catch (error) {
       console.error('Image pick failed:', error);
     }
   }
 
-  deleteImage(event: Event){
+  deleteImage(event: Event) {
     event.stopPropagation();
     this.valueChange.emit('');
   }

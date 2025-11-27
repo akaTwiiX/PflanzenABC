@@ -9,8 +9,8 @@ describe('AuthenticationModalComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthenticationModalComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [AuthenticationModalComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AuthenticationModalComponent);

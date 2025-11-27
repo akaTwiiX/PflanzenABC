@@ -9,8 +9,8 @@ describe('WaterSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WaterSelectorComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [WaterSelectorComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WaterSelectorComponent);

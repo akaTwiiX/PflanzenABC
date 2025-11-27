@@ -1,13 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonList, IonButton, AlertController, ToastController, IonIcon } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonList,
+  IonButton,
+  AlertController,
+  ToastController,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlantStorageService } from '@/services/plant-storage.service';
 import { CollectionStorageService } from '@/services/collection-storage.service';
 import { Collection } from '@/types/Collection';
 import { Plant } from '@/types/PlantType';
-import { PlantListComponent } from "src/app/components/plant-list/plant-list.component";
+import { PlantListComponent } from 'src/app/components/plant-list/plant-list.component';
 import { combineLatest, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -15,7 +27,20 @@ import { combineLatest, map, Subject, takeUntil } from 'rxjs';
   templateUrl: './collection.page.html',
   styleUrls: ['./collection.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButtons, IonBackButton, IonList, PlantListComponent, IonButton, IonIcon]
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+    IonButtons,
+    IonBackButton,
+    IonList,
+    PlantListComponent,
+    IonButton,
+    IonIcon,
+  ],
 })
 export class CollectionPage {
   collectionId!: number;
@@ -39,11 +64,8 @@ export class CollectionPage {
     this.getRouteParams();
   }
 
-  getRouteParams(){
-    combineLatest([
-      this.activateRoute.paramMap,
-      this.activateRoute.queryParamMap
-    ])
+  getRouteParams() {
+    combineLatest([this.activateRoute.paramMap, this.activateRoute.queryParamMap])
       .pipe(
         takeUntil(this.destroy$),
         map(([params, query]) => {
@@ -54,11 +76,11 @@ export class CollectionPage {
           if (f) {
             try {
               filter = JSON.parse(f);
-            } catch { }
+            } catch {}
           }
 
           return { id, filter };
-        })
+        }),
       )
       .subscribe(({ id, filter }) => {
         this.collectionId = id;
@@ -95,63 +117,69 @@ export class CollectionPage {
   }
 
   onAddPlant() {
-    this.alertCtrl.create({
-      header:'Willst du wirklich eine Pflanze hinzufügen?',
-      buttons: [
-        {
-          text: 'Abbrechen',
-          role: 'cancel',
-        },
-        {
-          text: 'Hinzufügen',
-          handler: () => {
-            this.navigateToAddPlant();
-          }
-        }
-      ]
-    }).then(alert => alert.present());
+    this.alertCtrl
+      .create({
+        header: 'Willst du wirklich eine Pflanze hinzufügen?',
+        buttons: [
+          {
+            text: 'Abbrechen',
+            role: 'cancel',
+          },
+          {
+            text: 'Hinzufügen',
+            handler: () => {
+              this.navigateToAddPlant();
+            },
+          },
+        ],
+      })
+      .then((alert) => alert.present());
   }
 
   navigateToAddPlant() {
     this.router.navigate(['/add-plant'], {
       queryParams: { parentId: this.collectionId },
-      replaceUrl: true
+      replaceUrl: true,
     });
   }
 
-  onDelete(){
-    this.alertCtrl.create({
-      header: 'Möchtest du diese Sammlung wirklich löschen?',
-      message: `Es werden alle Pflanzen in ${this.collection?.name} gelöscht!`,
-      buttons: [
-        {
-          text: 'Abbrechen',
-          role: 'cancel',
-        },
-        {
-          text: 'Löschen',
-          cssClass: 'alert-danger-button',
-          handler: () => {
-            this.deleteCollection();
-          }
-        }
-      ]
-    }).then(alert => alert.present());
+  onDelete() {
+    this.alertCtrl
+      .create({
+        header: 'Möchtest du diese Sammlung wirklich löschen?',
+        message: `Es werden alle Pflanzen in ${this.collection?.name} gelöscht!`,
+        buttons: [
+          {
+            text: 'Abbrechen',
+            role: 'cancel',
+          },
+          {
+            text: 'Löschen',
+            cssClass: 'alert-danger-button',
+            handler: () => {
+              this.deleteCollection();
+            },
+          },
+        ],
+      })
+      .then((alert) => alert.present());
   }
 
-  async deleteCollection(){
+  async deleteCollection() {
     await this.plantStorageService.bulkDelete(this.collection!.plantIds);
     await this.collectionStorageService.removeCollection(this.collectionId);
 
-    this.toastCtrl.create({
-      message: 'Sammlung gelöscht',
-      duration: 2000,
-      color: 'danger',
-      position: 'bottom',
-    }).then(toast => {
-      toast.present();
-      this.router.navigate(['/home']);
-    });
+    this.toastCtrl
+      .create({
+        message: 'Sammlung gelöscht',
+        duration: 2000,
+        color: 'danger',
+        position: 'bottom',
+      })
+      .then((toast) => {
+        toast.present();
+        this.router.navigate(['/home']);
+      });
   }
 
   ionViewDidLeave() {

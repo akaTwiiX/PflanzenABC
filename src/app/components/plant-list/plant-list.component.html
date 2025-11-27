@@ -1,28 +1,47 @@
-<div class="plant-list" slot="content">
-  @if(isLoading) {
-  <ion-item class="plant-item" lines="none">
-    <ion-spinner></ion-spinner>
-  </ion-item>
+<div
+  class="plant-list"
+  slot="content"
+>
+  @if (isLoading) {
+    <ion-item
+      class="plant-item"
+      lines="none"
+    >
+      <ion-spinner></ion-spinner>
+    </ion-item>
   } @else {
-  @if(mergedItems.length === 0) {
-  <ion-item class="plant-item" lines="none">
-    <ion-text>
-      Keine Pflanzen
-    </ion-text>
-  </ion-item>
-  } @else {
-  <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll" [style.height]="viewportHeight">
-    <ng-container *cdkVirtualFor="let item of mergedItems; let last = last; trackBy: trackByItem">
-      <ion-item (click)="goTo(item.path, item.id)" [lines]="last ? 'none' : 'full'">
-        @if(item.type === 'collection'){
-        <ion-icon name="file-tray-full-outline" slot="end" />
-        }
-        <ion-text [ngClass]="{'bold': item.type === 'collection'}">
-          {{ item.displayName }}
-        </ion-text>
+    @if (mergedItems.length === 0) {
+      <ion-item
+        class="plant-item"
+        lines="none"
+      >
+        <ion-text>Keine Pflanzen</ion-text>
       </ion-item>
-    </ng-container>
-  </cdk-virtual-scroll-viewport>
-  }
+    } @else {
+      <cdk-virtual-scroll-viewport
+        itemSize="50"
+        class="virtual-scroll"
+        [style.height]="viewportHeight"
+      >
+        <ng-container
+          *cdkVirtualFor="let item of mergedItems; let last = last; trackBy: trackByItem"
+        >
+          <ion-item
+            (click)="goTo(item.path, item.id)"
+            [lines]="last ? 'none' : 'full'"
+          >
+            @if (item.type === 'collection') {
+              <ion-icon
+                name="file-tray-full-outline"
+                slot="end"
+              />
+            }
+            <ion-text [ngClass]="{ bold: item.type === 'collection' }">
+              {{ item.displayName }}
+            </ion-text>
+          </ion-item>
+        </ng-container>
+      </cdk-virtual-scroll-viewport>
+    }
   }
 </div>

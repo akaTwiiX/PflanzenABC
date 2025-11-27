@@ -9,8 +9,8 @@ describe('LightSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LightSelectorComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [LightSelectorComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LightSelectorComponent);

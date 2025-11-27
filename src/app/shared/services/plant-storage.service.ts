@@ -4,10 +4,9 @@ import { Dexie } from 'dexie';
 import { db } from './app-database.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlantStorageService {
-
   private table = db.plants;
 
   async addPlant(plant: Plant): Promise<number> {

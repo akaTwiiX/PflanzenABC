@@ -10,7 +10,9 @@
     "build:android": "ng build --configuration android",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "cleanup": "ng g @angular/core:cleanup-unused-imports",
+    "format": "prettier --write \"src/**/*.{html,ts,js,json,css,scss,md}\""
   },
   "private": true,
   "dependencies": {
