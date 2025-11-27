@@ -20,7 +20,7 @@ export const mainTabsRoutes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/search',
+        redirectTo: '/home',
         pathMatch: 'full',
       },
       {

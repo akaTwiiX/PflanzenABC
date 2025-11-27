@@ -1,11 +1,4 @@
-<ion-list class="container">
-  <ion-item lines="none">
-    <ion-label>
-      <h1 class="ion-text-center">{{ plant.nameLatin }}</h1>
-      <p class="ion-text-center">{{ plant.nameGerman }}</p>
-    </ion-label>
-  </ion-item>
-
+<ion-list>
   <div class="img-container">
     @if (imageSrc) {
       <ion-img
@@ -44,6 +37,44 @@
     </ion-label>
   </ion-item>
 
+  @if (plant.leafColor.length > 0) {
+    <ion-item>
+      <div style="margin-top: 16px">
+        <strong>Blätterfarbe:</strong>
+        <div class="checkbox-container">
+          @for (color of plant.leafColor; track $index) {
+            <ion-checkbox
+              class="color-choices"
+              [style.--checkbox-background]="color"
+              [style.--checkbox-background-checked]="color"
+              [style.--border-color]="color"
+              [style.--border-color-checked]="color"
+            />
+          }
+        </div>
+      </div>
+    </ion-item>
+  }
+
+  @if (plant.bloomColor.length > 0) {
+    <ion-item>
+      <div style="margin-top: 16px">
+        <strong>Blütefarbe:</strong>
+        <div class="checkbox-container">
+          @for (color of plant.bloomColor; track $index) {
+            <ion-checkbox
+              class="color-choices"
+              [style.--checkbox-background]="color"
+              [style.--checkbox-background-checked]="color"
+              [style.--border-color]="color"
+              [style.--border-color-checked]="color"
+            />
+          }
+        </div>
+      </div>
+    </ion-item>
+  }
+
   @if (plant.fertilization.enabled) {
     <ion-item>
       <strong>Dünger:</strong>
@@ -73,6 +104,13 @@
   </ion-item>
 
   <ion-item>
+    <strong>Bedarf:</strong>
+    <ion-label slot="end">
+      {{ plant.requiredArea.start | commaDecimal }} – {{ plant.requiredArea.end | commaDecimal }} m²
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
     <strong>Abstand:</strong>
     <ion-label slot="end">
       {{ plant.distance.start | commaDecimal }} – {{ plant.distance.end | commaDecimal }} m
@@ -83,6 +121,20 @@
     <strong>Höhe:</strong>
     <ion-label slot="end">
       {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <strong>Breite:</strong>
+    <ion-label slot="end">
+      {{ plant.width.start | commaDecimal }} – {{ plant.width.end | commaDecimal }} m
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <strong>Wurzelsystem:</strong>
+    <ion-label slot="end">
+      {{ plant.rootSystem }}
     </ion-label>
   </ion-item>
 

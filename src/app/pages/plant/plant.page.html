@@ -8,6 +8,13 @@
         ></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-title class="ion-text-center">{{ plant?.nameLatin }}</ion-title>
+    <ion-title
+      size="small"
+      class="ion-text-center"
+    >
+      {{ plant?.nameGerman }}
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openMenu()">
         <ion-icon name="ellipsis-vertical"></ion-icon>
@@ -26,8 +33,6 @@
     <ion-spinner />
   </div>
   }@else {
-  <div class="plant-container">
-    <app-plant-details [plant]="plant!" />
-  </div>
+  <app-plant-details [plant]="plant!" />
   }
 </ion-content>

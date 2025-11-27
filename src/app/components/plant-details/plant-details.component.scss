@@ -26,6 +26,25 @@
   /* optional, für Vollbild-Galerie */
 }
 
+.checkbox-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .color-choices {
+    --size: 32px;
+    pointer-events: none;
+
+    &::part(container) {
+      border-radius: 6px;
+      border: 2px solid grey;
+    }
+  }
+}
+
+
 .close-icon {
   position: absolute;
   top: 16px;
@@ -45,6 +64,7 @@
   gap: 8px;
 
   ion-label {
-    height: 100px;
+    min-height: 100px;
+    white-space: pre-line;
   }
 }

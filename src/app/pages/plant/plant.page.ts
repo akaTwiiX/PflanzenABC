@@ -1,22 +1,13 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonText,
-  IonButtons,
-  IonSpinner,
-  IonButton,
-  IonIcon,
-} from '@ionic/angular/standalone';
-import { ActivatedRoute, Router } from '@angular/router';
+import { PlantFormService } from '@/services/plant-form.service';
 import { PlantStorageService } from '@/services/plant-storage.service';
 import { Plant } from '@/types/PlantType';
-import { PlantDetailsComponent } from 'src/app/components/plant-details/plant-details.component';
-import { PlantFormService } from '@/services/plant-form.service';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { PlantDetailsComponent } from 'src/app/components/plant-details/plant-details.component';
 
 @Component({
   selector: 'app-plant',
@@ -35,6 +26,7 @@ import { ActionSheetController } from '@ionic/angular';
     IonSpinner,
     IonIcon,
     IonButton,
+    IonTitle
   ],
 })
 export class PlantPage implements OnInit {
