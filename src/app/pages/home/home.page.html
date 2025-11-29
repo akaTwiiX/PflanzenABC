@@ -10,7 +10,11 @@
           (resetFiltersFn)="onResetFilter()"
         />
       </ion-buttons>
-      <ion-title>PflanzenABC</ion-title>
+      <ion-searchbar
+        placeholder="Pflanzen suchen..."
+        [value]="searchQuery"
+        (ionInput)="onSearch($event)"
+      />
       <ion-buttons slot="end">
         <app-add-button />
       </ion-buttons>
@@ -21,6 +25,10 @@
     [scrollY]="false"
     [fullscreen]="true"
   >
+    @if (searchQuery) {
+    <app-plant-list [plants]="searchResults" />
+    } @else {
     <app-dropdown-list #dropdownList />
+    }
   </ion-content>
 </div>

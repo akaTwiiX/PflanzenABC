@@ -1,6 +1,5 @@
 import { Plant } from '@/types/PlantType';
 import { Injectable } from '@angular/core';
-import { Dexie } from 'dexie';
 import { db } from './app-database.service';
 
 @Injectable({
@@ -26,6 +25,15 @@ export class PlantStorageService {
 
   async queryBy(query: string, value: any): Promise<Plant[]> {
     return await this.table.where(query).equals(value).toArray();
+  }
+
+  async searchPlants(query: string): Promise<Plant[]> {
+    return await this.table
+      .where('nameGerman')
+      .startsWithIgnoreCase(query)
+      .or('nameLatin')
+      .startsWithIgnoreCase(query)
+      .toArray();
   }
 
   getPlant(id: number): Promise<Plant | undefined> {
