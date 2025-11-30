@@ -23,3 +23,42 @@
   header="Actions"
   [buttons]="actionSheetButtons"
 ></ion-action-sheet>
+
+<ion-modal
+  #cropModal
+  (didDismiss)="cancelCrop()"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Bild zuschneiden</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      @if (croppingImage) {
+        <image-cropper
+          [imageFile]="croppingImage"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="4 / 3"
+          format="jpeg"
+          (imageCropped)="imageCropped($event)"
+        ></image-cropper>
+      }
+    </ion-content>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancelCrop()">Abbrechen</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button
+            (click)="confirmCrop()"
+            strong
+          >
+            Speichern
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
