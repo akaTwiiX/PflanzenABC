@@ -1,48 +1,48 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonList,
-  IonItem,
-  IonInput,
-  IonLabel,
-  IonCheckbox,
-  IonTextarea,
-  IonButton,
-  IonModal,
-  AlertController,
-} from '@ionic/angular/standalone';
-import { Plant } from 'src/app/shared/types/PlantType';
-import { PlantFormService } from 'src/app/shared/services/plant-form.service';
-import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
-import { monthRange } from '@/consts/monthRange';
-import { RangeSliderComponent } from 'src/app/components/range-slider/range-slider.component';
 import { distanceRange } from '@/consts/distanceRange';
-import { LightSelectorComponent } from 'src/app/components/light-selector/light-selector.component';
-import { SoilComponent } from 'src/app/components/soil/soil.component';
-import { FertilizationComponent } from 'src/app/components/fertilization/fertilization.component';
-import { WaterSelectorComponent } from 'src/app/components/water-selector/water-selector.component';
-import { PlantTypeComponent } from 'src/app/components/plant-type/plant-type.component';
-import { PruningComponent } from 'src/app/components/pruning/pruning.component';
-import { FruitComponent } from 'src/app/components/fruit/fruit.component';
-import { PlantStorageService } from '@/services/plant-storage.service';
-import { getFirstLetter } from '@/utils/string.utils';
-import { ActivatedRoute, Router } from '@angular/router';
+import { monthRange } from '@/consts/monthRange';
+import { requiredArea } from '@/consts/requiredArea';
+import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config';
+import { db } from '@/services/app-database.service';
 import { CollectionStorageService } from '@/services/collection-storage.service';
+import { PlantStorageService } from '@/services/plant-storage.service';
+import { convertBlobToBase64 } from '@/utils/image.utils';
+import { getFirstLetter } from '@/utils/string.utils';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
-import { convertBlobToBase64, loadNativeImage } from '@/utils/image.utils';
-import { db } from '@/services/app-database.service';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config';
-import { requiredArea } from '@/consts/requiredArea';
+import {
+  AlertController,
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonCheckbox,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
+  IonTextarea,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { Subject, takeUntil } from 'rxjs';
+import { FertilizationComponent } from 'src/app/components/fertilization/fertilization.component';
+import { FruitComponent } from 'src/app/components/fruit/fruit.component';
+import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
+import { LightSelectorComponent } from 'src/app/components/light-selector/light-selector.component';
+import { PlantTypeComponent } from 'src/app/components/plant-type/plant-type.component';
+import { PruningComponent } from 'src/app/components/pruning/pruning.component';
+import { RangeSliderComponent } from 'src/app/components/range-slider/range-slider.component';
 import { RootSystemComponent } from 'src/app/components/root-system/root-system.component';
+import { SoilComponent } from 'src/app/components/soil/soil.component';
+import { WaterSelectorComponent } from 'src/app/components/water-selector/water-selector.component';
+import { PlantFormService } from 'src/app/shared/services/plant-form.service';
+import { Plant } from 'src/app/shared/types/PlantType';
 
 import { ColorChoicesComponent } from 'src/app/components/color-choices/color-choices.component';
 

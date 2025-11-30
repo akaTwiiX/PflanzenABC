@@ -39,7 +39,7 @@
 
   @if (plant.leafColor.length > 0) {
     <ion-item>
-      <div style="margin-top: 16px">
+      <ion-label>
         <strong>Blätterfarbe:</strong>
         <div class="checkbox-container">
           @for (color of plant.leafColor; track $index) {
@@ -52,13 +52,13 @@
             />
           }
         </div>
-      </div>
+      </ion-label>
     </ion-item>
   }
 
   @if (plant.bloomColor.length > 0) {
     <ion-item>
-      <div style="margin-top: 16px">
+      <ion-label>
         <strong>Blütefarbe:</strong>
         <div class="checkbox-container">
           @for (color of plant.bloomColor; track $index) {
@@ -71,23 +71,25 @@
             />
           }
         </div>
-      </div>
+      </ion-label>
     </ion-item>
   }
 
   @if (plant.fertilization.enabled) {
     <ion-item>
-      <strong>Dünger:</strong>
-      <ion-label slot="end">
-        {{ plant.fertilization.type }} – {{ plant.fertilization.time }}
+      <ion-label>
+        <strong>Dünger:</strong>
+        <div>{{ plant.fertilization.type }} – {{ plant.fertilization.time }}</div>
       </ion-label>
     </ion-item>
   }
 
   @if (plant.pruning.enabled) {
     <ion-item>
-      <strong>Beschneidung:</strong>
-      <ion-label slot="end">{{ plant.pruning.amount }} – {{ plant.pruning.time }}</ion-label>
+      <ion-label>
+        <strong>Beschneidung:</strong>
+        <div>{{ plant.pruning.amount }} – {{ plant.pruning.time }}</div>
+      </ion-label>
     </ion-item>
   }
 
@@ -132,19 +134,17 @@
   </ion-item>
 
   <ion-item>
-    <strong>Wurzelsystem:</strong>
-    <ion-label slot="end">
-      {{ plant.rootSystem }}
+    <ion-label>
+      <strong>Wurzelsystem:</strong>
+      <div>{{ plant.rootSystem }}</div>
     </ion-label>
   </ion-item>
 
   <ion-item lines="none">
-    <div class="notice-container ion-margin-vertical">
+    <ion-label class="ion-text-wrap ion-margin-vertical">
       <strong>Notizen:</strong>
-      <ion-label>
-        {{ plant.notice }}
-      </ion-label>
-    </div>
+      <div class="notice-content">{{ plant.notice }}</div>
+    </ion-label>
   </ion-item>
 </ion-list>
 

@@ -1,15 +1,15 @@
 import { icons as lightIcons, LightRequirementLabel } from '@/enums/LightRequirements';
 import { PlantTypeLabel } from '@/enums/PlantTypes';
 import { icons as waterIcons, WaterRequirementLabel } from '@/enums/WaterRequirements';
+import { CommaDecimalPipe } from '@/pipes/comma-decimal.pipe';
+import { db } from '@/services/app-database.service';
 import { PlantFormService } from '@/services/plant-form.service';
 import { Plant } from '@/types/PlantType';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
-import { IonImg, IonLabel, IonText, IonItem, IonList, IonModal } from '@ionic/angular/standalone';
-import { CommaDecimalPipe } from '@/pipes/comma-decimal.pipe';
 import { loadNativeImage } from '@/utils/image.utils';
-import { Capacitor } from '@capacitor/core';
-import { db } from '@/services/app-database.service';
 import { CommonModule } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
+import { IonImg, IonItem, IonLabel, IonList, IonModal, IonText } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-plant-details',
@@ -57,6 +57,8 @@ export class PlantDetailsComponent implements OnInit {
       edible: 'eatable.png',
       toxic: 'skull.png',
       fragrant: 'nose.png',
+      windFriendly: 'wind.png',
+      bugsFriendly: 'bug.png',
     };
 
     this.icons = Object.entries(iconMap)
