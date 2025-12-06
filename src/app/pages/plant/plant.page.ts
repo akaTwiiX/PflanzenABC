@@ -68,7 +68,6 @@ export class PlantPage implements OnInit {
   }
 
   goToAddPlant() {
-    this.plantFormService.setPlant(this.plant!);
     this.router.navigate(['/add-plant'], {
       queryParams: { editId: this.plantId },
     });

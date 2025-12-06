@@ -8,7 +8,7 @@ import { PlantStorageService } from '@/services/plant-storage.service';
 import { convertBlobToBase64 } from '@/utils/image.utils';
 import { getFirstLetter } from '@/utils/string.utils';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
@@ -81,7 +81,7 @@ import { ColorChoicesComponent } from 'src/app/components/color-choices/color-ch
     ColorChoicesComponent,
   ],
 })
-export class AddPlantPage implements OnInit {
+export class AddPlantPage {
   plantFormService = inject(PlantFormService);
   plantStorageService = inject(PlantStorageService);
   collectionStorageService = inject(CollectionStorageService);
@@ -104,14 +104,19 @@ export class AddPlantPage implements OnInit {
 
   private destroy$ = new Subject<void>();
 
-  ngOnInit() {
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+  ionViewWillEnter() {
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async (params) => {
       const parentId = params['parentId'];
       const editId = params['editId'];
 
       if (parentId) this.parentId = Number(parentId);
 
-      if (editId) this.isEditMode = true;
+      if (editId) {
+        this.isEditMode = true;
+        const plant = await this.plantStorageService.getPlant(Number(editId));
+        if (!plant) return;
+        this.plantFormService.setPlant(plant);
+      }
     });
   }
 

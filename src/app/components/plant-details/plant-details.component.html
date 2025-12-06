@@ -1,16 +1,15 @@
+<div class="img-container">
+  @if (imageSrc) {
+    <ion-img
+      [src]="imageSrc"
+      class="image-preview"
+      (click)="openImageModal()"
+    />
+  } @else {
+    <ion-text color="medium">Kein Bild vorhanden</ion-text>
+  }
+</div>
 <ion-list>
-  <div class="img-container">
-    @if (imageSrc) {
-      <ion-img
-        [src]="imageSrc"
-        class="image-preview"
-        (click)="openImageModal()"
-      />
-    } @else {
-      <ion-text color="medium">Kein Bild vorhanden</ion-text>
-    }
-  </div>
-
   <div class="icons-container">
     @for (light of plant.light; track $index) {
       <ion-img
@@ -30,12 +29,14 @@
     }
   </div>
 
-  <ion-item>
-    <strong>Typ:</strong>
-    <ion-label slot="end">
-      {{ plant.type }}
-    </ion-label>
-  </ion-item>
+  @if (plant.type) {
+    <ion-item>
+      <strong>Typ:</strong>
+      <ion-label slot="end">
+        {{ plant.type }}
+      </ion-label>
+    </ion-item>
+  }
 
   @if (plant.leafColor.length > 0) {
     <ion-item>
@@ -133,19 +134,23 @@
     </ion-label>
   </ion-item>
 
-  <ion-item>
-    <ion-label>
-      <strong>Wurzelsystem:</strong>
-      <div>{{ plant.rootSystem }}</div>
-    </ion-label>
-  </ion-item>
+  @if (plant.rootSystem) {
+    <ion-item>
+      <ion-label>
+        <strong>Wurzelsystem:</strong>
+        <div>{{ plant.rootSystem }}</div>
+      </ion-label>
+    </ion-item>
+  }
 
-  <ion-item lines="none">
-    <ion-label class="ion-text-wrap ion-margin-vertical">
-      <strong>Notizen:</strong>
-      <div class="notice-content">{{ plant.notice }}</div>
-    </ion-label>
-  </ion-item>
+  @if (plant.notice) {
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap ion-margin-vertical">
+        <strong>Notizen:</strong>
+        <div class="notice-content">{{ plant.notice }}</div>
+      </ion-label>
+    </ion-item>
+  }
 </ion-list>
 
 <ion-modal

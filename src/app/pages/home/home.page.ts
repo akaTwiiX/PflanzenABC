@@ -55,7 +55,6 @@ export class HomePage {
       this.searchResults = await this.plantStorageService.searchPlants(this.searchQuery);
     } else {
       this.searchResults = [];
-      this.dropdownList.resetData(this.filter);
     }
   }
 }

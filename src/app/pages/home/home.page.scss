@@ -26,6 +26,10 @@
   text-decoration: none;
 }
 
+ion-toolbar {
+  --background: #d7dcd3;
+}
+
 .button {
   position: sticky;
   bottom: var(--ion-safe-area-bottom);
