@@ -1,11 +1,11 @@
 import { Collection } from '@/types/Collection';
 import { ListItem } from '@/types/ListItem';
 import { Plant } from '@/types/PlantType';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonItem, IonSpinner, IonIcon, IonText } from '@ionic/angular/standalone';
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
+import { IonIcon, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-plant-list',
@@ -40,23 +40,12 @@ export class PlantListComponent implements OnChanges {
   }
 
   private mergeAndSort() {
-    const mappedCollections: ListItem[] = this.collections.map((c) => ({
-      id: c.id,
-      displayName: c.name,
-      type: 'collection',
-      path: '/collection',
-    }));
-
-    const mappedPlants: ListItem[] = this.plants.map((p) => ({
-      id: p.id,
-      displayName: p.nameLatin,
-      type: 'plant',
-      path: '/plant',
-    }));
-
-    this.mergedItems = [...mappedCollections, ...mappedPlants].sort((a, b) =>
-      a.displayName.localeCompare(b.displayName),
-    );
+    const worker = new Worker(new URL('../../shared/workers/list-sort.worker', import.meta.url));
+    worker.onmessage = ({ data }) => {
+      this.mergedItems = data;
+      worker.terminate();
+    };
+    worker.postMessage({ plants: this.plants, collections: this.collections });
   }
 
   goTo(page: string, id: number | undefined) {
