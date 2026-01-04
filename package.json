@@ -11,6 +11,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "add:env:dev": "node scripts/init-env.js",
+    "prepare": "npm run add:env:dev",
     "cleanup": "ng g @angular/core:cleanup-unused-imports",
     "format": "prettier --write \"src/**/*.{html,ts,js,json,css,scss,md}\""
   },
