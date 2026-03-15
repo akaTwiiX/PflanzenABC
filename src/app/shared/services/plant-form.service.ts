@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PlantTypes } from '../enums/PlantTypes';
 import { LightRequirement } from '../enums/LightRequirements';
 import { WaterRequirement } from '../enums/WaterRequirements';
 import { Plant } from '../types/PlantType';
@@ -15,7 +14,7 @@ export class PlantFormService {
     pruning: { enabled: false, time: '', amount: '' },
     fertilization: { enabled: false, type: '', time: '' },
     soil: '',
-    distance: { start: 0.5, end: 10 },
+    distance: { enabled: false, value: { start: 0.5, end: 10 } },
     height: { start: 0.5, end: 10 },
     width: { start: 0.5, end: 10 },
     bloomTime: { start: 'Januar', end: 'Dezember' },
@@ -26,12 +25,13 @@ export class PlantFormService {
     fruit: { enabled: false, time: { start: 'Januar', end: 'Dezember' } },
     bloomColor: [],
     leafColor: [],
-    requiredArea: { start: 0, end: 50 },
+    requiredArea: { enabled: false, value: { start: 0, end: 50 } },
     rootSystem: '',
     bugsFriendly: false,
-    windFriendly: false,
+    birdFriendly: false,
     growth: '',
     evergreen: false,
+    regional: false,
     dryTolerance: false,
     edible: false,
     toxic: false,

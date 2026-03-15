@@ -1,5 +1,4 @@
 import { LightRequirement } from '../enums/LightRequirements';
-import { PlantTypes } from '../enums/PlantTypes';
 import { WaterRequirement } from '../enums/WaterRequirements';
 import { Fruit } from './Fruit';
 import { RangeSliderType } from './RangeSliderType';
@@ -11,6 +10,11 @@ export type ActionWithDetails = {
   type?: string;
 };
 
+export type ActionWithSlider = {
+  enabled: boolean;
+  value: RangeSliderType;
+};
+
 export type Plant = {
   id?: number;
   initialId?: string;
@@ -19,7 +23,7 @@ export type Plant = {
   pruning: ActionWithDetails;
   fertilization: ActionWithDetails;
   soil: string;
-  distance: RangeSliderType;
+  distance: ActionWithSlider;
   height: RangeSliderType;
   width: RangeSliderType;
   growth: string;
@@ -31,11 +35,12 @@ export type Plant = {
   fruit: Fruit;
   bloomColor: string[];
   leafColor: string[];
-  requiredArea: RangeSliderType;
+  requiredArea: ActionWithSlider;
   rootSystem: string;
   evergreen: boolean;
-  windFriendly: boolean;
   bugsFriendly: boolean;
+  birdFriendly: boolean;
+  regional: boolean;
   dryTolerance: boolean;
   edible: boolean;
   toxic: boolean;

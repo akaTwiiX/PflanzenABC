@@ -1,0 +1,20 @@
+<ion-item
+  lines="none"
+  class="ion-no-padding"
+>
+  <ion-label>Abstand zu anderen:</ion-label>
+  <ion-checkbox
+    slot="end"
+    [checked]="(plantForm$ | async)?.distance?.enabled"
+    (ionChange)="plantFormService.update('distance.enabled', $event.detail.checked)"
+  />
+</ion-item>
+
+@if ((plantForm$ | async)?.distance?.enabled) {
+  <app-range-slider
+    [range]="distanceRange"
+    [value]="(plantForm$ | async)?.distance!.value"
+    (valueChange)="plantFormService.update('distance.value', $event)"
+  />
+}
+

@@ -2,7 +2,7 @@
   class="plant-list"
   slot="content"
 >
-  @if (isLoading) {
+  @if (isLoading || isSorting()) {
     <ion-item
       class="plant-item"
       lines="none"

@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="safe-area">
     <app-image-picker
       [value]="(plantForm$ | async)?.imageUrl"
@@ -16,7 +16,7 @@
     <ion-list>
       <ion-item>
         <ion-input
-          label="Lateinischer Name"
+          label="Botanischer Name"
           labelPlacement="floating"
           placeholder="Enter text"
           [value]="(plantForm$ | async)?.nameLatin"
@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item>
         <app-range-slider
-          label="Größe:"
+          label="Höhe:"
           [range]="distanceRange"
           [value]="(plantForm$ | async)?.height!"
           (valueChange)="plantFormService.update('height', $event)"
@@ -91,20 +91,10 @@
         <app-fertilization />
       </ion-item>
       <ion-item>
-        <app-range-slider
-          label="Abstand zu anderen:"
-          [range]="distanceRange"
-          [value]="(plantForm$ | async)?.distance!"
-          (valueChange)="plantFormService.update('distance', $event)"
-        />
+        <app-distance />
       </ion-item>
       <ion-item>
-        <app-range-slider
-          label="Bedarf/Meter²:"
-          [range]="requiredArea"
-          [value]="(plantForm$ | async)?.requiredArea!"
-          (valueChange)="plantFormService.update('requiredArea', $event)"
-        />
+        <app-required-area />
       </ion-item>
       <ion-item>
         <app-root-system />

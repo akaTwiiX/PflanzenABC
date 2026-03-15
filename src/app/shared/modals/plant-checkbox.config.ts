@@ -1,4 +1,3 @@
-import { Plant } from '@/types/PlantType';
 
 export const CHECKBOX_FIELDS = [
   'frostResistant',
@@ -9,7 +8,8 @@ export const CHECKBOX_FIELDS = [
   'fragrant',
   'buckets',
   'bugsFriendly',
-  'windFriendly',
+  'birdFriendly',
+  'regional',
 ] as const;
 
 export type BooleanPlantKeys = (typeof CHECKBOX_FIELDS)[number];
@@ -23,7 +23,8 @@ export const CHECKBOX_LABELS: Record<BooleanPlantKeys, string> = {
   fragrant: 'Duftend',
   buckets: 'Topfgeeignet',
   bugsFriendly: 'Insektenfreundlich',
-  windFriendly: 'Windfreundlich',
+  birdFriendly: 'Vogelnährgehölz',
+  regional: 'Einheimisch',
 };
 
 export type CheckboxItem = {

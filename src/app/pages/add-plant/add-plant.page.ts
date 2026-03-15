@@ -45,6 +45,8 @@ import { PlantFormService } from 'src/app/shared/services/plant-form.service';
 import { Plant } from 'src/app/shared/types/PlantType';
 
 import { ColorChoicesComponent } from 'src/app/components/color-choices/color-choices.component';
+import { DistanceComponent } from "src/app/components/distance/distance.component";
+import { RequiredAreaComponent } from "src/app/components/required-area/required-area.component";
 
 @Component({
   selector: 'app-add-plant',
@@ -79,6 +81,8 @@ import { ColorChoicesComponent } from 'src/app/components/color-choices/color-ch
     IonModal,
     RootSystemComponent,
     ColorChoicesComponent,
+    RequiredAreaComponent,
+    DistanceComponent
   ],
 })
 export class AddPlantPage {
@@ -105,18 +109,26 @@ export class AddPlantPage {
   private destroy$ = new Subject<void>();
 
   ionViewWillEnter() {
+    this.lastAddedPlantId = null;
     this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async (params) => {
       const parentId = params['parentId'];
       const editId = params['editId'];
 
-      if (parentId) this.parentId = Number(parentId);
+      this.parentId = parentId ? Number(parentId) : null;
+      this.isEditMode = !!editId;
 
-      if (editId) {
-        this.isEditMode = true;
+      if (this.isEditMode) {
+        console.log('Edit mode activated for ID:', editId);
         const plant = await this.plantStorageService.getPlant(Number(editId));
         if (!plant) return;
         this.plantFormService.setPlant(plant);
+      } else {
+        this.plantFormService.reset();
       }
+
+      console.log('editId', editId);
+      console.log('parentId', parentId);
+      console.log('isEditMode', this.isEditMode);
     });
   }
 

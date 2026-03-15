@@ -59,6 +59,8 @@ export class PlantDetailsComponent implements OnInit {
       fragrant: 'nose.png',
       windFriendly: 'wind.png',
       bugsFriendly: 'bug.png',
+      birdFriendly: 'bird.png',
+      regional: 'home.png',
     };
 
     this.icons = Object.entries(iconMap)

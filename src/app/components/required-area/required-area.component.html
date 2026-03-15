@@ -1,0 +1,19 @@
+<ion-item
+  lines="none"
+  class="ion-no-padding"
+>
+  <ion-label>Bedarf/Meter²</ion-label>
+  <ion-checkbox
+    slot="end"
+    [checked]="(plantForm$ | async)?.requiredArea?.enabled"
+    (ionChange)="plantFormService.update('requiredArea.enabled', $event.detail.checked)"
+  />
+</ion-item>
+
+@if ((plantForm$ | async)?.requiredArea?.enabled) {
+  <app-range-slider
+    [range]="requiredArea"
+    [value]="(plantForm$ | async)?.requiredArea!.value"
+    (valueChange)="plantFormService.update('requiredArea.value', $event)"
+  />
+}

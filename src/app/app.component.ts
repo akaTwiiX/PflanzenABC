@@ -1,6 +1,7 @@
 import { BackupStateService } from '@/services/backup-state.service';
 import { IncrementalBackupService } from '@/services/incremental-backup.service';
 import { Component, inject } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { App, AppState } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
@@ -32,8 +33,10 @@ export class AppComponent {
   private alertCtrl = inject(AlertController);
   private modalCtrl = inject(ModalController);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   constructor() {
+    this.setupScrollToTop();
     this.platform.ready().then(() => {
       this.setSafeArea();
 
@@ -119,6 +122,29 @@ export class AppComponent {
     App.addListener('appStateChange', async (state: AppState) => {
       console.log('📴 Start backup...');
       await BackupStateService.performBackupIfNeeded();
+    });
+  }
+
+  private setupScrollToTop() {
+    let lastPath = '';
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const currentPath = event.urlAfterRedirects.split('?')[0];
+
+        if (currentPath !== lastPath) {
+          lastPath = currentPath;
+
+          // Small delay to ensure the content is rendered and ready
+          setTimeout(() => {
+            const contents = document.querySelectorAll('ion-content');
+            contents.forEach((content: any) => {
+              if (content.scrollToTop) {
+                content.scrollToTop(0);
+              }
+            });
+          }, 100);
+        }
+      }
     });
   }
 }

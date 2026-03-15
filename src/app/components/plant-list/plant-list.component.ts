@@ -3,7 +3,7 @@ import { ListItem } from '@/types/ListItem';
 import { Plant } from '@/types/PlantType';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonIcon, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone';
 
@@ -22,6 +22,7 @@ export class PlantListComponent implements OnChanges {
   router = inject(Router);
 
   mergedItems: ListItem[] = [];
+  isSorting = signal(false);
 
   get viewportHeight() {
     const itemHeight = 50;
@@ -40,9 +41,11 @@ export class PlantListComponent implements OnChanges {
   }
 
   private mergeAndSort() {
+    this.isSorting.set(true);
     const worker = new Worker(new URL('../../shared/workers/list-sort.worker', import.meta.url));
     worker.onmessage = ({ data }) => {
       this.mergedItems = data;
+      this.isSorting.set(false);
       worker.terminate();
     };
     worker.postMessage({ plants: this.plants, collections: this.collections });

@@ -1,31 +1,32 @@
+import { distanceRange } from '@/consts/distanceRange';
+import { monthRange } from '@/consts/monthRange';
 import { CollectionStorageService } from '@/services/collection-storage.service';
 import { PlantStorageService } from '@/services/plant-storage.service';
+import { Collection } from '@/types/Collection';
+import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
 import {
-  Component,
+  AfterViewInit,
   ChangeDetectionStrategy,
-  signal,
+  Component,
   computed,
   ElementRef,
-  AfterViewInit,
-  QueryList,
-  ViewChildren,
   inject,
+  OnDestroy,
+  QueryList,
+  signal,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import {
-  IonSpinner,
   IonContent,
   IonFab,
   IonFabButton,
   IonFabList,
+  IonSpinner,
 } from '@ionic/angular/standalone';
-import { PlantListComponent } from '../plant-list/plant-list.component';
-import { Collection } from '@/types/Collection';
-import { Plant } from '@/types/PlantType';
-import { monthRange } from '@/consts/monthRange';
-import { distanceRange } from '@/consts/distanceRange';
 import { Subject, takeUntil } from 'rxjs';
+import { PlantListComponent } from '../plant-list/plant-list.component';
 
 interface LetterGroup {
   letter: string;
@@ -51,7 +52,7 @@ interface LetterGroup {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DropdownListComponent implements AfterViewInit {
+export class DropdownListComponent implements AfterViewInit, OnDestroy {
   @ViewChild(IonContent) content!: IonContent;
 
   alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -89,22 +90,22 @@ export class DropdownListComponent implements AfterViewInit {
     });
   }
 
-  private initObservers() {
+  private async initObservers() {
     this.observer = new IntersectionObserver((entries) => this.onIntersect(entries), {
+      root: null,
       rootMargin: '100px',
-      threshold: 0.2,
+      threshold: 0,
     });
 
     this.observeSections();
     this.observeActiveLetter();
   }
 
-  private reconnectObservers() {
+  private async reconnectObservers() {
     if (this.observer) this.observer.disconnect();
     if (this.activeObserver) this.activeObserver.disconnect();
 
-    this.observeSections();
-    this.observeActiveLetter();
+    this.initObservers();
   }
 
   resetData(filter: Partial<Plant>) {
@@ -119,9 +120,9 @@ export class DropdownListComponent implements AfterViewInit {
 
     this.dataByLetter.set(reset);
 
-    queueMicrotask(() => {
+    setTimeout(() => {
       this.reconnectObservers();
-    });
+    }, 100);
   }
 
   private observeSections() {
@@ -252,25 +253,28 @@ export class DropdownListComponent implements AfterViewInit {
     }
   }
 
-  private observeActiveLetter() {
+  private async observeActiveLetter() {
     if (!this.content) {
       console.warn('IonContent not yet available');
       return;
     }
 
-    this.content.getScrollElement().then((root) => {
-      this.activeObserver = new IntersectionObserver(
-        (entries) => this.updateActiveLetter(entries),
-        {
-          root,
-          rootMargin: '0px 0px -90%',
-          threshold: 0,
-        },
-      );
+    if (this.activeObserver) {
+      this.activeObserver.disconnect();
+    }
 
-      this.sections.forEach((section) => {
-        this.activeObserver.observe(section.nativeElement);
-      });
+    const root = await this.content.getScrollElement();
+    this.activeObserver = new IntersectionObserver(
+      (entries) => this.updateActiveLetter(entries),
+      {
+        root,
+        rootMargin: '0px 0px -90%',
+        threshold: 0,
+      },
+    );
+
+    this.sections.forEach((section) => {
+      this.activeObserver.observe(section.nativeElement);
     });
   }
 
@@ -309,7 +313,10 @@ export class DropdownListComponent implements AfterViewInit {
     return item.letter;
   }
 
-  ionViewWillLeave() {
+  ngOnDestroy() {
+    if (this.observer) this.observer.disconnect();
+    if (this.activeObserver) this.activeObserver.disconnect();
     this.destroy$.next();
+    this.destroy$.complete();
   }
 }
