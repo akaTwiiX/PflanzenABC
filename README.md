@@ -42,7 +42,7 @@ You can add plants with optional photos, organize them alphabetically, and even 
 ### 1. Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 2. Run the App in the Browser
