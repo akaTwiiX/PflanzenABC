@@ -1,47 +1,48 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
+  PreloadAllModules,
   RouteReuseStrategy,
   provideRouter,
   withPreloading,
-  PreloadAllModules,
 } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 
-import { routes } from './app/app.routes';
-import { AppComponent } from './app/app.component';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { addIcons } from 'ionicons';
 import {
-  chevronDown,
   add,
-  camera,
-  close,
-  image,
   addCircleOutline,
-  fileTrayFullOutline,
-  pencilOutline,
   arrowBackOutline,
-  ellipsisVertical,
-  trashOutline,
-  closeCircle,
-  checkmarkCircle,
-  personCircleOutline,
-  logOutOutline,
-  cloudUploadOutline,
-  logInOutline,
   bookOutline,
-  leafOutline,
-  settingsOutline,
+  camera,
+  checkmarkCircle,
+  chevronDown,
+  close,
+  closeCircle,
+  cloudUploadOutline,
+  ellipsisVertical,
+  fileTrayFullOutline,
+  fileTrayStackedOutline,
   filterOutline,
+  image,
+  leafOutline,
+  logInOutline,
+  logOutOutline,
+  pencilOutline,
+  personCircleOutline,
+  settingsOutline,
+  trashOutline,
 } from 'ionicons/icons';
-import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
 
 addIcons({
   'add-circle-outline': addCircleOutline,
   'chevron-down': chevronDown,
-  add: add,
-  camera: camera,
-  close: close,
-  image: image,
+  'add': add,
+  'camera': camera,
+  'close': close,
+  'image': image,
   'file-tray-full-outline': fileTrayFullOutline,
   'pencil-outline': pencilOutline,
   'arrow-back-outline': arrowBackOutline,
@@ -57,6 +58,7 @@ addIcons({
   'leaf-outline': leafOutline,
   'settings-outline': settingsOutline,
   'filter-outline': filterOutline,
+  'file-tray-stacked-outline': fileTrayStackedOutline,
 });
 
 defineCustomElements();

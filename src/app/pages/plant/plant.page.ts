@@ -1,3 +1,4 @@
+import { CollectionStorageService } from '@/services/collection-storage.service';
 import { PlantFormService } from '@/services/plant-form.service';
 import { PlantStorageService } from '@/services/plant-storage.service';
 import { Plant } from '@/types/PlantType';
@@ -5,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { ActionSheetController, AlertController } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonSpinner, IonText, IonTitle, IonToolbar, ToastController } from '@ionic/angular/standalone';
 import { PlantDetailsComponent } from 'src/app/components/plant-details/plant-details.component';
 
 function migratePlant(plant: any, defaults: any): { plant: any; changed: boolean } {
@@ -58,10 +59,12 @@ function migratePlant(plant: any, defaults: any): { plant: any; changed: boolean
 export class PlantPage implements OnInit {
   route = inject(ActivatedRoute);
   plantStorageService = inject(PlantStorageService);
+  collectionStorageService = inject(CollectionStorageService);
   plantFormService = inject(PlantFormService);
   router = inject(Router);
   actionSheetCtrl = inject(ActionSheetController);
-  alertCtrl = inject(ActionSheetController);
+  alertCtrl = inject(AlertController);
+  toastCtrl = inject(ToastController);
 
   plantId!: number;
   isLoading = true;
@@ -135,10 +138,86 @@ export class PlantPage implements OnInit {
     this.goToHomeOrCollection();
   }
 
+  async openCollectionDialog() {
+    const collections = await this.collectionStorageService.getAllCollections();
+
+    if (collections.length === 0) {
+      const info = await this.alertCtrl.create({
+        header: 'Keine Sammlungen',
+        message: 'Es gibt noch keine Sammlungen. Erstelle zuerst eine Sammlung.',
+        buttons: ['OK'],
+      });
+      await info.present();
+      return;
+    }
+
+    const alert = await this.alertCtrl.create({
+      header: 'In Sammlung verschieben',
+      inputs: collections.map((c) => ({
+        type: 'radio' as const,
+        label: c.name,
+        value: c.id,
+        checked: c.id === this.plant?.collectionId,
+      })),
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+        },
+        {
+          text: 'Verschieben',
+          handler: (selectedId: number) => this.moveToCollection(selectedId),
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async moveToCollection(targetCollectionId: number) {
+    if (!this.plant) return;
+    if (this.plant.collectionId === targetCollectionId) return;
+
+    const oldCollectionId = this.plant.collectionId;
+
+    if (oldCollectionId && oldCollectionId !== targetCollectionId) {
+      const oldCollection = await this.collectionStorageService.getCollection(oldCollectionId);
+      if (oldCollection) {
+        const updatedIds = (oldCollection.plantIds ?? []).filter((id) => id !== this.plantId);
+        await this.collectionStorageService.updateCollection(oldCollectionId, { plantIds: updatedIds });
+      }
+    }
+
+    const newCollection = await this.collectionStorageService.getCollection(targetCollectionId);
+    if (newCollection) {
+      const currentIds = newCollection.plantIds ?? [];
+      if (!currentIds.includes(this.plantId)) {
+        await this.collectionStorageService.updateCollection(targetCollectionId, {
+          plantIds: [...currentIds, this.plantId],
+        });
+      }
+    }
+
+    this.plant.collectionId = targetCollectionId;
+    await this.plantStorageService.updatePlant(this.plantId, { collectionId: targetCollectionId });
+
+    const toast = await this.toastCtrl.create({
+      message: 'Pflanze erfolgreich verschoben',
+      duration: 2000,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
+
   async openMenu() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Optionen',
       buttons: [
+        {
+          text: 'in Sammlung verschieben',
+          icon: 'file-tray-stacked-outline',
+          handler: () => this.openCollectionDialog(),
+        },
         {
           text: 'Bearbeiten',
           icon: 'pencil-outline',

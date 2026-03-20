@@ -46,4 +46,8 @@ export class CollectionStorageService {
     const results = await this.table.bulkGet(ids);
     return results.filter((c): c is Collection => !!c);
   }
+
+  async getAllCollections(): Promise<Collection[]> {
+    return await this.table.toArray();
+  }
 }
