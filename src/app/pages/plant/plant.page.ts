@@ -9,6 +9,32 @@ import { ActionSheetController } from '@ionic/angular';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { PlantDetailsComponent } from 'src/app/components/plant-details/plant-details.component';
 
+function migratePlant(plant: any, defaults: any): { plant: any; changed: boolean } {
+  let changed = false;
+  for (const key of Object.keys(defaults)) {
+    if (plant[key] === undefined || plant[key] === null) {
+      // Field missing entirely → use default
+      plant[key] = structuredClone(defaults[key]);
+      changed = true;
+    } else if (Array.isArray(defaults[key]) && !Array.isArray(plant[key])) {
+      // Type changed: was scalar, now array → wrap non-empty string, else use []
+      plant[key] = plant[key] !== '' ? [plant[key]] : [];
+      changed = true;
+    } else if (
+      typeof defaults[key] === 'object' &&
+      !Array.isArray(defaults[key]) &&
+      defaults[key] !== null &&
+      typeof plant[key] === 'object' &&
+      !Array.isArray(plant[key])
+    ) {
+      // Nested object → recurse
+      const result = migratePlant(plant[key], defaults[key]);
+      if (result.changed) changed = true;
+    }
+  }
+  return { plant, changed };
+}
+
 @Component({
   selector: 'app-plant',
   templateUrl: './plant.page.html',
@@ -58,6 +84,12 @@ export class PlantPage implements OnInit {
       if (!this.plant) {
         this.errorMsg = 'Plant not found';
         return;
+      }
+      const defaults = this.plantFormService.getDefaultPlant();
+      const { plant: migrated, changed } = migratePlant(this.plant, defaults);
+      this.plant = migrated as Plant;
+      if (changed) {
+        await this.plantStorageService.updatePlant(this.plantId, this.plant);
       }
     } catch (err) {
       console.error('Failed to fetch related data:', err);

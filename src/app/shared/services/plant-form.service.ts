@@ -73,4 +73,8 @@ export class PlantFormService {
   reset() {
     this.state$.next(structuredClone(this.initialState));
   }
+
+  getDefaultPlant(): Plant {
+    return structuredClone(this.initialState);
+  }
 }
