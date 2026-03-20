@@ -12,6 +12,7 @@
 
 @if ((plantForm$ | async)?.fertilization?.enabled) {
   <app-choices
+    [multiple]="true"
     [choiceName]="ChoiceName.FertilizerType"
     [selected]="(plantForm$ | async)?.fertilization?.type"
     (selectedChange)="plantFormService.update('fertilization.type', $event)"

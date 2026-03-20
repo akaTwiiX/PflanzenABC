@@ -29,11 +29,11 @@
     }
   </div>
 
-  @if (plant.type) {
+  @if (plant.type.length > 0) {
     <ion-item>
       <strong>Typ:</strong>
       <ion-label slot="end">
-        {{ plant.type }}
+        {{ plant.type.join(', ') }}
       </ion-label>
     </ion-item>
   }
@@ -76,11 +76,39 @@
     </ion-item>
   }
 
-  @if (plant.fertilization.enabled) {
+  @if (plant.leafShape) {
+    <ion-item>
+      <ion-label>
+        <strong>Blattform:</strong>
+        <div>{{ plant.leafShape }}</div>
+      </ion-label>
+    </ion-item>
+  }
+
+  @if (plant.autumnColors.enabled && plant.autumnColors.colors && typeof plant.autumnColors.colors === 'object') {
+    <ion-item>
+      <ion-label>
+        <strong>Herbstfärbung:</strong>
+        <div class="checkbox-container">
+          @for (color of plant.autumnColors.colors; track $index) {
+            <ion-checkbox
+              class="color-choices"
+              [style.--checkbox-background]="color"
+              [style.--checkbox-background-checked]="color"
+              [style.--border-color]="color"
+              [style.--border-color-checked]="color"
+            />
+          }
+        </div>
+      </ion-label>
+    </ion-item>
+  }
+
+  @if (plant.fertilization.enabled && plant.fertilization.type && typeof plant.fertilization.type === 'object') {
     <ion-item>
       <ion-label>
         <strong>Dünger:</strong>
-        <div>{{ plant.fertilization.type }} – {{ plant.fertilization.time }}</div>
+        <div>{{ plant.fertilization.type.join(', ') }} – {{ plant.fertilization.time }}</div>
       </ion-label>
     </ion-item>
   }
@@ -98,6 +126,15 @@
     <ion-item>
       <strong>Früchte:</strong>
       <ion-label slot="end">{{ plant.fruit.time.start }} – {{ plant.fruit.time.end }}</ion-label>
+      @for (color of plant.fruit.color; track $index) {
+            <ion-checkbox
+              class="color-choices"
+              [style.--checkbox-background]="color"
+              [style.--checkbox-background-checked]="color"
+              [style.--border-color]="color"
+              [style.--border-color-checked]="color"
+            />
+          }
     </ion-item>
   }
 
@@ -143,6 +180,15 @@
       <ion-label>
         <strong>Wurzelsystem:</strong>
         <div>{{ plant.rootSystem }}</div>
+      </ion-label>
+    </ion-item>
+  }
+
+  @if (plant.growthForm) {
+    <ion-item>
+      <ion-label>
+        <strong>Wuchsform:</strong>
+        <div>{{ plant.growthForm.join(', ') }}</div>
       </ion-label>
     </ion-item>
   }

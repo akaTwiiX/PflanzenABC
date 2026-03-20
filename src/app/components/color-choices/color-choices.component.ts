@@ -33,7 +33,12 @@ export class ColorChoicesComponent {
   }
 
   getColors(plant: Plant): string[] {
-    return plant[this.choiceName as keyof Plant] as string[];
+    const keys = this.choiceName.split('.');
+    let value: any = plant;
+    for (const key of keys) {
+      value = value?.[key];
+    }
+    return (value as string[]) ?? [];
   }
 
   isSelected(currentColors: string[], color: string): boolean {

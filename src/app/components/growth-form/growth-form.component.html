@@ -1,0 +1,10 @@
+<div>
+  <ion-label>Wuchsform</ion-label>
+
+  <app-choices
+    [multiple]="true"
+    [choiceName]="ChoiceName.GrowthForm"
+    [selected]="(plantForm$ | async)?.growthForm"
+    (selectedChange)="plantFormService.update('growthForm', $event)"
+  />
+</div>

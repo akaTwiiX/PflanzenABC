@@ -3,6 +3,8 @@ export enum ChoiceName {
   FertilizerType = 'fertilizerType',
   SoilType = 'soilType',
   RootSystem = 'rootSystem',
+  GrowthForm = 'growthForm',
+  LeafShape = 'leafShape',
 }
 
 export interface ChoiceEntry {

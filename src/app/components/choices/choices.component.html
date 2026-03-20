@@ -1,6 +1,7 @@
 <ion-item lines="none">
   <ion-select
     [value]="selected"
+    [multiple]="multiple"
     [disabled]="options.length === 0"
     (ionChange)="onSelectChange($event.detail.value)"
     okText="OK"

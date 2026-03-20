@@ -1,0 +1,9 @@
+<div>
+  <ion-label>Blattform</ion-label>
+
+  <app-choices
+    [choiceName]="ChoiceName.LeafShape"
+    [selected]="(plantForm$ | async)?.leafShape"
+    (selectedChange)="plantFormService.update('leafShape', $event)"
+  />
+</div>

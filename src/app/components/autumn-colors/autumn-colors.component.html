@@ -1,0 +1,18 @@
+  <ion-item
+  lines="none"
+  class="ion-no-padding"
+>
+  <ion-label>Herbstfärbung</ion-label>
+  <ion-checkbox
+    slot="end"
+    [checked]="(plantForm$ | async)?.autumnColors?.enabled"
+    (ionChange)="plantFormService.update('autumnColors.enabled', $event.detail.checked)"
+  />
+</ion-item>
+
+  @if ((plantForm$ | async)?.autumnColors?.enabled) {
+    <app-color-choices
+      [title]="''"
+      [choiceName]="'autumnColors.colors'"
+    />
+  }

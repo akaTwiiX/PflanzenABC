@@ -17,4 +17,9 @@
     [value]="(plantForm$ | async)?.fruit?.time!"
     (valueChange)="plantFormService.update('fruit.time', $event)"
   />
+
+  <app-color-choices
+    [title]="'Fruchtfarbe:'"
+    [choiceName]="'fruit.color'"
+  />
 }

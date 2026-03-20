@@ -61,6 +61,10 @@
           (ionChange)="plantFormService.update('growth', $event.detail.value ?? '')"
         />
       </ion-item>
+      
+      <ion-item>
+        <app-growth-form />
+      </ion-item>
 
       <ion-item>
         <app-range-slider
@@ -79,10 +83,17 @@
       </ion-item>
 
       <ion-item>
+        <app-leaf-shape />
+      </ion-item>
+
+      <ion-item>
         <app-color-choices
           [title]="'Blätterfarbe:'"
           [choiceName]="'leafColor'"
         />
+      </ion-item>
+      <ion-item>
+        <app-autumn-colors />
       </ion-item>
       <ion-item>
         <app-soil />

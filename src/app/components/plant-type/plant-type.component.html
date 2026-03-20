@@ -2,6 +2,7 @@
   <ion-label>Art</ion-label>
 
   <app-choices
+    [multiple]="true"
     [choiceName]="ChoiceName.PlantType"
     [selected]="(plantForm$ | async)?.type"
     (selectedChange)="plantFormService.update('type', $event)"

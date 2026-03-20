@@ -44,9 +44,11 @@ import { ChoicesStorageService } from '@/services/choices-storage.service';
 export class ChoicesComponent implements OnInit {
   choiceStorageService = inject(ChoicesStorageService);
 
-  @Input() selected: string | undefined = undefined;
+  @Input() multiple = false;
 
-  @Output() selectedChange = new EventEmitter<string>();
+  @Input() selected: string | string[] | undefined = undefined;
+
+  @Output() selectedChange = new EventEmitter<string | string[]>();
 
   @Input() choiceName!: ChoiceName;
 
@@ -69,17 +71,23 @@ export class ChoicesComponent implements OnInit {
 
   async addNewOption() {
     if (this.newOption.trim()) {
-      this.selected = this.newOption.trim();
-      await this.choiceStorageService.addValue(this.choiceName, this.selected);
+      const trimmed = this.newOption.trim();
+      await this.choiceStorageService.addValue(this.choiceName, trimmed);
+
+      if (this.multiple) {
+        const current = Array.isArray(this.selected) ? this.selected : [];
+        this.selected = [...current, trimmed];
+      } else {
+        this.selected = trimmed;
+      }
 
       this.selectedChange.emit(this.selected);
-
       this.closeAddModal();
       this.getOptions();
     }
   }
 
-  onSelectChange(value: string) {
+  onSelectChange(value: string | string[]) {
     this.selected = value;
     this.selectedChange.emit(value);
   }
