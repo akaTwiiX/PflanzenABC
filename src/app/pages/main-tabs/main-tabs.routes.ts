@@ -12,7 +12,7 @@ export const mainTabsRoutes: Routes = [
       },
       {
         path: 'notice',
-        loadComponent: () => import('../notice/notice.page').then(m => m.NoticePage)
+        loadComponent: () => import('../notice/notice.page').then((m) => m.NoticePage),
       },
       {
         path: 'settings',

@@ -1,4 +1,45 @@
+.safe-area {
+  padding: 16px;
+  padding-bottom: calc(32px + var(--ion-safe-area-bottom, 24px));
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 24px;
+}
+
+ion-item {
+  --background: var(--ion-color-light);
+  --border-radius: var(--border-radius-md);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --min-height: 60px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(58, 90, 64, 0.03);
+
+  &::part(native) {
+    border: 1px solid rgba(58, 90, 64, 0.05);
+  }
+
+  ion-input,
+  ion-textarea,
+  ion-label {
+    --color: var(--ion-text-color);
+  }
+}
+
 .text-area {
   min-height: 160px;
   margin-top: 8px;
+}
+
+ion-button[shape='round'] {
+  --border-radius: 28px;
+  --background: var(--ion-color-primary);
+  --box-shadow: 0 8px 24px rgba(var(--ion-color-primary-rgb), 0.25);
+  height: 56px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-top: 16px;
 }

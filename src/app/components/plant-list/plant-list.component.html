@@ -11,15 +11,13 @@
     </ion-item>
   } @else {
     @if (mergedItems.length === 0) {
-      <ion-item
-        class="plant-item"
-        lines="none"
-      >
-        <ion-text>Keine Pflanzen</ion-text>
-      </ion-item>
+      <div class="empty-state">
+        <ion-icon name="leaf-outline"></ion-icon>
+        <ion-text>Keine Pflanzen gefunden</ion-text>
+      </div>
     } @else {
       <cdk-virtual-scroll-viewport
-        itemSize="50"
+        itemSize="80"
         class="virtual-scroll"
         [style.height]="viewportHeight"
       >
@@ -27,18 +25,27 @@
           *cdkVirtualFor="let item of mergedItems; let last = last; trackBy: trackByItem"
         >
           <ion-item
+            button
+            detail="true"
             (click)="goTo(item.path, item.id)"
-            [lines]="last ? 'none' : 'full'"
+            [lines]="last ? 'none' : 'inset'"
+            class="styled-item"
           >
-            @if (item.type === 'collection') {
+            <div
+              slot="start"
+              class="icon-container"
+              [ngClass]="item.type"
+            >
               <ion-icon
-                name="file-tray-full-outline"
-                slot="end"
-              />
-            }
-            <ion-text [ngClass]="{ bold: item.type === 'collection' }">
-              {{ item.displayName }}
-            </ion-text>
+                [name]="item.type === 'collection' ? 'folder-open-outline' : 'leaf-outline'"
+              ></ion-icon>
+            </div>
+            <div class="item-text">
+              <h2 [ngClass]="{ 'collection-title': item.type === 'collection' }">
+                {{ item.displayName }}
+              </h2>
+              <p>{{ item.type === 'collection' ? 'Kategorie' : 'Pflanze' }}</p>
+            </div>
           </ion-item>
         </ng-container>
       </cdk-virtual-scroll-viewport>

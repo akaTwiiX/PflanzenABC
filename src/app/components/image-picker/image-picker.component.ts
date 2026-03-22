@@ -1,9 +1,30 @@
 import { db } from '@/services/app-database.service';
 import { loadNativeImage } from '@/utils/image.utils';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
-import { IonActionSheet, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonModal, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  IonActionSheet,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonIcon,
+  IonImg,
+  IonModal,
+  IonText,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 @Component({

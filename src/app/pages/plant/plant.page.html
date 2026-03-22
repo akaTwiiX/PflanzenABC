@@ -4,17 +4,14 @@
       <ion-button (click)="goToHomeOrCollection()">
         <ion-icon
           slot="icon-only"
-          name="arrow-back-outline"
+          name="arrow-back"
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">{{ plant?.nameLatin }}</ion-title>
-    <ion-title
-      size="small"
-      class="ion-text-center"
-    >
-      {{ plant?.nameGerman }}
-    </ion-title>
+    <div class="header-titles">
+      <h1 class="latin-name">{{ plant?.nameLatin }}</h1>
+      <p class="german-name">{{ plant?.nameGerman }}</p>
+    </div>
     <ion-buttons slot="end">
       <ion-button (click)="openMenu()">
         <ion-icon name="ellipsis-vertical"></ion-icon>

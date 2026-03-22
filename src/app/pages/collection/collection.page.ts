@@ -1,26 +1,26 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonList,
-  IonButton,
-  AlertController,
-  ToastController,
-  IonIcon,
-} from '@ionic/angular/standalone';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PlantStorageService } from '@/services/plant-storage.service';
 import { CollectionStorageService } from '@/services/collection-storage.service';
+import { PlantStorageService } from '@/services/plant-storage.service';
 import { Collection } from '@/types/Collection';
 import { Plant } from '@/types/PlantType';
-import { PlantListComponent } from 'src/app/components/plant-list/plant-list.component';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  AlertController,
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonTitle,
+  IonToolbar,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { combineLatest, map, Subject, takeUntil } from 'rxjs';
+import { AddButtonComponent } from 'src/app/components/add-button/add-button.component';
+import { PlantListComponent } from 'src/app/components/plant-list/plant-list.component';
 
 @Component({
   selector: 'app-collection',
@@ -36,10 +36,10 @@ import { combineLatest, map, Subject, takeUntil } from 'rxjs';
     FormsModule,
     IonButtons,
     IonBackButton,
-    IonList,
     PlantListComponent,
     IonButton,
     IonIcon,
+    AddButtonComponent,
   ],
 })
 export class CollectionPage {

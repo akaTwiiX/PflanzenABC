@@ -9,8 +9,8 @@ describe('AutumnColorsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AutumnColorsComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [AutumnColorsComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AutumnColorsComponent);

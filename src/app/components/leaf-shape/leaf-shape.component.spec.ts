@@ -9,8 +9,8 @@ describe('LeafShapeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeafShapeComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [LeafShapeComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LeafShapeComponent);

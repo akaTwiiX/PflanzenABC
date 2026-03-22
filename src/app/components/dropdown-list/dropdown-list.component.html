@@ -11,7 +11,10 @@
             <h2 class="ion-text-uppercase ion-margin-top">{{ group.letter }}</h2>
           </div>
 
-          @if (group.isLoading || (isInitialLoading() && (group.letter === 'A' || group.letter === 'B'))) {
+          @if (
+            group.isLoading ||
+            (isInitialLoading() && (group.letter === 'A' || group.letter === 'B'))
+          ) {
             <ion-spinner
               name="crescent"
               class="ion-padding"
@@ -38,7 +41,7 @@
       <!-- <ion-icon name="add"></ion-icon> -->
       <span>A - Z</span>
     </ion-fab-button>
-    <ion-fab-list>
+    <ion-fab-list side="bottom">
       <div class="fab-letter-container">
         @for (group of dataByLetter(); track group.letter) {
           <div

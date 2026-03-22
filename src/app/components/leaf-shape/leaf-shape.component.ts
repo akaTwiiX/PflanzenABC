@@ -17,5 +17,4 @@ export class LeafShapeComponent {
   choiceStorageService = inject(ChoicesStorageService);
   plantForm$ = this.plantFormService.plantForm$;
   ChoiceName = ChoiceName;
-
 }

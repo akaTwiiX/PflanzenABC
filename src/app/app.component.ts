@@ -1,5 +1,8 @@
+import { AuthService } from '@/services/auth.service';
 import { BackupStateService } from '@/services/backup-state.service';
+import { auth } from '@/services/firebase';
 import { IncrementalBackupService } from '@/services/incremental-backup.service';
+import { UpdaterService } from '@/services/updater.service';
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { App, AppState } from '@capacitor/app';
@@ -7,18 +10,15 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import {
+  AlertController,
   IonApp,
   IonRouterOutlet,
-  AlertController,
   ModalController,
 } from '@ionic/angular/standalone';
 import { SafeArea } from 'capacitor-plugin-safe-area';
+import { onAuthStateChanged } from 'firebase/auth';
 import { register } from 'swiper/element/bundle';
 import { DownloadModalComponent } from './components/download-modal/download-modal.component';
-import { UpdaterService } from '@/services/updater.service';
-import { onAuthStateChanged } from 'firebase/auth';
-import { AuthService } from '@/services/auth.service';
-import { auth } from '@/services/firebase';
 
 register();
 

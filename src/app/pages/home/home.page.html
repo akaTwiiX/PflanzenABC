@@ -15,9 +15,6 @@
         [value]="searchQuery"
         (ionInput)="onSearch($event)"
       />
-      <ion-buttons slot="end">
-        <app-add-button />
-      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
@@ -30,5 +27,6 @@
     } @else {
     <app-dropdown-list #dropdownList />
     }
+    <app-add-button />
   </ion-content>
 </div>

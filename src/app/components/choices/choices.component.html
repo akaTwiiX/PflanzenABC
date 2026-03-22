@@ -1,4 +1,4 @@
-<ion-item lines="none">
+<div class="choices-wrapper">
   <ion-select
     [value]="selected"
     [multiple]="multiple"
@@ -7,7 +7,7 @@
     okText="OK"
     cancelText="Abbrechen"
     [placeholder]="options.length === 0 ? 'Typen hinzufügen' : 'Auswahl'"
-    fill="solid"
+    class="custom-select"
   >
     @for (option of options; track $index) {
       <ion-select-option [value]="option">
@@ -18,16 +18,21 @@
 
   <ion-button
     fill="clear"
-    slot="end"
+    color="secondary"
     (click)="openAddItemModal()"
-    size="large"
+    class="add-btn"
   >
-    <ion-icon name="add-circle-outline"></ion-icon>
+    <ion-icon
+      name="add-circle-outline"
+      slot="icon-only"
+    ></ion-icon>
   </ion-button>
-</ion-item>
+</div>
 
 <ion-modal
   [isOpen]="showAddModal"
+  [initialBreakpoint]="0.5"
+  [breakpoints]="[0, 0.5]"
   (didDismiss)="closeAddModal()"
 >
   <ng-template>

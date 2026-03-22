@@ -1,4 +1,3 @@
-
 export const CHECKBOX_FIELDS = [
   'frostResistant',
   'evergreen',

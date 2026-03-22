@@ -9,17 +9,33 @@ import { loadNativeImage } from '@/utils/image.utils';
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import { IonImg, IonItem, IonLabel, IonList, IonModal, IonText } from '@ionic/angular/standalone';
+import { IonBadge, IonButton, IonIcon, IonImg, IonModal, IonText } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-plant-details',
   templateUrl: './plant-details.component.html',
   styleUrls: ['./plant-details.component.scss'],
-  imports: [IonImg, IonLabel, IonText, IonItem, IonList, CommaDecimalPipe, CommonModule, IonModal],
+  imports: [
+    IonImg,
+    IonText,
+    CommaDecimalPipe,
+    CommonModule,
+    IonModal,
+    IonBadge,
+    IonButton,
+    IonIcon,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PlantDetailsComponent implements OnInit {
+  isArray = Array.isArray;
   @Input() plant!: Plant;
+
+  get fertilizationTypeDisplay(): string {
+    const type = this.plant.fertilization.type;
+    if (!type) return '';
+    return Array.isArray(type) ? type.join(', ') : type;
+  }
 
   plantFormService = inject(PlantFormService);
 
@@ -50,7 +66,7 @@ export class PlantDetailsComponent implements OnInit {
 
   buildIcons() {
     const iconMap: { [key: string]: string } = {
-      leaf: 'leaf.png',
+      evergreen: 'leaf.png',
       dryTolerance: 'cactus.png',
       buckets: 'flower-pot.png',
       frostResistant: 'snowflake.png',

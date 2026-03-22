@@ -1,12 +1,37 @@
-.container {
+.header-titles {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100%;
+  justify-content: center;
+  padding: 4px 8px;
+  max-width: calc(100vw - 120px); /* leave room for back button + edit button */
+  overflow: hidden;
+
+  .latin-name {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ion-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .german-name {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--ion-color-medium);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
 }
 
-.plant-container {
-  // background-color: #bec9b5;
-  // padding: 16px;
-  height: 100%;
+.plugin-content {
+  background-color: var(--ion-background-color);
 }

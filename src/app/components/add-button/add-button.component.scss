@@ -1,8 +1,112 @@
-.button {
-  height: 48px;
+.add-fab {
+  margin-bottom: 32px;
+
+  ion-fab-button {
+    --background: var(--ion-color-secondary-tint);
+    --color: var(--ion-color-secondary-contrast);
+    --box-shadow: 0 8px 32px rgba(var(--ion-color-secondary-rgb), 0.4);
+    --border-radius: 18px;
+    font-size: 24px;
+
+    ion-icon {
+      font-size: 32px;
+    }
+  }
 }
 
-ion-icon {
-  color: black;
-  --ionicon-stroke-width: 40px;
+.modal-wrapper {
+  padding: 24px;
+  background-color: var(--ion-background-color);
+  height: 100%;
+
+  .modal-header {
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--ion-text-color);
+    }
+
+    p {
+      margin: 4px 0 0 0;
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.action-grid {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.action-card {
+  flex: 1;
+  background: var(--ion-color-light);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius-md);
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 120px;
+
+  &:active {
+    transform: scale(0.95);
+    background: var(--ion-color-step-100);
+  }
+
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 1.8rem;
+    }
+
+    &.primary {
+      background: rgba(var(--ion-color-primary-rgb), 0.1);
+      color: var(--ion-color-primary);
+    }
+
+    &.secondary {
+      background: rgba(var(--ion-color-secondary-rgb), 0.1);
+      color: var(--ion-color-secondary);
+    }
+  }
+
+  span {
+    font-weight: 600;
+    color: var(--ion-text-color);
+  }
+}
+
+.styled-input {
+  --background: var(--ion-color-light);
+  --border-radius: var(--border-radius-md);
+  margin-bottom: 24px;
+  --padding-start: 16px;
+  padding: 4px 0;
+
+  ion-input {
+    font-weight: 500;
+  }
+}
+
+.submit-button {
+  --border-radius: var(--border-radius-md);
+  --background: var(--ion-color-primary);
+  --box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.2);
+  height: 50px;
 }

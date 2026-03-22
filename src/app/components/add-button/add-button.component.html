@@ -1,37 +1,48 @@
-<ion-button
-  fill="clear"
-  (click)="dialog.present()"
+<ion-fab
+  slot="fixed"
+  vertical="bottom"
+  horizontal="center"
+  class="add-fab"
 >
-  <ion-icon
-    slot="icon-only"
-    size="large"
-    name="add"
-  ></ion-icon>
-</ion-button>
+  <ion-fab-button (click)="dialog.present()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
 <ion-modal
   id="dialog"
   #dialog
+  class="add-modal"
+  [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]"
 >
   <ng-template>
-    <div class="wrapper">
-      <h1>Was möchtest du hinzufügen?</h1>
-      <div class="button-row">
-        <ion-button
-          class="ion-margin-bottom"
-          expand="block"
-          color="primary"
+    <div class="modal-wrapper">
+      <div class="modal-header">
+        <h2>Hinzufügen</h2>
+        <p>Wähle eine Option aus</p>
+      </div>
+
+      <div class="action-grid">
+        <div
+          class="action-card"
           (click)="collectionDialog.present(); dialog.dismiss()"
         >
-          Sammlung
-        </ion-button>
-        <ion-button
-          expand="block"
-          color="primary"
+          <div class="icon-circle secondary">
+            <ion-icon name="folder-outline"></ion-icon>
+          </div>
+          <span>Sammlung</span>
+        </div>
+
+        <div
+          class="action-card"
           (click)="navigateToAddPlant(); dialog.dismiss()"
         >
-          Pflanze
-        </ion-button>
+          <div class="icon-circle primary">
+            <ion-icon name="leaf-outline"></ion-icon>
+          </div>
+          <span>Pflanze</span>
+        </div>
       </div>
     </div>
   </ng-template>
@@ -39,25 +50,37 @@
 
 <ion-modal
   #collectionDialog
-  [initialBreakpoint]="0.3"
+  [initialBreakpoint]="0.5"
+  [breakpoints]="[0, 0.5]"
+  class="collection-modal"
   (didDismiss)="newCollection = ''"
 >
   <ng-template>
-    <ion-content class="ion-padding-top">
-      <ion-item>
+    <div class="modal-wrapper">
+      <div class="modal-header">
+        <h2>Neue Sammlung</h2>
+        <p>Geben Sie einen Namen für Ihre neue Sammlung ein</p>
+      </div>
+
+      <ion-item
+        lines="none"
+        class="styled-input"
+      >
         <ion-input
-          placeholder="Neue Sammlung eingeben"
+          placeholder="z.B. Zimmerpflanzen"
           [(ngModel)]="newCollection"
+          autofocus="true"
         ></ion-input>
       </ion-item>
+
       <ion-button
-        class="ion-margin-top"
+        class="submit-button"
         expand="block"
         (click)="addNewCollection(); collectionDialog.dismiss()"
         [disabled]="!newCollection"
       >
-        Hinzufügen
+        Erstellen
       </ion-button>
-    </ion-content>
+    </div>
   </ng-template>
 </ion-modal>

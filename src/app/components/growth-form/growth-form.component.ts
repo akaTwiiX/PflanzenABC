@@ -4,7 +4,7 @@ import { PlantFormService } from '@/services/plant-form.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IonLabel } from '@ionic/angular/standalone';
-import { ChoicesComponent } from "../choices/choices.component";
+import { ChoicesComponent } from '../choices/choices.component';
 
 @Component({
   selector: 'app-growth-form',
@@ -17,5 +17,4 @@ export class GrowthFormComponent {
   choiceStorageService = inject(ChoicesStorageService);
   plantForm$ = this.plantFormService.plantForm$;
   ChoiceName = ChoiceName;
-
 }

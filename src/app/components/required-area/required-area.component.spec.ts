@@ -9,8 +9,8 @@ describe('RequiredAreaComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequiredAreaComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RequiredAreaComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RequiredAreaComponent);

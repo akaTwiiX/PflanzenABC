@@ -1,4 +1,3 @@
-
 export async function encryptData(data: any, password: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const worker = new Worker(new URL('../workers/crypto.worker', import.meta.url));

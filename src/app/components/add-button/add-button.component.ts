@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import {
   IonButton,
   IonIcon,
-  IonContent,
   IonItem,
   IonModal,
   IonInput,
+  IonFab,
+  IonFabButton,
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '@/services/collection-storage.service';
@@ -17,7 +18,7 @@ import { getFirstLetter } from '@/utils/string.utils';
   selector: 'app-add-button',
   templateUrl: './add-button.component.html',
   styleUrls: ['./add-button.component.scss'],
-  imports: [IonButton, IonIcon, IonContent, IonItem, IonModal, IonInput, FormsModule],
+  imports: [IonButton, IonIcon, IonItem, IonModal, IonInput, IonFab, IonFabButton, FormsModule],
 })
 export class AddButtonComponent {
   @Input()
