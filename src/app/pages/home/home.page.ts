@@ -2,7 +2,13 @@ import { AuthService } from '@/services/auth.service';
 import { PlantStorageService } from '@/services/plant-storage.service';
 import { Plant } from '@/types/PlantType';
 import { Component, ViewChild, inject } from '@angular/core';
-import { IonButtons, IonContent, IonHeader, IonSearchbar, IonToolbar } from '@ionic/angular/standalone';
+import {
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonSearchbar,
+  IonToolbar,
+} from '@ionic/angular/standalone';
 import { AddButtonComponent } from 'src/app/components/add-button/add-button.component';
 import { DropdownListComponent } from 'src/app/components/dropdown-list/dropdown-list.component';
 import { FilterButtonComponent } from 'src/app/components/filter-button/filter-button.component';

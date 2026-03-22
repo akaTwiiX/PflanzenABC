@@ -1,4 +1,4 @@
 export type AutumnColors = {
-    enabled: boolean;
-    colors: string[];
+  enabled: boolean;
+  colors: string[];
 };

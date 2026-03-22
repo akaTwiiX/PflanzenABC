@@ -9,8 +9,8 @@ describe('GrowthFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ GrowthFormComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [GrowthFormComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GrowthFormComponent);

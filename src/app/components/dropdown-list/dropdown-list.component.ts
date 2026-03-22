@@ -264,14 +264,11 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
     }
 
     const root = await this.content.getScrollElement();
-    this.activeObserver = new IntersectionObserver(
-      (entries) => this.updateActiveLetter(entries),
-      {
-        root,
-        rootMargin: '0px 0px -90%',
-        threshold: 0,
-      },
-    );
+    this.activeObserver = new IntersectionObserver((entries) => this.updateActiveLetter(entries), {
+      root,
+      rootMargin: '0px 0px -90%',
+      threshold: 0,
+    });
 
     this.sections.forEach((section) => {
       this.activeObserver.observe(section.nativeElement);

@@ -1,3 +1,121 @@
-.bold {
-  font-weight: bold;
+:host {
+  display: block;
+  width: 100%;
+  overflow-x: hidden;
+  /* prevent horizontal scroll */
+}
+
+.plant-list {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.styled-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --min-height: 60px;
+  --background: transparent;
+  --transition: background 0.2s ease;
+  --inner-padding-end: 8px;
+  margin: 4px 12px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  height: 72px;
+  max-width: calc(100vw - 56px);
+  /* 12px margin each side */
+  /* 16px padding each side in parent */
+
+  /* Ionic renders a flex container inside – constrain it to allow ellipsis */
+  &::part(native) {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &:active {
+    --background: var(--ion-color-light);
+  }
+
+  .item-text {
+    margin-left: 12px;
+    overflow: hidden;
+    flex: 1;
+    min-width: 0;
+    /* crucial for flex ellipsis */
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ion-text-color);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.collection-title {
+        color: var(--ion-color-secondary);
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+    }
+
+    p {
+      font-size: 0.8rem;
+      color: var(--ion-color-medium);
+      margin: 2px 0 0 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+
+  ion-icon {
+    font-size: 1.4rem;
+  }
+
+  &.plant {
+    background: rgba(var(--ion-color-primary-rgb), 0.1);
+    color: var(--ion-color-primary);
+  }
+
+  &.collection {
+    background: rgba(var(--ion-color-secondary-rgb), 0.1);
+    color: var(--ion-color-secondary);
+  }
+}
+
+.virtual-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
+  opacity: 0.6;
+
+  ion-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    color: var(--ion-color-primary);
+  }
+
+  ion-text {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }

@@ -7,7 +7,17 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonSpinner, IonText, IonTitle, IonToolbar, ToastController } from '@ionic/angular/standalone';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonSpinner,
+  IonText,
+  IonToolbar,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { PlantDetailsComponent } from 'src/app/components/plant-details/plant-details.component';
 
 function migratePlant(plant: any, defaults: any): { plant: any; changed: boolean } {
@@ -53,7 +63,6 @@ function migratePlant(plant: any, defaults: any): { plant: any; changed: boolean
     IonSpinner,
     IonIcon,
     IonButton,
-    IonTitle
   ],
 })
 export class PlantPage implements OnInit {
@@ -184,7 +193,9 @@ export class PlantPage implements OnInit {
       const oldCollection = await this.collectionStorageService.getCollection(oldCollectionId);
       if (oldCollection) {
         const updatedIds = (oldCollection.plantIds ?? []).filter((id) => id !== this.plantId);
-        await this.collectionStorageService.updateCollection(oldCollectionId, { plantIds: updatedIds });
+        await this.collectionStorageService.updateCollection(oldCollectionId, {
+          plantIds: updatedIds,
+        });
       }
     }
 

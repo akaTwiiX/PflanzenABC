@@ -1,4 +1,4 @@
-<div class="img-container">
+<div class="hero-container">
   @if (imageSrc) {
     <ion-img
       [src]="imageSrc"
@@ -6,10 +6,30 @@
       (click)="openImageModal()"
     />
   } @else {
-    <ion-text color="medium">Kein Bild vorhanden</ion-text>
+    <div class="no-image">
+      <ion-icon name="image-outline"></ion-icon>
+      <ion-text>Kein Bild vorhanden</ion-text>
+    </div>
   }
 </div>
-<ion-list>
+
+<div class="content-wrapper">
+  @if (plant.type.length > 0) {
+    <div class="type-tags">
+      @for (t of plant.type; track $index) {
+        <ion-badge color="tertiary">{{ t }}</ion-badge>
+      }
+    </div>
+  }
+
+  <!-- Full names – visible when header is truncated -->
+  <div class="name-header">
+    <h2 class="name-latin">{{ plant.nameLatin }}</h2>
+    @if (plant.nameGerman) {
+      <p class="name-german">{{ plant.nameGerman }}</p>
+    }
+  </div>
+
   <div class="icons-container">
     @for (light of plant.light; track $index) {
       <ion-img
@@ -29,179 +49,171 @@
     }
   </div>
 
-  @if (plant.type.length > 0) {
-    <ion-item>
-      <strong>Typ:</strong>
-      <ion-label slot="end">
-        {{ plant.type.join(', ') }}
-      </ion-label>
-    </ion-item>
-  }
+  <div class="details-grid">
+    <!-- Highlights Section -->
+    <div class="info-card">
+      <strong>Höhe</strong>
+      <div class="value">
+        {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
+      </div>
+    </div>
+    <div class="info-card">
+      <strong>Breite</strong>
+      <div class="value">
+        {{ plant.width.start | commaDecimal }} – {{ plant.width.end | commaDecimal }} m
+      </div>
+    </div>
+    <div class="info-card">
+      <strong>Blütezeit</strong>
+      <div class="value">{{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}</div>
+    </div>
 
-  @if (plant.leafColor.length > 0) {
-    <ion-item>
-      <ion-label>
-        <strong>Blätterfarbe:</strong>
-        <div class="checkbox-container">
-          @for (color of plant.leafColor; track $index) {
-            <ion-checkbox
-              class="color-choices"
-              [style.--checkbox-background]="color"
-              [style.--checkbox-background-checked]="color"
-              [style.--border-color]="color"
-              [style.--border-color-checked]="color"
-            />
-          }
-        </div>
-      </ion-label>
-    </ion-item>
-  }
-
-  @if (plant.bloomColor.length > 0) {
-    <ion-item>
-      <ion-label>
-        <strong>Blütefarbe:</strong>
-        <div class="checkbox-container">
-          @for (color of plant.bloomColor; track $index) {
-            <ion-checkbox
-              class="color-choices"
-              [style.--checkbox-background]="color"
-              [style.--checkbox-background-checked]="color"
-              [style.--border-color]="color"
-              [style.--border-color-checked]="color"
-            />
-          }
-        </div>
-      </ion-label>
-    </ion-item>
-  }
-
-  @if (plant.leafShape) {
-    <ion-item>
-      <ion-label>
-        <strong>Blattform:</strong>
-        <div>{{ plant.leafShape }}</div>
-      </ion-label>
-    </ion-item>
-  }
-
-  @if (plant.autumnColors.enabled && plant.autumnColors.colors && typeof plant.autumnColors.colors === 'object') {
-    <ion-item>
-      <ion-label>
-        <strong>Herbstfärbung:</strong>
-        <div class="checkbox-container">
-          @for (color of plant.autumnColors.colors; track $index) {
-            <ion-checkbox
-              class="color-choices"
-              [style.--checkbox-background]="color"
-              [style.--checkbox-background-checked]="color"
-              [style.--border-color]="color"
-              [style.--border-color-checked]="color"
-            />
-          }
-        </div>
-      </ion-label>
-    </ion-item>
-  }
-
-  @if (plant.fertilization.enabled && plant.fertilization.type && typeof plant.fertilization.type === 'object') {
-    <ion-item>
-      <ion-label>
-        <strong>Dünger:</strong>
-        <div>{{ plant.fertilization.type.join(', ') }} – {{ plant.fertilization.time }}</div>
-      </ion-label>
-    </ion-item>
-  }
-
-  @if (plant.pruning.enabled) {
-    <ion-item>
-      <ion-label>
-        <strong>Beschneidung:</strong>
-        <div>{{ plant.pruning.amount }} – {{ plant.pruning.time }}</div>
-      </ion-label>
-    </ion-item>
-  }
-
-  @if (plant.fruit.enabled) {
-    <ion-item>
-      <strong>Früchte:</strong>
-      <ion-label slot="end">{{ plant.fruit.time.start }} – {{ plant.fruit.time.end }}</ion-label>
-      @for (color of plant.fruit.color; track $index) {
-            <ion-checkbox
-              class="color-choices"
-              [style.--checkbox-background]="color"
-              [style.--checkbox-background-checked]="color"
-              [style.--border-color]="color"
-              [style.--border-color-checked]="color"
-            />
-          }
-    </ion-item>
-  }
-
-  <ion-item>
-    <strong>Blütezeit:</strong>
-    <ion-label slot="end">{{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}</ion-label>
-  </ion-item>
-  
-    @if (plant.requiredArea.enabled) {
-      <ion-item>
-        <strong>Bedarf:</strong>
-        <ion-label slot="end">
-          <div>{{ plant.requiredArea.value.start | commaDecimal }} – {{ plant.requiredArea.value.end | commaDecimal }} m²</div>
-        </ion-label>
-      </ion-item>
+    @if (plant.leafShape) {
+      <div class="info-card">
+        <strong>Blattform</strong>
+        <div class="value">{{ plant.leafShape }}</div>
+      </div>
     }
 
-  @if (plant.distance.enabled) {
-    <ion-item>
-      <strong>Abstand:</strong>
-      <ion-label slot="end">
-        {{ plant.distance.value.start | commaDecimal }} – {{ plant.distance.value.end | commaDecimal }} m
-      </ion-label>
-    </ion-item>
-  }
+    <!-- Care Section -->
+    @if (plant.soil.length > 0) {
+      <div class="info-card">
+        <strong>Erde</strong>
+        <div class="value">{{ plant.soil }}</div>
+      </div>
+    }
 
-  <ion-item>
-    <strong>Höhe:</strong>
-    <ion-label slot="end">
-      {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
-    </ion-label>
-  </ion-item>
+    @if (plant.growth) {
+      <div class="info-card">
+        <strong>Wachstum</strong>
+        <div class="value">{{ plant.growth }}</div>
+      </div>
+    }
 
-  <ion-item>
-    <strong>Breite:</strong>
-    <ion-label slot="end">
-      {{ plant.width.start | commaDecimal }} – {{ plant.width.end | commaDecimal }} m
-    </ion-label>
-  </ion-item>
+    @if (plant.fertilization.enabled) {
+      <div class="full-width-card">
+        <strong>Dünger</strong>
+        <div class="value">
+          {{ fertilizationTypeDisplay }}
+          – {{ plant.fertilization.time }}
+        </div>
+      </div>
+    }
 
-  @if (plant.rootSystem) {
-    <ion-item>
-      <ion-label>
-        <strong>Wurzelsystem:</strong>
-        <div>{{ plant.rootSystem }}</div>
-      </ion-label>
-    </ion-item>
-  }
+    @if (plant.pruning.enabled) {
+      <div class="full-width-card">
+        <strong>Beschneidung</strong>
+        <div class="value">{{ plant.pruning.amount }} – {{ plant.pruning.time }}</div>
+      </div>
+    }
 
-  @if (plant.growthForm.length > 0) {
-    <ion-item>
-      <ion-label>
-        <strong>Wuchsform:</strong>
-        <div>{{ plant.growthForm.join(', ') }}</div>
-      </ion-label>
-    </ion-item>
-  }
+    <!-- Appearance Colors -->
+    @if (plant.leafColor.length > 0) {
+      <div class="info-card">
+        <strong>Blätterfarbe</strong>
+        <div class="color-badge-container">
+          @for (color of plant.leafColor; track $index) {
+            <div
+              class="color-dot"
+              [style.background-color]="color"
+            ></div>
+          }
+        </div>
+      </div>
+    }
 
-  @if (plant.notice) {
-    <ion-item lines="none">
-      <ion-label class="ion-text-wrap ion-margin-vertical">
-        <strong>Notizen:</strong>
+    @if (plant.bloomColor.length > 0) {
+      <div class="info-card">
+        <strong>Blütefarbe</strong>
+        <div class="color-badge-container">
+          @for (color of plant.bloomColor; track $index) {
+            <div
+              class="color-dot"
+              [style.background-color]="color"
+            ></div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (plant.autumnColors.enabled) {
+      <div class="info-card">
+        <strong>Herbstfärbung</strong>
+        <div class="color-badge-container">
+          @for (color of plant.autumnColors.colors; track $index) {
+            <div
+              class="color-dot"
+              [style.background-color]="color"
+            ></div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (plant.fruit.enabled) {
+      <div class="full-width-card">
+        <strong>Frucht / Fruchtreife</strong>
+        <div class="value">{{ plant.fruit.time.start }} – {{ plant.fruit.time.end }}</div>
+        @if (plant.fruit.color.length > 0) {
+          <div
+            class="color-badge-container"
+            style="margin-top: 8px"
+          >
+            @for (color of plant.fruit.color; track $index) {
+              <div
+                class="color-dot"
+                [style.background-color]="color"
+              ></div>
+            }
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Additional Traits -->
+    @if (plant.rootSystem) {
+      <div class="info-card">
+        <strong>Wurzelsystem</strong>
+        <div class="value">{{ plant.rootSystem }}</div>
+      </div>
+    }
+
+    @if (plant.growthForm.length > 0) {
+      <div class="info-card">
+        <strong>Wuchsform</strong>
+        <div class="value">{{ plant.growthForm.join(', ') }}</div>
+      </div>
+    }
+
+    @if (plant.distance.enabled) {
+      <div class="info-card">
+        <strong>Pflanzabstand</strong>
+        <div class="value">
+          {{ plant.distance.value.start | commaDecimal }} –
+          {{ plant.distance.value.end | commaDecimal }}
+        </div>
+      </div>
+    }
+
+    @if (plant.requiredArea.enabled) {
+      <div class="info-card">
+        <strong>Bedarf / m²</strong>
+        <div class="value">
+          {{ plant.requiredArea.value.start | commaDecimal }} –
+          {{ plant.requiredArea.value.end | commaDecimal }} St.
+        </div>
+      </div>
+    }
+
+    <!-- Notice -->
+    @if (plant.notice) {
+      <div class="notice-section">
+        <strong>Notizen</strong>
         <div class="notice-content">{{ plant.notice }}</div>
-      </ion-label>
-    </ion-item>
-  }
-</ion-list>
+      </div>
+    }
+  </div>
+</div>
 
 <ion-modal
   [isOpen]="isImageModalOpen"
@@ -209,11 +221,16 @@
 >
   <ng-template>
     <div class="modal-content">
-      <ion-icon
-        name="close"
-        class="close-icon"
+      <ion-button
+        fill="clear"
+        class="close-button"
         (click)="isImageModalOpen = false"
-      />
+      >
+        <ion-icon
+          name="close"
+          slot="icon-only"
+        ></ion-icon>
+      </ion-button>
 
       <swiper-container
         pagination="true"

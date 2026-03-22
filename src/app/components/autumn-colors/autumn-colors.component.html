@@ -1,6 +1,6 @@
-  <ion-item
+<ion-item
   lines="none"
-  class="ion-no-padding"
+  class="ion-no-padding bg-transparent"
 >
   <ion-label>Herbstfärbung</ion-label>
   <ion-checkbox
@@ -10,9 +10,9 @@
   />
 </ion-item>
 
-  @if ((plantForm$ | async)?.autumnColors?.enabled) {
-    <app-color-choices
-      [title]="''"
-      [choiceName]="'autumnColors.colors'"
-    />
-  }
+@if ((plantForm$ | async)?.autumnColors?.enabled) {
+  <app-color-choices
+    [title]="''"
+    [choiceName]="'autumnColors.colors'"
+  />
+}

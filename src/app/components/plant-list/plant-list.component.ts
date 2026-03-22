@@ -1,7 +1,7 @@
 import { Collection } from '@/types/Collection';
 import { ListItem } from '@/types/ListItem';
 import { Plant } from '@/types/PlantType';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkVirtualForOf, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { IonIcon, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone
   selector: 'app-plant-list',
   templateUrl: './plant-list.component.html',
   styleUrls: ['./plant-list.component.scss'],
-  imports: [IonItem, IonSpinner, IonIcon, CommonModule, IonText, ScrollingModule],
+  imports: [IonItem, IonSpinner, IonIcon, CommonModule, IonText, ScrollingModule, CdkVirtualForOf],
 })
 export class PlantListComponent implements OnChanges {
   @Input() plants: Plant[] = [];
@@ -25,9 +25,9 @@ export class PlantListComponent implements OnChanges {
   isSorting = signal(false);
 
   get viewportHeight() {
-    const itemHeight = 50;
+    const itemHeight = 80;
     const totalHeight = this.mergedItems.length * itemHeight;
-    return totalHeight + 'px';
+    return totalHeight + 0 + 'px';
   }
 
   ngOnChanges(changes: SimpleChanges) {

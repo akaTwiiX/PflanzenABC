@@ -12,6 +12,7 @@ import { addIcons } from 'ionicons';
 import {
   add,
   addCircleOutline,
+  arrowBack,
   arrowBackOutline,
   bookOutline,
   camera,
@@ -24,7 +25,10 @@ import {
   fileTrayFullOutline,
   fileTrayStackedOutline,
   filterOutline,
+  folderOpenOutline,
+  folderOutline,
   image,
+  imageOutline,
   leafOutline,
   logInOutline,
   logOutOutline,
@@ -39,10 +43,10 @@ import { routes } from './app/app.routes';
 addIcons({
   'add-circle-outline': addCircleOutline,
   'chevron-down': chevronDown,
-  'add': add,
-  'camera': camera,
-  'close': close,
-  'image': image,
+  add: add,
+  camera: camera,
+  close: close,
+  image: image,
   'file-tray-full-outline': fileTrayFullOutline,
   'pencil-outline': pencilOutline,
   'arrow-back-outline': arrowBackOutline,
@@ -59,6 +63,10 @@ addIcons({
   'settings-outline': settingsOutline,
   'filter-outline': filterOutline,
   'file-tray-stacked-outline': fileTrayStackedOutline,
+  'folder-open-outline': folderOpenOutline,
+  'arrow-back': arrowBack,
+  'image-outline': imageOutline,
+  'folder-outline': folderOutline,
 });
 
 defineCustomElements();

@@ -1,17 +1,43 @@
-ion-select::part(icon) {
-  position: absolute;
-  right: 16px;
-}
-
-ion-select::part(text) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+:host {
   display: block;
+  width: 100%;
 }
 
-div {
+.choices-wrapper {
   display: flex;
-  flex-direction: row;
-  padding-top: 16px;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  margin-top: 8px; /* space from label */
+}
+
+.custom-select {
+  flex: 1;
+  background: rgba(var(--ion-color-medium-rgb), 0.1);
+  border-radius: 12px;
+  padding: 8px 16px;
+  min-height: 44px;
+  font-weight: 500;
+
+  &::part(icon) {
+    color: var(--ion-color-medium);
+  }
+
+  &::part(text) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+}
+
+.add-btn {
+  margin: 0;
+  height: 44px;
+  width: 44px;
+  --border-radius: 50%;
+
+  ion-icon {
+    font-size: 26px;
+  }
 }

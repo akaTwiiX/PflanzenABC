@@ -40,80 +40,101 @@
 }
 
 ion-content,
-.virtual-scroll {
-  flex: 1 1 auto;
-  height: 100%;
-}
-
 .title-bg {
-  background: #d7dcd3ff;
-}
+  background: var(--ion-color-tertiary);
+  border-radius: var(--border-radius-md);
+  margin: 12px;
+  padding: 6px 16px;
+  color: var(--ion-color-tertiary-contrast);
+  box-shadow: 0 4px 12px rgba(var(--ion-color-tertiary-rgb), 0.15);
 
-/* FAB-Letter-Container ersetzt ion-fab-list */
-.fab-letter-container {
-  width: 100%;
-  padding: 4px 0;
-  border-radius: 0 0 8px 8px;
-  background: #d7dcd3ff;
-  z-index: 11;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  scrollbar-width: none;
-  height: 100%;
-}
-
-.fab-letter {
-  flex: 1;
-  // color: var(--ion-color-light);
-  font-weight: 600;
-  font-size: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  // border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  transition:
-    background 0.2s,
-    transform 0.1s;
-
-  // &:last-child {
-  //   border-radius: 0 0 50% 50%;
-  // }
-  &.active {
-    padding: 6px 0;
-    background: #bec9b5;
-    transform: scale(1.05);
+  h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-family: 'Playfair Display', serif;
   }
 }
 
+/* FAB and Letter Index Styling */
 .fab {
-  height: calc(100% - 20px);
+  top: 16px;
+  right: 12px;
+  z-index: 100;
+
+  /* Ensure fab doesn't block the whole screen height */
+  height: auto;
+  margin: 0;
 
   ion-fab-list {
-    margin: calc(100% + 0px) 0px !important;
-    height: calc(100% - 56px);
+    margin-top: 56px;
+    /* Space from the top button */
   }
 }
 
 ion-fab-button {
-  transition:
-    border-radius 0.25s ease,
-    transform 0.2s ease;
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-primary);
+  --box-shadow: 0 4px 16px rgba(58, 90, 64, 0.15);
   --border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
 
-  &.fab-button {
-    --background: #bec9b5;
-    --background-activated: #bec9b5;
-    --color: #000;
+  span {
+    white-space: nowrap;
+  }
+}
+
+.fab-letter-container {
+  width: 40px;
+  margin: 0 auto;
+  max-height: calc(100vh - 220px);
+  /* Leave room for bottom FAB */
+  padding: 12px 0;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 32px rgba(58, 90, 64, 0.1);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.fab-letter {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  margin: 2px 0;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  color: var(--ion-color-medium);
+
+  &:hover {
+    color: var(--ion-color-primary);
   }
 
-  &.fab-button-close-active {
-    --border-radius: 50% 50% 0 0;
-    transform: translateY(2px);
+  &.active {
+    background: var(--ion-color-primary);
+    color: var(--ion-color-light);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.3);
   }
 }

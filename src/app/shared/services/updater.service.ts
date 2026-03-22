@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { App } from '@capacitor/app';
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { FileTransfer } from '@capacitor/file-transfer';
 import { FileOpener } from '@capacitor-community/file-opener';
+import { App } from '@capacitor/app';
 import { CapacitorHttp } from '@capacitor/core';
+import { FileTransfer } from '@capacitor/file-transfer';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Injectable({ providedIn: 'root' })
 export class UpdaterService {

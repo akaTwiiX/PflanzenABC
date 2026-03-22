@@ -14,7 +14,7 @@
       (valueChange)="plantFormService.update('imageUrl', $event)"
     />
     <ion-list>
-      <ion-item>
+      <ion-item lines="none">
         <ion-input
           label="Botanischer Name"
           labelPlacement="floating"
@@ -23,7 +23,7 @@
           (ionChange)="plantFormService.update('nameLatin', $event.detail.value ?? '')"
         />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <ion-input
           label="Deutscher Name"
           labelPlacement="floating"
@@ -32,10 +32,10 @@
           (ionChange)="plantFormService.update('nameGerman', $event.detail.value ?? '')"
         />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-plant-type />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-range-slider
           label="Höhe:"
           [range]="distanceRange"
@@ -43,7 +43,7 @@
           (valueChange)="plantFormService.update('height', $event)"
         />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-range-slider
           label="Breite:"
           [range]="distanceRange"
@@ -52,7 +52,7 @@
         />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <ion-input
           label="Wachstum:"
           labelPlacement="floating"
@@ -61,12 +61,12 @@
           (ionChange)="plantFormService.update('growth', $event.detail.value ?? '')"
         />
       </ion-item>
-      
-      <ion-item>
+
+      <ion-item lines="none">
         <app-growth-form />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-range-slider
           label="Blüte-/Erntezeit:"
           [range]="monthRange"
@@ -75,60 +75,60 @@
         />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-color-choices
           [title]="'Blütefarbe:'"
           [choiceName]="'bloomColor'"
         />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-leaf-shape />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-color-choices
           [title]="'Blätterfarbe:'"
           [choiceName]="'leafColor'"
         />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-autumn-colors />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-soil />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-fertilization />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-distance />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-required-area />
       </ion-item>
-      <ion-item>
+      <ion-item lines="none">
         <app-root-system />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-pruning />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-water-selector />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-light-selector />
       </ion-item>
 
-      <ion-item>
+      <ion-item lines="none">
         <app-fruit />
       </ion-item>
 
       @for( field of checkboxFields; track field){
-      <ion-item>
+      <ion-item lines="none">
         <ion-label>{{ checkboxLabels[field] }}</ion-label>
         <ion-checkbox
           slot="end"
@@ -138,7 +138,7 @@
       </ion-item>
       }
 
-      <ion-item>
+      <ion-item lines="none">
         <ion-textarea
           class="text-area"
           label="Notizen/Pflege/Schritt"

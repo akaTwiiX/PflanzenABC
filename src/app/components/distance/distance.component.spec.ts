@@ -9,8 +9,8 @@ describe('DistanceComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DistanceComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [DistanceComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DistanceComponent);

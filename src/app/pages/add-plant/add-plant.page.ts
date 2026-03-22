@@ -44,12 +44,12 @@ import { WaterSelectorComponent } from 'src/app/components/water-selector/water-
 import { PlantFormService } from 'src/app/shared/services/plant-form.service';
 import { Plant } from 'src/app/shared/types/PlantType';
 
-import { AutumnColorsComponent } from "src/app/components/autumn-colors/autumn-colors.component";
+import { AutumnColorsComponent } from 'src/app/components/autumn-colors/autumn-colors.component';
 import { ColorChoicesComponent } from 'src/app/components/color-choices/color-choices.component';
-import { DistanceComponent } from "src/app/components/distance/distance.component";
+import { DistanceComponent } from 'src/app/components/distance/distance.component';
 import { GrowthFormComponent } from 'src/app/components/growth-form/growth-form.component';
 import { LeafShapeComponent } from 'src/app/components/leaf-shape/leaf-shape.component';
-import { RequiredAreaComponent } from "src/app/components/required-area/required-area.component";
+import { RequiredAreaComponent } from 'src/app/components/required-area/required-area.component';
 
 @Component({
   selector: 'app-add-plant',
@@ -88,7 +88,7 @@ import { RequiredAreaComponent } from "src/app/components/required-area/required
     DistanceComponent,
     GrowthFormComponent,
     LeafShapeComponent,
-    AutumnColorsComponent
+    AutumnColorsComponent,
   ],
 })
 export class AddPlantPage {
