@@ -5,7 +5,7 @@ import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import {
   IonButton,
@@ -16,6 +16,7 @@ import {
   IonSpinner,
   IonText,
   IonToolbar,
+  NavController,
   ToastController,
 } from '@ionic/angular/standalone';
 import { PlantDetailsComponent } from 'src/app/components/plant-details/plant-details.component';
@@ -70,7 +71,7 @@ export class PlantPage implements OnInit {
   plantStorageService = inject(PlantStorageService);
   collectionStorageService = inject(CollectionStorageService);
   plantFormService = inject(PlantFormService);
-  router = inject(Router);
+  navCtrl = inject(NavController);
   actionSheetCtrl = inject(ActionSheetController);
   alertCtrl = inject(AlertController);
   toastCtrl = inject(ToastController);
@@ -112,14 +113,15 @@ export class PlantPage implements OnInit {
   }
 
   goToAddPlant() {
-    this.router.navigate(['/add-plant'], {
+    this.navCtrl.navigateForward(['/add-plant'], {
       queryParams: { editId: this.plantId },
     });
   }
 
   goToHomeOrCollection() {
-    if (this.plant!.collectionId) this.router.navigate(['/collection', this.plant!.collectionId]);
-    else this.router.navigate(['/home']);
+    if (this.plant!.collectionId)
+      this.navCtrl.navigateForward(['/collection', this.plant!.collectionId]);
+    else this.navCtrl.navigateForward(['/home']);
   }
 
   async openDialog() {

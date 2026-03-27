@@ -5,7 +5,7 @@ import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   AlertController,
   IonBackButton,
@@ -16,6 +16,7 @@ import {
   IonIcon,
   IonTitle,
   IonToolbar,
+  NavController,
   ToastController,
 } from '@ionic/angular/standalone';
 import { combineLatest, map, Subject, takeUntil } from 'rxjs';
@@ -45,7 +46,7 @@ import { PlantListComponent } from 'src/app/components/plant-list/plant-list.com
 export class CollectionPage {
   collectionId!: number;
   activateRoute = inject(ActivatedRoute);
-  router = inject(Router);
+  navCtrl = inject(NavController);
   plantStorageService = inject(PlantStorageService);
   collectionStorageService = inject(CollectionStorageService);
   alertCtrl = inject(AlertController);
@@ -76,7 +77,7 @@ export class CollectionPage {
           if (f) {
             try {
               filter = JSON.parse(f);
-            } catch {}
+            } catch { }
           }
 
           return { id, filter };
@@ -137,9 +138,8 @@ export class CollectionPage {
   }
 
   navigateToAddPlant() {
-    this.router.navigate(['/add-plant'], {
+    this.navCtrl.navigateForward(['/add-plant'], {
       queryParams: { parentId: this.collectionId },
-      replaceUrl: true,
     });
   }
 
@@ -178,7 +178,7 @@ export class CollectionPage {
       })
       .then((toast) => {
         toast.present();
-        this.router.navigate(['/home']);
+        this.navCtrl.navigateRoot(['/home']);
       });
   }
 

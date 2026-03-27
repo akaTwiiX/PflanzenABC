@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import {
   IonButton,
   IonIcon,
@@ -8,6 +8,7 @@ import {
   IonInput,
   IonFab,
   IonFabButton,
+  NavController,
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { CollectionStorageService } from '@/services/collection-storage.service';
@@ -25,17 +26,16 @@ export class AddButtonComponent {
   parentCollection?: number;
 
   newCollection: string = '';
-  router = inject(Router);
+  navCtrl = inject(NavController);
   collectionStorageService = inject(CollectionStorageService);
 
   navigateToAddPlant() {
     if (this.parentCollection) {
-      this.router.navigate(['/add-plant'], {
+      this.navCtrl.navigateForward(['/add-plant'], {
         queryParams: { parentId: this.parentCollection },
-        replaceUrl: true,
       });
     } else {
-      this.router.navigate(['/add-plant'], { replaceUrl: true });
+      this.navCtrl.navigateForward(['/add-plant']);
     }
   }
 
@@ -56,7 +56,7 @@ export class AddButtonComponent {
       if (this.parentCollection)
         await this.collectionStorageService.addChild(this.parentCollection, id, 'collection');
 
-      this.router.navigate(['/collection', id]);
+      this.navCtrl.navigateForward(['/collection', id]);
     } catch (error) {
       console.error('Failed to add new collection:', error);
     }

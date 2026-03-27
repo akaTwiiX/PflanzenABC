@@ -4,8 +4,8 @@ import { Plant } from '@/types/PlantType';
 import { CdkVirtualForOf, ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonIcon, IonItem, IonSpinner, IonText } from '@ionic/angular/standalone';
+// import { Router } from '@angular/router';
+import { IonIcon, IonItem, IonSpinner, IonText, NavController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-plant-list',
@@ -19,7 +19,7 @@ export class PlantListComponent implements OnChanges {
   @Input() isLoading = false;
   @Input() filter: Partial<Plant> = {};
 
-  router = inject(Router);
+  navCtrl = inject(NavController);
 
   mergedItems: ListItem[] = [];
   isSorting = signal(false);
@@ -52,7 +52,7 @@ export class PlantListComponent implements OnChanges {
   }
 
   goTo(page: string, id: number | undefined) {
-    this.router.navigate([page, id], {
+    this.navCtrl.navigateForward([page, id], {
       queryParams: {
         filter: JSON.stringify(this.filter),
       },

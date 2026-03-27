@@ -10,7 +10,7 @@ import { getFirstLetter } from '@/utils/string.utils';
 import { CommonModule } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import {
@@ -28,6 +28,7 @@ import {
   IonModal,
   IonTextarea,
   IonTitle,
+  NavController,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { Subject, takeUntil } from 'rxjs';
@@ -96,7 +97,7 @@ export class AddPlantPage {
   plantStorageService = inject(PlantStorageService);
   collectionStorageService = inject(CollectionStorageService);
   route = inject(ActivatedRoute);
-  router = inject(Router);
+  navCtrl = inject(NavController);
   alertCtrl = inject(AlertController);
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
@@ -203,7 +204,7 @@ export class AddPlantPage {
 
   saveAndView() {
     this.plantFormService.reset();
-    this.router.navigate(['/plant', this.lastAddedPlantId]);
+    this.navCtrl.navigateForward(['/plant', this.lastAddedPlantId]);
     this.lastAddedPlantId = null;
     this.modal.dismiss();
   }
