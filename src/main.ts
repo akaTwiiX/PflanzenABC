@@ -76,6 +76,7 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular({
       swipeBackEnabled: true,
+      backButtonDefaultHref: '/home',
     }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
