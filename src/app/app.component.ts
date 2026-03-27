@@ -14,6 +14,7 @@ import {
   IonApp,
   IonRouterOutlet,
   ModalController,
+  NavController,
 } from '@ionic/angular/standalone';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -34,10 +35,14 @@ export class AppComponent {
   private modalCtrl = inject(ModalController);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private navCtrl = inject(NavController);
 
   constructor() {
     this.setupScrollToTop();
     this.platform.ready().then(() => {
+      this.platform.backButton.subscribeWithPriority(10, () => {
+        this.navCtrl.back();
+      });
       this.setSafeArea();
 
       onAuthStateChanged(auth, (user) => {
