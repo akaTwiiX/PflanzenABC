@@ -74,7 +74,9 @@ defineCustomElements();
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+    provideIonicAngular({
+      swipeBackEnabled: true,
+    }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
 });
