@@ -38,7 +38,7 @@ export class AppComponent {
   private navCtrl = inject(NavController);
 
   constructor() {
-    this.setupScrollToTop();
+    // this.setupScrollToTop();
     this.platform.ready().then(() => {
       this.platform.backButton.subscribeWithPriority(10, () => {
         this.navCtrl.back();

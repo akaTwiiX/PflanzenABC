@@ -15,7 +15,12 @@
     "add:env:dev": "node scripts/init-env.js",
     "prepare": "pnpm add:env:dev",
     "cleanup": "ng g @angular/core:cleanup-unused-imports",
-    "format": "prettier --write \"src/**/*.{html,ts,js,json,css,scss,md}\""
+    "format": "prettier --write \"src/**/*.{html,ts,js,json,css,scss,md}\"",
+    "commit": "node scripts/commit-push.js",
+    "commit:patch": "node scripts/commit-push.js patch",
+    "commit:minor": "node scripts/commit-push.js minor",
+    "commit:major": "node scripts/commit-push.js major",
+    "commit:tag": "node scripts/commit-push.js tag-only"
   },
   "private": true,
   "dependencies": {
