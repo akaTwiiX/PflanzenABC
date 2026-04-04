@@ -7,6 +7,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Injectable({ providedIn: 'root' })
 export class UpdaterService {
+  private readonly VERSION_PREFIX_REGEX = /^v/;
   githubRepo = 'akatwiix/PflanzenABC';
 
   async checkForUpdate() {
@@ -15,9 +16,10 @@ export class UpdaterService {
       url: `https://api.github.com/repos/${this.githubRepo}/releases/latest`,
     });
 
-    const latest = res.data.tag_name?.replace(/^v/, '');
+    const latest = res.data.tag_name?.replace(this.VERSION_PREFIX_REGEX, '');
     const asset = res.data.assets?.find((a: any) => a.name.endsWith('.apk'));
-    if (!asset) return { available: false };
+    if (!asset)
+      return { available: false };
 
     if (latest !== info.version) {
       return { available: true, version: latest, url: asset.browser_download_url };

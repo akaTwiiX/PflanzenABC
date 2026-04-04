@@ -1,10 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { IonLabel } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { IonLabel } from '@ionic/angular/standalone';
+import { ChoiceName } from '../../shared/enums/ChoiceEntry';
+import { PlantFormService } from '../../shared/services/plant-form.service';
 import { ChoicesComponent } from '../choices/choices.component';
-import { PlantFormService } from '@/services/plant-form.service';
-import { ChoiceName } from '@/enums/ChoiceEntry';
 
 @Component({
   selector: 'app-soil',

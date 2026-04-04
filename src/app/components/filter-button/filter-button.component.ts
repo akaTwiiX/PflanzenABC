@@ -1,27 +1,28 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   IonButton,
-  IonIcon,
-  IonModal,
-  IonItem,
-  IonList,
-  IonLabel,
   IonCheckbox,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonModal,
 } from '@ionic/angular/standalone';
-import { SelectorComponent, SelectorOption } from '../selector/selector.component';
-import { icons, LightRequirement, LightRequirementLabel } from '@/enums/LightRequirements';
-import { Plant } from '@/types/PlantType';
-import { FormsModule } from '@angular/forms';
-import { CHECKBOX_ARRAY } from '@/modals/plant-checkbox.config';
+import { distanceRange } from '../../shared/consts/distanceRange';
+import { monthRange } from '../../shared/consts/monthRange';
+import { icons, LightRequirement, LightRequirementLabel } from '../../shared/enums/LightRequirements';
+import { CHECKBOX_ARRAY } from '../../shared/modals/plant-checkbox.config';
+import type { Plant } from '../../shared/types/PlantType';
+import type { RangeSliderType } from '../../shared/types/RangeSliderType';
 import { RangeSliderComponent } from '../range-slider/range-slider.component';
-import { RangeSliderType } from '@/types/RangeSliderType';
-import { distanceRange } from '@/consts/distanceRange';
-import { monthRange } from '@/consts/monthRange';
+import type { SelectorOption } from '../selector/selector.component';
+import { SelectorComponent } from '../selector/selector.component';
 
-type rangeFilter = {
+interface rangeFilter {
   checked: boolean;
   range: RangeSliderType;
-};
+}
 
 @Component({
   selector: 'app-filter-button',
@@ -31,12 +32,12 @@ type rangeFilter = {
     IonButton,
     IonIcon,
     IonModal,
-    SelectorComponent,
     IonItem,
     IonList,
     IonCheckbox,
     IonLabel,
     FormsModule,
+    SelectorComponent,
     RangeSliderComponent,
   ],
 })
@@ -44,7 +45,7 @@ export class FilterButtonComponent {
   @Output() applyFiltersFn = new EventEmitter<Partial<Plant>>();
   @Output() resetFiltersFn = new EventEmitter<void>();
 
-  readonly options: SelectorOption[] = Object.values(LightRequirement).map((lr) => ({
+  readonly options: SelectorOption[] = Object.values(LightRequirement).map(lr => ({
     value: lr,
     label: LightRequirementLabel[lr],
     icon: icons[lr],
@@ -61,7 +62,7 @@ export class FilterButtonComponent {
     checked: false,
     range: {
       start: distanceRange[0],
-      end: distanceRange[distanceRange.length - 1],
+      end: distanceRange.at(-1)!,
     },
   };
 
@@ -69,22 +70,22 @@ export class FilterButtonComponent {
     checked: false,
     range: {
       start: monthRange[0],
-      end: monthRange[monthRange.length - 1],
+      end: monthRange.at(-1)!,
     },
   };
 
   get isChecked() {
     return (
-      this.selected.length > 0 ||
-      this.checkboxArray.some((box) => box.checked) ||
-      this.height.checked ||
-      this.bloomTime.checked
+      this.selected.length > 0
+      || this.checkboxArray.some(box => box.checked)
+      || this.height.checked
+      || this.bloomTime.checked
     );
   }
 
   resetFilters() {
     this.selected = [];
-    this.checkboxArray.forEach((box) => (box.checked = false));
+    this.checkboxArray.forEach(box => (box.checked = false));
     this.height.checked = false;
     this.bloomTime.checked = false;
 

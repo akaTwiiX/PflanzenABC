@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FertilizationComponent } from './fertilization.component';
+import { FertilizationComponent } from '@/components/fertilization/fertilization.component';
 
-describe('FertilizationComponent', () => {
+describe('fertilizationComponent', () => {
   let component: FertilizationComponent;
   let fixture: ComponentFixture<FertilizationComponent>;
 

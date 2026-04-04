@@ -1,12 +1,3 @@
-import { distanceRange } from '@/consts/distanceRange';
-import { monthRange } from '@/consts/monthRange';
-import { requiredArea } from '@/consts/requiredArea';
-import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '@/modals/plant-checkbox.config';
-import { db } from '@/services/app-database.service';
-import { CollectionStorageService } from '@/services/collection-storage.service';
-import { PlantStorageService } from '@/services/plant-storage.service';
-import { convertBlobToBase64 } from '@/utils/image.utils';
-import { getFirstLetter } from '@/utils/string.utils';
 import { CommonModule } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -28,29 +19,37 @@ import {
   IonModal,
   IonTextarea,
   IonTitle,
-  NavController,
   IonToolbar,
+  NavController,
 } from '@ionic/angular/standalone';
 import { Subject, takeUntil } from 'rxjs';
-import { FertilizationComponent } from 'src/app/components/fertilization/fertilization.component';
-import { FruitComponent } from 'src/app/components/fruit/fruit.component';
-import { ImagePickerComponent } from 'src/app/components/image-picker/image-picker.component';
-import { LightSelectorComponent } from 'src/app/components/light-selector/light-selector.component';
-import { PlantTypeComponent } from 'src/app/components/plant-type/plant-type.component';
-import { PruningComponent } from 'src/app/components/pruning/pruning.component';
-import { RangeSliderComponent } from 'src/app/components/range-slider/range-slider.component';
-import { RootSystemComponent } from 'src/app/components/root-system/root-system.component';
-import { SoilComponent } from 'src/app/components/soil/soil.component';
-import { WaterSelectorComponent } from 'src/app/components/water-selector/water-selector.component';
-import { PlantFormService } from 'src/app/shared/services/plant-form.service';
-import { Plant } from 'src/app/shared/types/PlantType';
-
-import { AutumnColorsComponent } from 'src/app/components/autumn-colors/autumn-colors.component';
-import { ColorChoicesComponent } from 'src/app/components/color-choices/color-choices.component';
-import { DistanceComponent } from 'src/app/components/distance/distance.component';
-import { GrowthFormComponent } from 'src/app/components/growth-form/growth-form.component';
-import { LeafShapeComponent } from 'src/app/components/leaf-shape/leaf-shape.component';
-import { RequiredAreaComponent } from 'src/app/components/required-area/required-area.component';
+import { AutumnColorsComponent } from '../../components/autumn-colors/autumn-colors.component';
+import { ColorChoicesComponent } from '../../components/color-choices/color-choices.component';
+import { DistanceComponent } from '../../components/distance/distance.component';
+import { FertilizationComponent } from '../../components/fertilization/fertilization.component';
+import { FruitComponent } from '../../components/fruit/fruit.component';
+import { GrowthFormComponent } from '../../components/growth-form/growth-form.component';
+import { ImagePickerComponent } from '../../components/image-picker/image-picker.component';
+import { LeafShapeComponent } from '../../components/leaf-shape/leaf-shape.component';
+import { LightSelectorComponent } from '../../components/light-selector/light-selector.component';
+import { PlantTypeComponent } from '../../components/plant-type/plant-type.component';
+import { PruningComponent } from '../../components/pruning/pruning.component';
+import { RangeSliderComponent } from '../../components/range-slider/range-slider.component';
+import { RequiredAreaComponent } from '../../components/required-area/required-area.component';
+import { RootSystemComponent } from '../../components/root-system/root-system.component';
+import { SoilComponent } from '../../components/soil/soil.component';
+import { WaterSelectorComponent } from '../../components/water-selector/water-selector.component';
+import { distanceRange, growthDistanceRange } from '../../shared/consts/distanceRange';
+import { monthRange } from '../../shared/consts/monthRange';
+import { requiredArea } from '../../shared/consts/requiredArea';
+import { CHECKBOX_FIELDS, CHECKBOX_LABELS } from '../../shared/modals/plant-checkbox.config';
+import { db } from '../../shared/services/app-database.service';
+import { CollectionStorageService } from '../../shared/services/collection-storage.service';
+import { PlantFormService } from '../../shared/services/plant-form.service';
+import { PlantStorageService } from '../../shared/services/plant-storage.service';
+import type { Plant } from '../../shared/types/PlantType';
+import { convertBlobToBase64 } from '../../shared/utils/image.utils';
+import { getFirstLetter } from '../../shared/utils/string.utils';
 
 @Component({
   selector: 'app-add-plant',
@@ -103,10 +102,12 @@ export class AddPlantPage {
   monthRange = monthRange;
   distanceRange = distanceRange;
   requiredArea = requiredArea;
+  growthRange = growthDistanceRange;
   parentId: number | null = null;
   isEditMode = false;
 
   @ViewChild('dialog') modal!: IonModal;
+  @ViewChild(IonContent) content!: IonContent;
   lastAddedPlantId: number | null = null;
 
   checkboxFields = CHECKBOX_FIELDS;
@@ -116,10 +117,10 @@ export class AddPlantPage {
   private destroy$ = new Subject<void>();
 
   ionViewWillEnter() {
+    this.content?.scrollToTop(0);
     this.lastAddedPlantId = null;
     this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async (params) => {
-      const parentId = params['parentId'];
-      const editId = params['editId'];
+      const { parentId, editId } = params as { parentId?: string, editId?: string, };
 
       this.parentId = parentId ? Number(parentId) : null;
       this.isEditMode = !!editId;
@@ -127,7 +128,8 @@ export class AddPlantPage {
       if (this.isEditMode) {
         console.log('Edit mode activated for ID:', editId);
         const plant = await this.plantStorageService.getPlant(Number(editId));
-        if (!plant) return;
+        if (!plant)
+          return;
         this.plantFormService.setPlant(plant);
       } else {
         this.plantFormService.reset();
@@ -141,7 +143,8 @@ export class AddPlantPage {
 
   async savePlant() {
     const plant = this.plantFormService.getPlant();
-    if (!this.parentId) plant.initialId = getFirstLetter(plant.nameLatin);
+    if (!this.parentId)
+      plant.initialId = getFirstLetter(plant.nameLatin);
     else plant.collectionId = this.parentId;
 
     const errors = this.validatePlant(plant);
@@ -243,7 +246,7 @@ export class AddPlantPage {
 
   async saveImageInStore(imagePath: string) {
     if (Capacitor.getPlatform() === 'web') {
-      const blob = await fetch(imagePath).then((r) => r.blob());
+      const blob = await fetch(imagePath).then(r => r.blob());
       const imageId = await db.images.add({
         name: Date.now().toString(),
         data: blob,
@@ -262,7 +265,7 @@ export class AddPlantPage {
           directory: Directory.ExternalStorage,
         });
       } else {
-        const blob = await fetch(imagePath).then((r) => r.blob());
+        const blob = await fetch(imagePath).then(r => r.blob());
         const base64 = (await convertBlobToBase64(blob)) as string;
 
         await Filesystem.writeFile({

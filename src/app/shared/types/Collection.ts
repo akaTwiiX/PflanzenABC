@@ -1,4 +1,4 @@
-export type Collection = {
+export interface Collection {
   id?: number;
   initialId?: string;
   name: string;
@@ -6,4 +6,4 @@ export type Collection = {
   plantIds: number[];
   collectionIds: number[];
   updatedAt: string;
-};
+}

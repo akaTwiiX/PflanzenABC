@@ -1,7 +1,7 @@
-import { RangeSliderType } from './RangeSliderType';
+import type { RangeSliderType } from '@/shared/types/RangeSliderType';
 
-export type Fruit = {
+export interface Fruit {
   enabled: boolean;
   time: RangeSliderType;
   color: string[];
-};
+}

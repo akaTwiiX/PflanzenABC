@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoticePage } from './notice.page';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { NoticePage } from '@/pages/notice/notice.page';
 
-describe('NoticePage', () => {
+describe('noticePage', () => {
   let component: NoticePage;
   let fixture: ComponentFixture<NoticePage>;
 

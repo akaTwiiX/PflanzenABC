@@ -1,8 +1,8 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   PreloadAllModules,
-  RouteReuseStrategy,
   provideRouter,
+  RouteReuseStrategy,
   withPreloading,
 } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
@@ -37,16 +37,16 @@ import {
   settingsOutline,
   trashOutline,
 } from 'ionicons/icons';
-import { AppComponent } from './app/app.component';
-import { routes } from './app/app.routes';
+import { AppComponent } from '@/app.component';
+import { routes } from '@/app.routes';
 
 addIcons({
   'add-circle-outline': addCircleOutline,
   'chevron-down': chevronDown,
-  add: add,
-  camera: camera,
-  close: close,
-  image: image,
+  'add': add,
+  'camera': camera,
+  'close': close,
+  'image': image,
   'file-tray-full-outline': fileTrayFullOutline,
   'pencil-outline': pencilOutline,
   'arrow-back-outline': arrowBackOutline,

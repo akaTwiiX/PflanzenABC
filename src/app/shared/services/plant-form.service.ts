@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { LightRequirement } from '../enums/LightRequirements';
 import { WaterRequirement } from '../enums/WaterRequirements';
-import { Plant } from '../types/PlantType';
+import type { Plant } from '../types/PlantType';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class PlantFormService {
     rootSystem: '',
     bugsFriendly: false,
     birdFriendly: false,
-    growth: '',
+    growth: { start: 0, end: 2.0 },
     growthForm: [],
     leafShape: '',
     evergreen: false,

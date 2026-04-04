@@ -1,7 +1,3 @@
-import { CollectionStorageService } from '@/services/collection-storage.service';
-import { PlantStorageService } from '@/services/plant-storage.service';
-import { Collection } from '@/types/Collection';
-import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,8 +16,12 @@ import {
   ToastController,
 } from '@ionic/angular/standalone';
 import { combineLatest, map, Subject, takeUntil } from 'rxjs';
-import { AddButtonComponent } from 'src/app/components/add-button/add-button.component';
-import { PlantListComponent } from 'src/app/components/plant-list/plant-list.component';
+import { AddButtonComponent } from '../../components/add-button/add-button.component';
+import { PlantListComponent } from '../../components/plant-list/plant-list.component';
+import { CollectionStorageService } from '../../shared/services/collection-storage.service';
+import { PlantStorageService } from '../../shared/services/plant-storage.service';
+import type { Collection } from '../../shared/types/Collection';
+import type { Plant } from '../../shared/types/PlantType';
 
 @Component({
   selector: 'app-collection',
@@ -77,7 +77,7 @@ export class CollectionPage {
           if (f) {
             try {
               filter = JSON.parse(f);
-            } catch { }
+            } catch {}
           }
 
           return { id, filter };
@@ -134,7 +134,7 @@ export class CollectionPage {
           },
         ],
       })
-      .then((alert) => alert.present());
+      .then(alert => alert.present());
   }
 
   navigateToAddPlant() {
@@ -162,7 +162,7 @@ export class CollectionPage {
           },
         ],
       })
-      .then((alert) => alert.present());
+      .then(alert => alert.present());
   }
 
   async deleteCollection() {

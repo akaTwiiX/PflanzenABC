@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RequiredAreaComponent } from './required-area.component';
+import { RequiredAreaComponent } from '@/components/required-area/required-area.component';
 
-describe('RequiredAreaComponent', () => {
+describe('requiredAreaComponent', () => {
   let component: RequiredAreaComponent;
   let fixture: ComponentFixture<RequiredAreaComponent>;
 

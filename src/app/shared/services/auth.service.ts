@@ -1,16 +1,13 @@
-import { Injectable, signal, inject } from '@angular/core';
-import {
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+import { inject, Injectable, signal } from '@angular/core';
+import type {
   User,
-  sendEmailVerification,
 } from 'firebase/auth';
-import { auth } from './firebase';
-import { BackupStateService } from './backup-state.service';
-import { Capacitor } from '@capacitor/core';
-import { App, AppState } from '@capacitor/app';
-import { IncrementalBackupService } from './incremental-backup.service';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { auth } from '@/shared/services/firebase';
 import { ToastController } from '@ionic/angular/standalone';
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +16,7 @@ export class AuthService {
 
   currentUser = signal<User | null>(null);
 
-  async register(email: string, password: string): Promise<{ success: boolean; message: string }> {
+  async register(email: string, password: string): Promise<{ success: boolean, message: string, }> {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       const user = result.user;
@@ -43,7 +40,7 @@ export class AuthService {
   async login(
     email: string,
     password: string,
-  ): Promise<{ success: boolean; message: string; code?: string }> {
+  ): Promise<{ success: boolean, message: string, code?: string, }> {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const user = result.user;

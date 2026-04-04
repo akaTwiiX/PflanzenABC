@@ -1,15 +1,16 @@
-import { icons as lightIcons, LightRequirementLabel } from '@/enums/LightRequirements';
-import { PlantTypeLabel } from '@/enums/PlantTypes';
-import { icons as waterIcons, WaterRequirementLabel } from '@/enums/WaterRequirements';
-import { CommaDecimalPipe } from '@/pipes/comma-decimal.pipe';
-import { db } from '@/services/app-database.service';
-import { PlantFormService } from '@/services/plant-form.service';
-import { Plant } from '@/types/PlantType';
-import { loadNativeImage } from '@/utils/image.utils';
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { IonBadge, IonButton, IonIcon, IonImg, IonModal, IonText } from '@ionic/angular/standalone';
+import { icons as lightIcons, LightRequirementLabel } from '../../shared/enums/LightRequirements';
+import { PlantTypeLabel } from '../../shared/enums/PlantTypes';
+import { icons as waterIcons, WaterRequirementLabel } from '../../shared/enums/WaterRequirements';
+import { CommaDecimalPipe } from '../../shared/pipes/comma-decimal.pipe';
+import { db } from '../../shared/services/app-database.service';
+import { PlantFormService } from '../../shared/services/plant-form.service';
+import type { Plant } from '../../shared/types/PlantType';
+import { loadNativeImage } from '../../shared/utils/image.utils';
 
 @Component({
   selector: 'app-plant-details',
@@ -33,7 +34,8 @@ export class PlantDetailsComponent implements OnInit {
 
   get fertilizationTypeDisplay(): string {
     const type = this.plant.fertilization.type;
-    if (!type) return '';
+    if (!type)
+      return '';
     return Array.isArray(type) ? type.join(', ') : type;
   }
 
@@ -65,7 +67,7 @@ export class PlantDetailsComponent implements OnInit {
   }
 
   buildIcons() {
-    const iconMap: { [key: string]: string } = {
+    const iconMap: { [key: string]: string, } = {
       evergreen: 'leaf.png',
       dryTolerance: 'cactus.png',
       buckets: 'flower-pot.png',

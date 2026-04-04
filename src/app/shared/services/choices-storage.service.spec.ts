@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChoicesStorageService } from './choices-storage.service';
+import { ChoicesStorageService } from '@/shared/services/choices-storage.service';
 
-describe('ChoicesStorageService', () => {
+describe('choicesStorageService', () => {
   let service: ChoicesStorageService;
 
   beforeEach(() => {

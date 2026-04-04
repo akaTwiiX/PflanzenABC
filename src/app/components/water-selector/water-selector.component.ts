@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { IonLabel } from '@ionic/angular/standalone';
-import { SelectorComponent, SelectorOption } from '../selector/selector.component';
-import { PlantFormService } from '@/services/plant-form.service';
-import { icons, WaterRequirement, WaterRequirementLabel } from '@/enums/WaterRequirements';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { IonLabel } from '@ionic/angular/standalone';
+import { icons, WaterRequirement, WaterRequirementLabel } from '../../shared/enums/WaterRequirements';
+import { PlantFormService } from '../../shared/services/plant-form.service';
+import type { SelectorOption } from '../selector/selector.component';
+import { SelectorComponent } from '../selector/selector.component';
 
 @Component({
   selector: 'app-water-selector',
@@ -15,7 +16,7 @@ export class WaterSelectorComponent {
   plantFormService = inject(PlantFormService);
   plantForm$ = this.plantFormService.plantForm$;
 
-  readonly options: SelectorOption[] = Object.values(WaterRequirement).map((lr) => ({
+  readonly options: SelectorOption[] = Object.values(WaterRequirement).map(lr => ({
     value: lr,
     label: WaterRequirementLabel[lr],
     icon: icons[lr],

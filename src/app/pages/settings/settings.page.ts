@@ -1,21 +1,22 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
   IonTitle,
   IonToolbar,
-  IonItem,
-  IonList,
-  IonLabel,
-  IonIcon,
   MenuController,
   ModalController,
 } from '@ionic/angular/standalone';
-import { IncrementalBackupService } from '@/services/incremental-backup.service';
-import { AuthenticationModalComponent } from 'src/app/components/authentication-modal/authentication-modal.component';
-import { AuthService } from '@/services/auth.service';
+import { AuthenticationModalComponent } from '../../components/authentication-modal/authentication-modal.component';
+import { AuthService } from '../../shared/services/auth.service';
+import { IncrementalBackupService } from '../../shared/services/incremental-backup.service';
 
 @Component({
   selector: 'app-settings',

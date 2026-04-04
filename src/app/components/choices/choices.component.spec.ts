@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ChoicesComponent } from './choices.component';
+import { ChoicesComponent } from '@/components/choices/choices.component';
 
-describe('ChoicesComponent', () => {
+describe('choicesComponent', () => {
   let component: ChoicesComponent;
   let fixture: ComponentFixture<ChoicesComponent>;
 

@@ -1,9 +1,9 @@
-import { ChoiceName } from '@/enums/ChoiceEntry';
-import { ChoicesStorageService } from '@/services/choices-storage.service';
-import { PlantFormService } from '@/services/plant-form.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IonLabel } from '@ionic/angular/standalone';
+import { ChoiceName } from '../../shared/enums/ChoiceEntry';
+import { ChoicesStorageService } from '../../shared/services/choices-storage.service';
+import { PlantFormService } from '../../shared/services/plant-form.service';
 import { ChoicesComponent } from '../choices/choices.component';
 
 @Component({

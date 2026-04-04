@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AuthenticationModalComponent } from './authentication-modal.component';
+import { AuthenticationModalComponent } from '@/components/authentication-modal/authentication-modal.component';
 
-describe('AuthenticationModalComponent', () => {
+describe('authenticationModalComponent', () => {
   let component: AuthenticationModalComponent;
   let fixture: ComponentFixture<AuthenticationModalComponent>;
 

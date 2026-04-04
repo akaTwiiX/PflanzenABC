@@ -1,19 +1,19 @@
 import { Component, inject, Input } from '@angular/core';
 // import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import {
   IonButton,
-  IonIcon,
-  IonItem,
-  IonModal,
-  IonInput,
   IonFab,
   IonFabButton,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonModal,
   NavController,
 } from '@ionic/angular/standalone';
-import { FormsModule } from '@angular/forms';
-import { CollectionStorageService } from '@/services/collection-storage.service';
-import { Collection } from '@/types/Collection';
-import { getFirstLetter } from '@/utils/string.utils';
+import { CollectionStorageService } from '../../shared/services/collection-storage.service';
+import type { Collection } from '../../shared/types/Collection';
+import { getFirstLetter } from '../../shared/utils/string.utils';
 
 @Component({
   selector: 'app-add-button',
@@ -48,7 +48,8 @@ export class AddButtonComponent {
       updatedAt: new Date().toISOString(),
     };
 
-    if (!this.parentCollection) collection.initialId = getFirstLetter(this.newCollection);
+    if (!this.parentCollection)
+      collection.initialId = getFirstLetter(this.newCollection);
 
     try {
       const id = await this.collectionStorageService.addCollection(collection);

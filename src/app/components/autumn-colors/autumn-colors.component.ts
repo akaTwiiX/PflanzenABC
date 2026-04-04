@@ -1,9 +1,9 @@
-import { ChoicesStorageService } from '@/services/choices-storage.service';
-import { PlantFormService } from '@/services/plant-form.service';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IonCheckbox, IonItem, IonLabel } from '@ionic/angular/standalone';
-import { ColorChoicesComponent } from '../color-choices/color-choices.component';
+import { ColorChoicesComponent } from '@/components/color-choices/color-choices.component';
+import { ChoicesStorageService } from '@/shared/services/choices-storage.service';
+import { PlantFormService } from '@/shared/services/plant-form.service';
 
 @Component({
   selector: 'app-autumn-colors',

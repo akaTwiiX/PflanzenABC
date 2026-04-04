@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RangeSliderComponent } from './range-slider.component';
+import { RangeSliderComponent } from '@/components/range-slider/range-slider.component';
 
-describe('RangeSliderComponent', () => {
+describe('rangeSliderComponent', () => {
   let component: RangeSliderComponent;
   let fixture: ComponentFixture<RangeSliderComponent>;
 

@@ -1,5 +1,5 @@
-import { Plant } from '@/types/PlantType';
 import { Injectable } from '@angular/core';
+import type { Plant } from '../types/PlantType';
 import { db } from './app-database.service';
 
 @Injectable({

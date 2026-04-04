@@ -1,12 +1,13 @@
-import { db } from '@/services/app-database.service';
-import { loadNativeImage } from '@/utils/image.utils';
+import type {
+  OnChanges,
+  SimpleChange,
+  SimpleChanges,
+} from '@angular/core';
 import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -25,7 +26,16 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
+import type { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageCropperComponent } from 'ngx-image-cropper';
+import { db } from '../../shared/services/app-database.service';
+import { loadNativeImage } from '../../shared/utils/image.utils';
+
+const NUMERIC_ID_REGEX = /^\d+$/;
+const FILESYSTEM_NAME_REGEX = /^[^/]+?\.(?:jpe?g|png|gif)$/i;
+interface ImagePickerChanges extends SimpleChanges {
+  value: SimpleChange;
+}
 
 @Component({
   selector: 'app-image-picker',
@@ -59,18 +69,17 @@ export class ImagePickerComponent implements OnChanges {
   croppedImage: string | null = null;
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes['value'] && this.value) {
+    const typedChanges = changes as ImagePickerChanges;
+    if (typedChanges.value && this.value) {
       const type = this.detectType(this.value);
       console.log('Image value changed:', this.value, '→', type);
 
       switch (type) {
         case 'index':
-          const entry = await db.images.get(Number(this.value));
-          this.image = entry ? URL.createObjectURL(entry.data) : undefined;
+          this.image = await db.images.get(Number(this.value)).then(entry => entry ? URL.createObjectURL(entry.data) : undefined);
           break;
         case 'filesystem':
-          const image = await loadNativeImage(this.value);
-          this.image = image;
+          this.image = await loadNativeImage(this.value);
           break;
         case 'temporary':
           this.image = this.value;
@@ -80,10 +89,10 @@ export class ImagePickerComponent implements OnChanges {
   }
 
   private detectType(val: string): 'index' | 'filesystem' | 'temporary' {
-    if (/^\d+$/.test(val)) {
+    if (NUMERIC_ID_REGEX.test(val)) {
       return 'index';
     }
-    if (/^[^/]+?\.(jpe?g|png|gif)$/i.test(val)) {
+    if (FILESYSTEM_NAME_REGEX.test(val)) {
       return 'filesystem';
     }
     return 'temporary';

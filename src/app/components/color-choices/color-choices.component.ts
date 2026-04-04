@@ -1,9 +1,9 @@
-import { colorChoices } from '@/consts/colorChoices';
-import { PlantFormService } from '@/services/plant-form.service';
-import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { IonCheckbox, IonText } from '@ionic/angular/standalone';
+import { colorChoices } from '@/shared/consts/colorChoices';
+import { PlantFormService } from '@/shared/services/plant-form.service';
+import type { Plant } from '@/shared/types/PlantType';
 
 @Component({
   selector: 'app-color-choices',

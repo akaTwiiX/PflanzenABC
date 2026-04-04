@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { IonLabel, IonCheckbox, IonInput, IonItem } from '@ionic/angular/standalone';
-import { PlantFormService } from '@/services/plant-form.service';
 import { CommonModule } from '@angular/common';
-import { monthRange } from '@/consts/monthRange';
+import { Component, inject } from '@angular/core';
+import { IonCheckbox, IonInput, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { monthRange } from '@/shared/consts/monthRange';
+import { PlantFormService } from '@/shared/services/plant-form.service';
 
 @Component({
   selector: 'app-pruning',

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PlantFormService } from './plant-form.service';
+import { PlantFormService } from '@/shared/services/plant-form.service';
 
-describe('PlantFormService', () => {
+describe('plantFormService', () => {
   let service: PlantFormService;
 
   beforeEach(() => {

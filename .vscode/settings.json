@@ -1,8 +1,14 @@
 {
-  "typescript.preferences.autoImportFileExcludePatterns": [
-    "@ionic/angular/common",
-    "@ionic/angular"
-  ],
+  "editor.formatOnSave": false,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "eslint.format.enable": true,
+  "prettier.enable": false,
+  "[html]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[angular]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit",
     "source.fixAll.eslint": "explicit"

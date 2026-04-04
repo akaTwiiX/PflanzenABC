@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddButtonComponent } from './add-button.component';
+import { AddButtonComponent } from '@/components/add-button/add-button.component';
 
-describe('AddButtonComponent', () => {
+describe('addButtonComponent', () => {
   let component: AddButtonComponent;
   let fixture: ComponentFixture<AddButtonComponent>;
 

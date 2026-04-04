@@ -26,13 +26,13 @@ export const CHECKBOX_LABELS: Record<BooleanPlantKeys, string> = {
   regional: 'Einheimisch',
 };
 
-export type CheckboxItem = {
+export interface CheckboxItem {
   name: BooleanPlantKeys;
   label: string;
   checked: boolean;
-};
+}
 
-export const CHECKBOX_ARRAY: CheckboxItem[] = CHECKBOX_FIELDS.map((field) => ({
+export const CHECKBOX_ARRAY: CheckboxItem[] = CHECKBOX_FIELDS.map(field => ({
   name: field,
   label: CHECKBOX_LABELS[field],
   checked: false,

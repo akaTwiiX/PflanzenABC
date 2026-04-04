@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { RootSystemComponent } from './root-system.component';
+import { RootSystemComponent } from '@/components/root-system/root-system.component';
 
-describe('RootSystemComponent', () => {
+describe('rootSystemComponent', () => {
   let component: RootSystemComponent;
   let fixture: ComponentFixture<RootSystemComponent>;
 

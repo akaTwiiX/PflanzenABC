@@ -1,11 +1,6 @@
-import { AuthService } from '@/services/auth.service';
-import { BackupStateService } from '@/services/backup-state.service';
-import { auth } from '@/services/firebase';
-import { IncrementalBackupService } from '@/services/incremental-backup.service';
-import { UpdaterService } from '@/services/updater.service';
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { App, AppState } from '@capacitor/app';
+import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
@@ -18,8 +13,14 @@ import {
 } from '@ionic/angular/standalone';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { onAuthStateChanged } from 'firebase/auth';
+
 import { register } from 'swiper/element/bundle';
 import { DownloadModalComponent } from './components/download-modal/download-modal.component';
+import { AuthService } from './shared/services/auth.service';
+import { BackupStateService } from './shared/services/backup-state.service';
+import { auth } from './shared/services/firebase';
+import { IncrementalBackupService } from './shared/services/incremental-backup.service';
+import { UpdaterService } from './shared/services/updater.service';
 
 register();
 
@@ -124,7 +125,7 @@ export class AppComponent {
   }
 
   private async setupBackupListeners() {
-    App.addListener('appStateChange', async (state: AppState) => {
+    App.addListener('appStateChange', async () => {
       console.log('📴 Start backup...');
       await BackupStateService.performBackupIfNeeded();
     });

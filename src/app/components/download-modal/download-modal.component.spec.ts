@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DownloadModalComponent } from './download-modal.component';
+import { DownloadModalComponent } from '@/components/download-modal/download-modal.component';
 
-describe('DownloadModalComponent', () => {
+describe('downloadModalComponent', () => {
   let component: DownloadModalComponent;
   let fixture: ComponentFixture<DownloadModalComponent>;
 

@@ -9,7 +9,7 @@
 //   node scripts/commit-push.mjs tag-only              → tag last commit
 // ─────────────────────────────────────────
 
-const { execSync } = require('child_process')
+import { execSync } from 'node:child_process';
 
 // ── Parse arguments ───────────────────────
 // pnpm commit:patch "my message"  → argv = ['patch', 'my message']  (bump injected first by package.json)
@@ -75,9 +75,16 @@ if (!message) {
 }
 
 // ── Calculate new version ─────────────────
-if (bump === 'major') { major++; minor = 0; patch = 0; }
-else if (bump === 'minor') { minor++; patch = 0; }
-else if (bump === 'patch') { patch++; }
+if (bump === 'major') {
+  major++;
+  minor = 0;
+  patch = 0;
+} else if (bump === 'minor') {
+  minor++;
+  patch = 0;
+} else if (bump === 'patch') {
+  patch++;
+}
 
 const newTag = `v${major}.${minor}.${patch}`;
 

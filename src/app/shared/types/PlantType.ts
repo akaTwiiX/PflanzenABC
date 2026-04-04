@@ -1,22 +1,22 @@
-import { LightRequirement } from '../enums/LightRequirements';
-import { WaterRequirement } from '../enums/WaterRequirements';
-import { AutumnColors } from './AutumnColors';
-import { Fruit } from './Fruit';
-import { RangeSliderType } from './RangeSliderType';
+import type { LightRequirement } from '../enums/LightRequirements';
+import type { WaterRequirement } from '../enums/WaterRequirements';
+import type { AutumnColors } from './AutumnColors';
+import type { Fruit } from './Fruit';
+import type { RangeSliderType } from './RangeSliderType';
 
-export type ActionWithDetails = {
+export interface ActionWithDetails {
   enabled: boolean;
   time: string;
   amount?: string;
   type?: string | string[];
-};
+}
 
-export type ActionWithSlider = {
+export interface ActionWithSlider {
   enabled: boolean;
   value: RangeSliderType;
-};
+}
 
-export type Plant = {
+export interface Plant {
   id?: number;
   initialId?: string;
   nameGerman: string;
@@ -27,7 +27,7 @@ export type Plant = {
   distance: ActionWithSlider;
   height: RangeSliderType;
   width: RangeSliderType;
-  growth: string;
+  growth: RangeSliderType;
   growthForm: string[];
   leafShape: string;
   bloomTime: RangeSliderType;
@@ -55,4 +55,4 @@ export type Plant = {
   collectionId?: number;
   updatedAt: string;
   createdAt?: string;
-};
+}

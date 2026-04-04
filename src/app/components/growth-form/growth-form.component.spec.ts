@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { GrowthFormComponent } from './growth-form.component';
+import { GrowthFormComponent } from '@/components/growth-form/growth-form.component';
 
-describe('GrowthFormComponent', () => {
+describe('growthFormComponent', () => {
   let component: GrowthFormComponent;
   let fixture: ComponentFixture<GrowthFormComponent>;
 

@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LeafShapeComponent } from './leaf-shape.component';
+import { LeafShapeComponent } from '@/components/leaf-shape/leaf-shape.component';
 
-describe('LeafShapeComponent', () => {
+describe('leafShapeComponent', () => {
   let component: LeafShapeComponent;
   let fixture: ComponentFixture<LeafShapeComponent>;
 

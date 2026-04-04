@@ -1,12 +1,14 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { RangeSliderType } from '@/types/RangeSliderType';
+import type { OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonRange, IonText } from '@ionic/angular/standalone';
-import { CommaDecimalPipe } from '@/pipes/comma-decimal.pipe';
+import { CommaDecimalPipe } from '../../shared/pipes/comma-decimal.pipe';
+import type { RangeSliderType } from '../../shared/types/RangeSliderType';
 
 @Component({
   selector: 'app-range-slider',
   templateUrl: './range-slider.component.html',
   styleUrls: ['./range-slider.component.scss'],
+  standalone: true,
   imports: [IonRange, IonText, CommaDecimalPipe],
 })
 export class RangeSliderComponent<T extends string | number | null> implements OnChanges {
@@ -21,11 +23,11 @@ export class RangeSliderComponent<T extends string | number | null> implements O
   upper = 0;
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['range']) {
+    if ('range' in changes) {
       this.max = this.range.length - 1;
     }
 
-    if (changes['value'] && this.value) {
+    if ('value' in changes && this.value) {
       this.lower = this.getIndex(this.value.start, 0);
       this.upper = this.getIndex(this.value.end, this.range.length - 1);
     }

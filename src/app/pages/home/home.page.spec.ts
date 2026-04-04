@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import { HomePage } from './home.page';
+import { HomePage } from '@/pages/home/home.page';
 
-describe('HomePage', () => {
+describe('homePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
 

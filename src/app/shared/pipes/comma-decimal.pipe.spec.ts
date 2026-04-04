@@ -1,6 +1,6 @@
-import { CommaDecimalPipe } from './comma-decimal.pipe';
+import { CommaDecimalPipe } from '@/shared/pipes/comma-decimal.pipe';
 
-describe('CommaDecimalPipe', () => {
+describe('commaDecimalPipe', () => {
   it('create an instance', () => {
     const pipe = new CommaDecimalPipe();
     expect(pipe).toBeTruthy();

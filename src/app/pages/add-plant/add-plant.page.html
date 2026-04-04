@@ -53,12 +53,18 @@
       </ion-item>
 
       <ion-item lines="none">
-        <ion-input
+        <!-- <ion-input
           label="Wachstum:"
           labelPlacement="floating"
           placeholder="Enter text"
           [value]="(plantForm$ | async)?.growth"
           (ionChange)="plantFormService.update('growth', $event.detail.value ?? '')"
+        /> -->
+        <app-range-slider
+          label="Wachstum:"
+          [range]="growthRange"
+          [value]="(plantForm$ | async)?.growth!"
+          (valueChange)="plantFormService.update('growth', $event)"
         />
       </ion-item>
 

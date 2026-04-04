@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IncrementalBackupService } from './incremental-backup.service';
+import { IncrementalBackupService } from '@/shared/services/incremental-backup.service';
 
-describe('IncrementalBackupService', () => {
+describe('incrementalBackupService', () => {
   let service: IncrementalBackupService;
 
   beforeEach(() => {

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CollectionStorageService } from './collection-storage.service';
+import { CollectionStorageService } from '@/shared/services/collection-storage.service';
 
-describe('CollectionStorageService', () => {
+describe('collectionStorageService', () => {
   let service: CollectionStorageService;
 
   beforeEach(() => {

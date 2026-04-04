@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WaterSelectorComponent } from './water-selector.component';
+import { WaterSelectorComponent } from '@/components/water-selector/water-selector.component';
 
-describe('WaterSelectorComponent', () => {
+describe('waterSelectorComponent', () => {
   let component: WaterSelectorComponent;
   let fixture: ComponentFixture<WaterSelectorComponent>;
 

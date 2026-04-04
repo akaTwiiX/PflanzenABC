@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { db } from './app-database.service';
-import { ChoiceEntry, ChoiceName } from '@/enums/ChoiceEntry';
+import type { ChoiceEntry, ChoiceName } from '@/shared/enums/ChoiceEntry';
+import { db } from '@/shared/services/app-database.service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +40,7 @@ export class ChoicesStorageService {
   async removeValue(name: ChoiceName, valueToRemove: string): Promise<void> {
     const entry = await this.table.where('name').equals(name).first();
     if (entry) {
-      const filtered = entry.value.filter((v) => v !== valueToRemove);
+      const filtered = entry.value.filter(v => v !== valueToRemove);
       await this.table.update(entry.id!, { value: filtered });
     }
   }

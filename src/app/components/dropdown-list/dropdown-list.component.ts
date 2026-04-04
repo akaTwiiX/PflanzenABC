@@ -1,19 +1,15 @@
-import { distanceRange } from '@/consts/distanceRange';
-import { monthRange } from '@/consts/monthRange';
-import { CollectionStorageService } from '@/services/collection-storage.service';
-import { PlantStorageService } from '@/services/plant-storage.service';
-import { Collection } from '@/types/Collection';
-import { Plant } from '@/types/PlantType';
 import { CommonModule } from '@angular/common';
-import {
+import type {
   AfterViewInit,
+  OnDestroy,
+  QueryList,
+} from '@angular/core';
+import {
   ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
   inject,
-  OnDestroy,
-  QueryList,
   signal,
   ViewChild,
   ViewChildren,
@@ -26,6 +22,12 @@ import {
   IonSpinner,
 } from '@ionic/angular/standalone';
 import { Subject, takeUntil } from 'rxjs';
+import { distanceRange } from '../../shared/consts/distanceRange';
+import { monthRange } from '../../shared/consts/monthRange';
+import { CollectionStorageService } from '../../shared/services/collection-storage.service';
+import { PlantStorageService } from '../../shared/services/plant-storage.service';
+import type { Collection } from '../../shared/types/Collection';
+import type { Plant } from '../../shared/types/PlantType';
 import { PlantListComponent } from '../plant-list/plant-list.component';
 
 interface LetterGroup {
@@ -45,10 +47,10 @@ interface LetterGroup {
     CommonModule,
     IonContent,
     IonSpinner,
-    PlantListComponent,
     IonFab,
     IonFabButton,
     IonFabList,
+    PlantListComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -62,17 +64,18 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   private collectionStorageService = inject(CollectionStorageService);
 
   dataByLetter = signal<LetterGroup[]>(
-    this.alphabet.map((l) => ({
+    this.alphabet.map(l => ({
       letter: l,
       isLoading: false,
       loaded: false,
     })),
   );
+
   activeLetter = signal<string | null>(null);
 
-  isAnyLoading = computed(() => this.dataByLetter().some((l) => l.isLoading));
+  isAnyLoading = computed(() => this.dataByLetter().some(l => l.isLoading));
   isInitialLoading = computed(
-    () => this.isAnyLoading() && this.dataByLetter().every((l) => !l.loaded),
+    () => this.isAnyLoading() && this.dataByLetter().every(l => !l.loaded),
   );
 
   @ViewChildren('letterSection', { read: ElementRef })
@@ -91,7 +94,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   private async initObservers() {
-    this.observer = new IntersectionObserver((entries) => this.onIntersect(entries), {
+    this.observer = new IntersectionObserver(entries => this.onIntersect(entries), {
       root: null,
       rootMargin: '100px',
       threshold: 0,
@@ -102,15 +105,17 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   private async reconnectObservers() {
-    if (this.observer) this.observer.disconnect();
-    if (this.activeObserver) this.activeObserver.disconnect();
+    if (this.observer)
+      this.observer.disconnect();
+    if (this.activeObserver)
+      this.activeObserver.disconnect();
 
     this.initObservers();
   }
 
   resetData(filter: Partial<Plant>) {
     this.activeFilter = filter;
-    const reset = this.alphabet.map((l) => ({
+    const reset = this.alphabet.map(l => ({
       letter: l,
       isLoading: false,
       loaded: false,
@@ -135,17 +140,19 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
     for (const entry of entries) {
       if (entry.isIntersecting) {
         const letter = entry.target.getAttribute('data-letter');
-        if (letter) this.loadDataForLetter(letter);
+        if (letter)
+          this.loadDataForLetter(letter);
       }
     }
   }
 
   private async loadDataForLetter(letter: string) {
     const currentData = this.dataByLetter();
-    const index = currentData.findIndex((x) => x.letter === letter);
+    const index = currentData.findIndex(x => x.letter === letter);
     const entry = currentData[index];
 
-    if (!entry || entry.loaded || entry.isLoading) return;
+    if (!entry || entry.loaded || entry.isLoading)
+      return;
 
     const updated = [...currentData];
     updated[index] = { ...entry, isLoading: true };
@@ -208,20 +215,23 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
       return Object.entries(filter).every(([key, value]) => {
         const plantValue = (plant as any)[key];
 
-        if (value === undefined) return true;
+        if (value === undefined)
+          return true;
 
         if (
-          typeof value === 'object' &&
-          value !== null &&
-          'start' in value &&
-          value.start &&
-          'end' in value &&
-          value.end
+          typeof value === 'object'
+          && value !== null
+          && 'start' in value
+          && value.start
+          && 'end' in value
+          && value.end
         ) {
-          if (!plantValue) return false;
+          if (!plantValue)
+            return false;
 
           const rangeArray = this.getRangeArrayForKey(key);
-          if (!rangeArray) return false;
+          if (!rangeArray)
+            return false;
 
           const filterStart = rangeArray.indexOf(value.start);
           const filterEnd = rangeArray.indexOf(value.end);
@@ -229,12 +239,13 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
           const plantStart = rangeArray.indexOf(plantValue.start);
           const plantEnd = rangeArray.indexOf(plantValue.end);
 
-          if (filterStart < 0 || filterEnd < 0 || plantStart < 0 || plantEnd < 0) return false;
+          if (filterStart < 0 || filterEnd < 0 || plantStart < 0 || plantEnd < 0)
+            return false;
           return plantStart >= filterStart && plantEnd <= filterEnd;
         }
 
         if (Array.isArray(value)) {
-          return Array.isArray(plantValue) && plantValue.some((v) => value.includes(v));
+          return Array.isArray(plantValue) && plantValue.some(v => value.includes(v));
         }
 
         return plantValue === value;
@@ -264,7 +275,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
     }
 
     const root = await this.content.getScrollElement();
-    this.activeObserver = new IntersectionObserver((entries) => this.updateActiveLetter(entries), {
+    this.activeObserver = new IntersectionObserver(entries => this.updateActiveLetter(entries), {
       root,
       rootMargin: '0px 0px -90%',
       threshold: 0,
@@ -289,10 +300,11 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
 
   scrollToLetter(letter: string) {
     const target = this.sections.find(
-      (el) => el.nativeElement.getAttribute('data-letter') === letter,
+      el => el.nativeElement.getAttribute('data-letter') === letter,
     );
 
-    if (!target) return;
+    if (!target)
+      return;
 
     this.content.scrollToPoint(0, target.nativeElement.offsetTop, 400);
   }
@@ -311,8 +323,10 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.observer) this.observer.disconnect();
-    if (this.activeObserver) this.activeObserver.disconnect();
+    if (this.observer)
+      this.observer.disconnect();
+    if (this.activeObserver)
+      this.activeObserver.disconnect();
     this.destroy$.next();
     this.destroy$.complete();
   }

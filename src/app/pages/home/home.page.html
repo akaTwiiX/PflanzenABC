@@ -18,9 +18,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content
-    [scrollY]="false"
-  >
+  <ion-content [scrollY]="false">
     @if (searchQuery) {
     <app-plant-list [plants]="searchResults" />
     } @else {

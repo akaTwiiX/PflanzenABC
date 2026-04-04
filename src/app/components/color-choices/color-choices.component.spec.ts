@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ColorChoicesComponent } from './color-choices.component';
+import { ColorChoicesComponent } from '@/components/color-choices/color-choices.component';
 
-describe('ColorChoicesComponent', () => {
+describe('colorChoicesComponent', () => {
   let component: ColorChoicesComponent;
   let fixture: ComponentFixture<ColorChoicesComponent>;
 

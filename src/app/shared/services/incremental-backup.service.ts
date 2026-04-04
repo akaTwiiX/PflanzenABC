@@ -1,16 +1,19 @@
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { db } from '@/services/app-database.service';
-import { Capacitor } from '@capacitor/core';
-import { environment } from 'src/environments/environment';
-import { decryptData, encryptData } from '@/utils/crypto.utils';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db as firestoreDb } from './firebase';
 import { signal } from '@angular/core';
-import { Dexie } from 'dexie';
+import type { Dexie } from 'dexie';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { environment } from '../../../environments/environment';
+import { decryptData, encryptData } from '../utils/crypto.utils';
+import { db } from './app-database.service';
+import { auth, db as firestoreDb } from './firebase';
 
 const SECRET_KEY = environment.BACKUP_SECRET_KEY;
-const BACKUP_FILE_NAME = 'PflanzenABC-backup.json';
-const BACKUP_DIR = 'PflanzenABC/Backups';
+// const BACKUP_FILE_NAME = 'PflanzenABC-backup.json';
+// const BACKUP_DIR = 'PflanzenABC/Backups';
+
+interface BackupDocument {
+  data?: string;
+  updatedAt?: Date;
+}
 
 export class IncrementalBackupService {
   static backupAvailable = signal(false);
@@ -32,7 +35,7 @@ export class IncrementalBackupService {
 
       const encrypted = await encryptData(backupData, SECRET_KEY);
 
-      this.createOrUpdateBackup(encrypted);
+      await this.createOrUpdateBackup(encrypted);
       this.backupAvailable.set(true);
       console.log('✅ Full backup created/updated successfully');
     } catch (e) {
@@ -43,12 +46,12 @@ export class IncrementalBackupService {
   static async restoreBackup() {
     try {
       const file = await this.getBackup();
-      if (!file || !file['data']) {
+      if (!file || !file.data) {
         console.warn('⚠️ No backup data found to restore.');
         return;
       }
 
-      const data = await decryptData(file['data'] as string, SECRET_KEY);
+      const data = await decryptData(file.data as string, SECRET_KEY);
 
       await db.transaction('rw', db.plants, db.collections, db.choices, db.images, async () => {
         await Promise.all([
@@ -70,7 +73,7 @@ export class IncrementalBackupService {
     }
   }
 
-  static async getBackup() {
+  static async getBackup(): Promise<BackupDocument | null> {
     const user = auth.currentUser;
     if (!user) {
       throw new Error('User not authenticated');
@@ -78,7 +81,7 @@ export class IncrementalBackupService {
     const ref = doc(firestoreDb, 'backups', user.uid);
     const snapshot = await getDoc(ref);
     if (snapshot.exists()) {
-      return snapshot.data();
+      return snapshot.data() as BackupDocument;
     } else {
       console.warn('⚠️ No backup found for user:', user.email);
       return null;
@@ -92,7 +95,7 @@ export class IncrementalBackupService {
     }
 
     const ref = doc(firestoreDb, 'backups', user.uid);
-    setDoc(ref, { data: encrypted, updatedAt: new Date() }, { merge: true });
+    await setDoc(ref, { data: encrypted, updatedAt: new Date() }, { merge: true });
     console.log('✅ Backup updated in Firestore for user:', user.email);
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IncrementalBackupService } from './incremental-backup.service';
+import { IncrementalBackupService } from '@/shared/services/incremental-backup.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,8 @@ export class BackupStateService {
   }
 
   static async performBackupIfNeeded() {
-    if (!this.needsBackup()) return;
+    if (!this.needsBackup())
+      return;
 
     console.log('💾 Performing scheduled backup...');
     await IncrementalBackupService.createEncryptedBackup();

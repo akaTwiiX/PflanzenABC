@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ImagePickerComponent } from './image-picker.component';
+import { ImagePickerComponent } from '@/components/image-picker/image-picker.component';
 
-describe('ImagePickerComponent', () => {
+describe('imagePickerComponent', () => {
   let component: ImagePickerComponent;
   let fixture: ComponentFixture<ImagePickerComponent>;
 

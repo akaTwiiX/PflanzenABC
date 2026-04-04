@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BackupStateService } from './backup-state.service';
+import { BackupStateService } from '@/shared/services/backup-state.service';
 
-describe('BackupStateService', () => {
+describe('backupStateService', () => {
   let service: BackupStateService;
 
   beforeEach(() => {

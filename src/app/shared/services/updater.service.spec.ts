@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UpdaterService } from './updater.service';
+import { UpdaterService } from '@/shared/services/updater.service';
 
-describe('UpdaterService', () => {
+describe('updaterService', () => {
   let service: UpdaterService;
 
   beforeEach(() => {

@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsPage } from './settings.page';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { SettingsPage } from '@/pages/settings/settings.page';
 
-describe('SettingsPage', () => {
+describe('settingsPage', () => {
   let component: SettingsPage;
   let fixture: ComponentFixture<SettingsPage>;
 

@@ -1,16 +1,15 @@
-import { UpdaterService } from '@/services/updater.service';
-import { Component, Input, inject } from '@angular/core';
-import { Capacitor } from '@capacitor/core';
+import { Component, inject, Input } from '@angular/core';
 import {
-  IonProgressBar,
+  AlertController,
   IonButton,
   IonContent,
   IonHeader,
-  IonToolbar,
+  IonProgressBar,
   IonTitle,
+  IonToolbar,
   ModalController,
-  AlertController,
 } from '@ionic/angular/standalone';
+import { UpdaterService } from '@/shared/services/updater.service';
 
 @Component({
   selector: 'app-download-modal',
@@ -29,7 +28,7 @@ export class DownloadModalComponent {
   async ionViewDidEnter() {
     this.downloading = true;
     try {
-      await this.updater.downloadAndInstall(this.url, (p) => (this.progress = p));
+      await this.updater.downloadAndInstall(this.url, p => (this.progress = p));
       await this.modalCtrl.dismiss();
       const alert = await this.alertCtrl.create({
         header: 'Download abgeschlossen',

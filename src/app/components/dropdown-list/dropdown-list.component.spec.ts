@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DropdownListComponent } from './dropdown-list.component';
+import { DropdownListComponent } from '@/components/dropdown-list/dropdown-list.component';
 
-describe('DropdownListComponent', () => {
+describe('dropdownListComponent', () => {
   let component: DropdownListComponent;
   let fixture: ComponentFixture<DropdownListComponent>;
 

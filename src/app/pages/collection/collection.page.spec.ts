@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CollectionPage } from './collection.page';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { CollectionPage } from '@/pages/collection/collection.page';
 
-describe('CollectionPage', () => {
+describe('collectionPage', () => {
   let component: CollectionPage;
   let fixture: ComponentFixture<CollectionPage>;
 

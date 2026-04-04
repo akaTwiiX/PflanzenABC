@@ -1,4 +1,4 @@
-import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 export function convertBlobToBase64(blob: Blob): Promise<string | ArrayBuffer | null> {
   return new Promise((resolve, reject) => {

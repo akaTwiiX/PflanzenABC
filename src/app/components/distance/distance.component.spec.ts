@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DistanceComponent } from './distance.component';
+import { DistanceComponent } from '@/components/distance/distance.component';
 
-describe('DistanceComponent', () => {
+describe('distanceComponent', () => {
   let component: DistanceComponent;
   let fixture: ComponentFixture<DistanceComponent>;
 

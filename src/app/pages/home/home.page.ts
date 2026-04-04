@@ -1,7 +1,4 @@
-import { AuthService } from '@/services/auth.service';
-import { PlantStorageService } from '@/services/plant-storage.service';
-import { Plant } from '@/types/PlantType';
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   IonButtons,
   IonContent,
@@ -9,10 +6,13 @@ import {
   IonSearchbar,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { AddButtonComponent } from 'src/app/components/add-button/add-button.component';
-import { DropdownListComponent } from 'src/app/components/dropdown-list/dropdown-list.component';
-import { FilterButtonComponent } from 'src/app/components/filter-button/filter-button.component';
-import { PlantListComponent } from 'src/app/components/plant-list/plant-list.component';
+import { AddButtonComponent } from '../../components/add-button/add-button.component';
+import { DropdownListComponent } from '../../components/dropdown-list/dropdown-list.component';
+import { FilterButtonComponent } from '../../components/filter-button/filter-button.component';
+import { PlantListComponent } from '../../components/plant-list/plant-list.component';
+import { AuthService } from '../../shared/services/auth.service';
+import { PlantStorageService } from '../../shared/services/plant-storage.service';
+import type { Plant } from '../../shared/types/PlantType';
 
 @Component({
   selector: 'app-home',

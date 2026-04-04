@@ -16,6 +16,8 @@ addEventListener('message', async ({ data }) => {
   }
 });
 
+const solarCrypto = globalThis.crypto.subtle;
+
 async function deriveKey(password: string, salt: BufferSource): Promise<CryptoKey> {
   const enc = new TextEncoder();
   const keyMaterial = await solarCrypto.importKey(
@@ -40,12 +42,10 @@ async function deriveKey(password: string, salt: BufferSource): Promise<CryptoKe
   );
 }
 
-const solarCrypto = self.crypto.subtle;
-
 async function encryptData(data: any, password: string): Promise<string> {
   const enc = new TextEncoder();
-  const salt = self.crypto.getRandomValues(new Uint8Array(16));
-  const iv = self.crypto.getRandomValues(new Uint8Array(12));
+  const salt = globalThis.crypto.getRandomValues(new Uint8Array(16));
+  const iv = globalThis.crypto.getRandomValues(new Uint8Array(12));
   const key = await deriveKey(password, salt);
 
   const encoded = enc.encode(JSON.stringify(data));
@@ -56,7 +56,7 @@ async function encryptData(data: any, password: string): Promise<string> {
 }
 
 async function decryptData(encryptedData: string, password: string): Promise<any> {
-  const raw = Uint8Array.from(atob(encryptedData), (c) => c.charCodeAt(0));
+  const raw = Uint8Array.from(atob(encryptedData), c => c.charCodeAt(0));
   const salt = raw.slice(0, 16);
   const iv = raw.slice(16, 28);
   const ciphertext = raw.slice(28);

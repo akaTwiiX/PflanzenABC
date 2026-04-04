@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LightSelectorComponent } from './light-selector.component';
+import { LightSelectorComponent } from '@/components/light-selector/light-selector.component';
 
-describe('LightSelectorComponent', () => {
+describe('lightSelectorComponent', () => {
   let component: LightSelectorComponent;
   let fixture: ComponentFixture<LightSelectorComponent>;
 

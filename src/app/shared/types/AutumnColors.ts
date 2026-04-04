@@ -1,4 +1,4 @@
-export type AutumnColors = {
+export interface AutumnColors {
   enabled: boolean;
   colors: string[];
-};
+}

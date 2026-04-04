@@ -86,7 +86,7 @@
     @if (plant.growth) {
       <div class="info-card">
         <strong>Wachstum</strong>
-        <div class="value">{{ plant.growth }}</div>
+        <div class="value">{{ plant.growth.start | commaDecimal }} – {{ plant.growth.end | commaDecimal }} m</div>
       </div>
     }
 

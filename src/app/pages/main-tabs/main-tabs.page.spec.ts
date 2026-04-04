@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MainTabsPage } from './main-tabs.page';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { MainTabsPage } from '@/pages/main-tabs/main-tabs.page';
 
-describe('MainTabsPage', () => {
+describe('mainTabsPage', () => {
   let component: MainTabsPage;
   let fixture: ComponentFixture<MainTabsPage>;
 

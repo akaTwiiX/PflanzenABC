@@ -1,24 +1,23 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
-  IonItem,
-  IonSelectOption,
   IonButton,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonButtons,
   IonContent,
+  IonHeader,
   IonIcon,
-  IonSelect,
-  IonModal,
   IonInput,
-  IonText,
-  IonLabel,
+  IonItem,
+  IonModal,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ChoiceName } from '@/enums/ChoiceEntry';
-import { ChoicesStorageService } from '@/services/choices-storage.service';
+import type { ChoiceName } from '@/shared/enums/ChoiceEntry';
+import { ChoicesStorageService } from '@/shared/services/choices-storage.service';
 
 @Component({
   selector: 'app-choices',

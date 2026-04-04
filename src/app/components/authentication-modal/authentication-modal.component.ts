@@ -1,25 +1,24 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { AuthService } from '@/services/auth.service';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
-  IonContent,
+  AlertController,
   IonButton,
-  IonInput,
-  IonLabel,
-  IonItem,
+  IonContent,
+  IonFooter,
+  IonHeader,
   IonIcon,
+  IonInput,
+  IonItem,
+  IonLabel,
   IonList,
   IonText,
-  IonHeader,
-  IonToolbar,
   IonTitle,
-  IonFooter,
-  IonToggle,
+  IonToolbar,
   ModalController,
-  AlertController,
   ToastController,
 } from '@ionic/angular/standalone';
+import { AuthService } from '@/shared/services/auth.service';
 
 @Component({
   selector: 'app-authentication-modal',
@@ -71,7 +70,7 @@ export class AuthenticationModalComponent {
       return this.showToast('Die Passwörter stimmen nicht überein.', 'danger');
     }
 
-    let result: { success: boolean; message: string; code?: string };
+    let result: { success: boolean, message: string, code?: string, };
 
     try {
       if (this.mode === 'login') {

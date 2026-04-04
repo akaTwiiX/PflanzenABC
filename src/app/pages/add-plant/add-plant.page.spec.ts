@@ -1,7 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AddPlantPage } from './add-plant.page';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { AddPlantPage } from '@/pages/add-plant/add-plant.page';
 
-describe('AddPlantPage', () => {
+describe('addPlantPage', () => {
   let component: AddPlantPage;
   let fixture: ComponentFixture<AddPlantPage>;
 

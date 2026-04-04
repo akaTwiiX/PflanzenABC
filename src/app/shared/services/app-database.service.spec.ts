@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AppDatabaseService } from './app-database.service';
+import { AppDatabaseService } from '@/shared/services/app-database.service';
 
-describe('AppDatabaseService', () => {
+describe('appDatabaseService', () => {
   let service: AppDatabaseService;
 
   beforeEach(() => {
