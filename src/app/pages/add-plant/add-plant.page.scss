@@ -11,6 +11,10 @@ ion-list {
 
 ion-item {
   --background: var(--ion-color-light);
+  --ripple-color: transparent;
+  --background-activated: var(--ion-color-light);
+  --background-focused: var(--ion-color-light);
+  --background-hover: var(--ion-color-light);
   --border-radius: var(--border-radius-md);
   --padding-start: 16px;
   --padding-end: 16px;

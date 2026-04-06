@@ -1,20 +1,56 @@
 :host {
+  display: block;
   margin-top: 16px;
   width: 100%;
 }
 
-.checkbox-container {
+// ion-text {
+//   font-size: 0.85rem;
+//   font-weight: 600;
+//   color: var(--ion-color-medium);
+//   text-transform: uppercase;
+//   letter-spacing: 0.08em;
+// }
+
+.color-grid {
   display: flex;
-  justify-content: space-around;
-  flex-direction: row;
   flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 12px; 
 }
 
-ion-checkbox {
-  --size: 32px;
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  transition: opacity 0.15s ease, outline 0.15s ease;
+  border: 2px solid rgba(0, 0, 0, 0.15); // immer sichtbar → löst Weiß-Problem
+  opacity: 0.5;
+  flex-shrink: 0; // verhindert Schrumpfen
 
-  &::part(container) {
-    border-radius: 6px;
-    border: 2px solid grey;
+  &.selected {
+    opacity: 1;
+    outline: 3px solid var(--swatch-color); // kein scale → kein Überlappen
+    outline-offset: 3px;
+
+    &::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  &:active {
+    opacity: 0.7;
   }
 }

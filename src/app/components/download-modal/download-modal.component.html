@@ -7,14 +7,14 @@
 <ion-content class="ion-padding">
   <p>Bitte warte, während das Update geladen wird...</p>
 
-  <ion-progress-bar [value]="progress / 100"></ion-progress-bar>
-  <p>{{ progress }} %</p>
+  <ion-progress-bar [value]="progress()"></ion-progress-bar>
+  <p style="text-align: center">{{ progress() * 100 | number:'1.0-0' }} %</p>
 
   <ion-button
     expand="block"
     color="medium"
     (click)="cancel()"
-    [disabled]="!downloading"
+    [disabled]="!downloading()"
   >
     Abbrechen
   </ion-button>

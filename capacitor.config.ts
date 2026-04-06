@@ -1,3 +1,5 @@
+/// <reference types="@capacitor-community/safe-area" />
+import { SystemBarsStyle } from '@capacitor-community/safe-area';
 import type { CapacitorConfig } from '@capacitor/cli';
 import { KeyboardResize } from '@capacitor/keyboard';
 
@@ -7,17 +9,12 @@ const config: CapacitorConfig = {
   webDir: 'www',
   plugins: {
     SafeArea: {
-      enabled: true,
-      customColorsForSystemBars: true,
-      statusBarColor: '#000000',
-      statusBarContent: 'light',
-      navigationBarColor: '#000000',
-      navigationBarContent: 'light',
-      offset: 0,
+      statusBarStyle: SystemBarsStyle.Dark,
+      navigationBarStyle: SystemBarsStyle.Dark,
     },
     Keyboard: {
       resize: KeyboardResize.Ionic,
-      resizeOnFullScreen: true,
+      resizeOnFullScreen: false,
     },
   },
 };

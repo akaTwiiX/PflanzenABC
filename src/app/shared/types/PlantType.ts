@@ -16,21 +16,26 @@ export interface ActionWithSlider {
   value: RangeSliderType;
 }
 
+interface ActionWithRangeTime extends Omit<ActionWithDetails, 'time'> {
+  time: RangeSliderType;
+}
+
 export interface Plant {
   id?: number;
   initialId?: string;
   nameGerman: string;
   nameLatin: string;
-  pruning: ActionWithDetails;
-  fertilization: ActionWithDetails;
+  pruning: ActionWithRangeTime;
+  fertilization: ActionWithRangeTime;
   soil: string;
   distance: ActionWithSlider;
   height: RangeSliderType;
   width: RangeSliderType;
   growth: RangeSliderType;
   growthForm: string[];
-  leafShape: string;
+  leafShape: string[];
   bloomTime: RangeSliderType;
+  harvestTime: RangeSliderType;
   type: string[];
   light: LightRequirement[];
   watering: WaterRequirement;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IncrementalBackupService } from '@/shared/services/incremental-backup.service';
+import { IncrementalBackupService } from './incremental-backup.service';
 
 @Injectable({
   providedIn: 'root',

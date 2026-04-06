@@ -29,6 +29,11 @@
     white-space: nowrap;
     display: block;
   }
+
+  &.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
 }
 
 .add-btn {

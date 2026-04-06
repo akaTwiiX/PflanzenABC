@@ -4,9 +4,9 @@
 >
   <ion-label>Frucht</ion-label>
   <ion-checkbox
-    slot="end"
-    [checked]="(plantForm$ | async)?.fruit?.enabled"
-    (ionChange)="plantFormService.update('fruit.enabled', $event.detail.checked)"
+  slot="end"
+  [checked]="(plantForm$ | async)?.fruit?.enabled"
+  (ionChange)="plantFormService.update('fruit.enabled', $event.detail.checked)"
   />
 </ion-item>
 
@@ -22,4 +22,27 @@
     [title]="'Fruchtfarbe:'"
     [choiceName]="'fruit.color'"
   />
+
+  <ion-item
+    lines="none"
+    class="ion-no-padding bg-transparent"
+  >
+    <ion-label>Selbstbefruchtend</ion-label>
+    <ion-checkbox
+      slot="end"
+      [checked]="(plantForm$ | async)?.fruit?.selfFertilizing"
+      (ionChange)="plantFormService.update('fruit.selfFertilizing', $event.detail.checked)"
+    />
+  </ion-item>
+
+  @if(!(plantForm$ | async)?.fruit?.selfFertilizing) {
+    <div>
+      <app-choices
+        [multiple]="true"
+        [choiceName]="ChoiceName.FruitFertilizationType"
+        [selected]="(plantForm$ | async)?.fruit?.fertilizationType ?? []"
+        (selectedChange)="plantFormService.update('fruit.fertilizationType', $event)"
+      />
+    </div>
+  }
 }

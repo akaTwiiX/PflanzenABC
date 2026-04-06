@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { db } from '@/shared/services/app-database.service';
-import type { Collection } from '@/shared/types/Collection';
+import type { Collection } from '../types/Collection';
+import { db } from './app-database.service';
 
 @Injectable({
   providedIn: 'root',

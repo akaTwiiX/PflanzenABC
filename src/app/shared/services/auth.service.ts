@@ -1,4 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
+import { ToastController } from '@ionic/angular/standalone';
 import type {
   User,
 } from 'firebase/auth';
@@ -7,8 +8,7 @@ import {
   sendEmailVerification,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { auth } from '@/shared/services/firebase';
-import { ToastController } from '@ionic/angular/standalone';
+import { auth } from './firebase';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

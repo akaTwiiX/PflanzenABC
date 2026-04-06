@@ -54,18 +54,30 @@
     <div class="info-card">
       <strong>Höhe</strong>
       <div class="value">
+        @if (plant.height.start === plant.height.end) {
+          {{ plant.height.start | commaDecimal }} m
+        } @else { 
         {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
+        }
       </div>
     </div>
     <div class="info-card">
       <strong>Breite</strong>
       <div class="value">
+        @if (plant.width.start === plant.width.end) {
+          {{ plant.width.start | commaDecimal }} m
+        } @else {
         {{ plant.width.start | commaDecimal }} – {{ plant.width.end | commaDecimal }} m
+        }
       </div>
     </div>
     <div class="info-card">
       <strong>Blütezeit</strong>
       <div class="value">{{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}</div>
+    </div>
+    <div class="info-card">
+      <strong>Erntezeit</strong>
+      <div class="value">{{ plant.harvestTime.start }} – {{ plant.harvestTime.end }}</div>
     </div>
 
     @if (plant.leafShape) {
@@ -86,7 +98,11 @@
     @if (plant.growth) {
       <div class="info-card">
         <strong>Wachstum</strong>
+        @if (plant.growth.start === plant.growth.end) {
+          <div class="value">{{ plant.growth.start | commaDecimal }} m</div>
+        } @else {
         <div class="value">{{ plant.growth.start | commaDecimal }} – {{ plant.growth.end | commaDecimal }} m</div>
+        }
       </div>
     }
 
@@ -95,7 +111,8 @@
         <strong>Dünger</strong>
         <div class="value">
           {{ fertilizationTypeDisplay }}
-          – {{ plant.fertilization.time }}
+          – {{ plant.fertilization.time.start }} 
+          – {{ plant.fertilization.time.end }}
         </div>
       </div>
     }
@@ -110,7 +127,7 @@
     <!-- Appearance Colors -->
     @if (plant.leafColor.length > 0) {
       <div class="info-card">
-        <strong>Blätterfarbe</strong>
+        <strong>Blattfarbe</strong>
         <div class="color-badge-container">
           @for (color of plant.leafColor; track $index) {
             <div
@@ -167,6 +184,13 @@
             }
           </div>
         }
+        @if(plant.fruit.selfFertilizing) {
+          <div class="value" style="margin-top: 8px">Selbstbefruchtend</div>
+        } @else if (plant.fruit.fertilizationType.length > 0) {
+          <div class="value" style="margin-top: 8px">
+            Befruchtungsart: {{ plant.fruit.fertilizationType.join(', ') }}
+          </div>
+        }
       </div>
     }
 
@@ -189,8 +213,13 @@
       <div class="info-card">
         <strong>Pflanzabstand</strong>
         <div class="value">
+          @if (plant.distance.value.start === plant.distance.value.end) {
+            {{ plant.distance.value.start | commaDecimal }} m
+          } @else {
           {{ plant.distance.value.start | commaDecimal }} –
           {{ plant.distance.value.end | commaDecimal }}
+          m
+          }
         </div>
       </div>
     }
@@ -199,8 +228,12 @@
       <div class="info-card">
         <strong>Bedarf / m²</strong>
         <div class="value">
-          {{ plant.requiredArea.value.start | commaDecimal }} –
-          {{ plant.requiredArea.value.end | commaDecimal }} St.
+          @if (plant.requiredArea.value.start === plant.requiredArea.value.end) {
+            {{ plant.requiredArea.value.start | commaDecimal }} St.
+          } @else {
+            {{ plant.requiredArea.value.start | commaDecimal }} –
+            {{ plant.requiredArea.value.end | commaDecimal }} St.
+          }
         </div>
       </div>
     }

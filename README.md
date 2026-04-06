@@ -54,8 +54,7 @@ ionic serve
 ### 3. Run on Android (Debug)
 
 ```bash
-ionic capacitor build android
-ionic capacitor run android -l --external
+pnpm star:android
 ```
 
 ### 4. Build for Production

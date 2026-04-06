@@ -224,7 +224,7 @@ export class AddPlantPage {
     }
 
     if (plant.pruning.enabled) {
-      if (!plant.pruning.time?.trim()) {
+      if (!plant.pruning.time?.start || !plant.pruning.time?.end) {
         errors.push('Zeit darf nicht leer sein, wenn Rückschnitt aktiviert ist.');
       }
       if (!plant.pruning.amount?.trim()) {
@@ -236,7 +236,7 @@ export class AddPlantPage {
       if (plant.fertilization.type?.length === 0) {
         errors.push('Typ darf nicht leer sein, wenn Dünger aktiviert ist.');
       }
-      if (!plant.fertilization.time?.trim()) {
+      if (!plant.fertilization.time?.start || !plant.fertilization.time?.end) {
         errors.push('Zeit darf nicht leer sein, wenn Dünger aktiviert ist.');
       }
     }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { SafeArea, SystemBarsStyle } from '@capacitor-community/safe-area';
 import { App } from '@capacitor/app';
-import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Platform } from '@ionic/angular';
 import {
@@ -11,11 +11,9 @@ import {
   ModalController,
   NavController,
 } from '@ionic/angular/standalone';
-import { SafeArea } from 'capacitor-plugin-safe-area';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { register } from 'swiper/element/bundle';
-import { DownloadModalComponent } from './components/download-modal/download-modal.component';
 import { AuthService } from './shared/services/auth.service';
 import { BackupStateService } from './shared/services/backup-state.service';
 import { auth } from './shared/services/firebase';
@@ -40,11 +38,10 @@ export class AppComponent {
 
   constructor() {
     // this.setupScrollToTop();
-    this.platform.ready().then(() => {
+    this.platform.ready().then(async () => {
       this.platform.backButton.subscribeWithPriority(10, () => {
         this.navCtrl.back();
       });
-      this.setSafeArea();
 
       onAuthStateChanged(auth, (user) => {
         this.authService.currentUser.set(user);
@@ -62,21 +59,13 @@ export class AppComponent {
         }
       });
 
-      if (Capacitor.getPlatform() !== 'web') {
+      if (this.platform.is('capacitor')) {
         this.clearCacheOnStartup();
-        this.checkForUpdates();
+        this.updater.checkForUpdates();
+        await SafeArea.setSystemBarsStyle({
+          style: SystemBarsStyle.Light,
+        });
       }
-    });
-  }
-
-  setSafeArea() {
-    SafeArea.getSafeAreaInsets().then((data) => {
-      // document.documentElement.classList.toggle('ion-palette-dark', true);
-      const { insets } = data;
-      document.body.style.setProperty('--ion-safe-area-top', `${insets.top}px`);
-      document.body.style.setProperty('--ion-safe-area-right', `${insets.right}px`);
-      document.body.style.setProperty('--ion-safe-area-bottom', `${insets.bottom}px`);
-      document.body.style.setProperty('--ion-safe-area-left', `${insets.left}px`);
     });
   }
 
@@ -91,37 +80,6 @@ export class AppComponent {
     } catch (err) {
       console.warn('⚠️ Cache cleared failed:', err);
     }
-  }
-
-  async checkForUpdates() {
-    try {
-      const update = await this.updater.checkForUpdate();
-      if (update.available) {
-        const alert = await this.alertCtrl.create({
-          header: 'Update verfügbar',
-          message: `Version ${update.version} ist verfügbar.`,
-          buttons: [
-            { text: 'Später' },
-            {
-              text: 'Installieren',
-              handler: () => this.showDownloadModal(update.url),
-            },
-          ],
-        });
-        await alert.present();
-      }
-    } catch (err) {
-      console.error('Update-Check failed', err);
-    }
-  }
-
-  async showDownloadModal(url: string) {
-    const modal = await this.modalCtrl.create({
-      component: DownloadModalComponent,
-      componentProps: { url },
-      backdropDismiss: false,
-    });
-    await modal.present();
   }
 
   private async setupBackupListeners() {

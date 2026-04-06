@@ -4,18 +4,15 @@
 
 @let plant = plantFormService.plantForm$ | async;
 @if (plant) {
-  <div class="checkbox-container">
+  <div class="color-grid">
     @for (color of colors; track $index) {
-      <ion-checkbox
-        [checked]="isSelected(getColors(plant), color)"
-        (ionChange)="toggleColor(color, getColors(plant))"
-        [value]="color"
-        [style.--checkbox-background]="color"
-        [style.--checkbox-background-checked]="color"
-        [style.--border-color]="color"
-        [style.--border-color-checked]="color"
-        [style.--checkmark-color]="color === 'black' ? 'white' : 'black'"
-      />
+      <div
+        class="color-swatch"
+        [class.selected]="isSelected(getColors(plant), color)"
+        [style.background]="color"
+        [style.--swatch-color]="color"
+        (click)="toggleColor(color, getColors(plant))"
+      ></div>
     }
   </div>
 }

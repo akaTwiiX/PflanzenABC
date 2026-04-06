@@ -5,6 +5,7 @@ export enum ChoiceName {
   RootSystem = 'rootSystem',
   GrowthForm = 'growthForm',
   LeafShape = 'leafShape',
+  FruitFertilizationType = 'fruit.fertilizationType',
 }
 
 export interface ChoiceEntry {

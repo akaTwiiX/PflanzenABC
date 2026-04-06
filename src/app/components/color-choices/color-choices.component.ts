@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-import { IonCheckbox, IonText } from '@ionic/angular/standalone';
-import { colorChoices } from '@/shared/consts/colorChoices';
-import { PlantFormService } from '@/shared/services/plant-form.service';
-import type { Plant } from '@/shared/types/PlantType';
+import { IonText } from '@ionic/angular/standalone';
+import { colorChoices } from '../../shared/consts/colorChoices';
+import { PlantFormService } from '../../shared/services/plant-form.service';
+import type { Plant } from '../../shared/types/PlantType';
 
 @Component({
   selector: 'app-color-choices',
   templateUrl: './color-choices.component.html',
   styleUrls: ['./color-choices.component.scss'],
-  imports: [IonCheckbox, CommonModule, IonText],
+  imports: [CommonModule, IonText],
 })
 export class ColorChoicesComponent {
   @Input() choiceName!: string;

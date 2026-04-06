@@ -2,7 +2,9 @@
   <ion-select
     [value]="selected"
     [multiple]="multiple"
-    [disabled]="options.length === 0"
+    [class.is-disabled]="options.length === 0"
+    [attr.aria-disabled]="options.length === 0"
+    [attr.tabindex]="options.length === 0 ? -1 : null"
     (ionChange)="onSelectChange($event.detail.value)"
     okText="OK"
     cancelText="Abbrechen"

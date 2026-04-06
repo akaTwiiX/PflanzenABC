@@ -11,17 +11,17 @@
   />
 </ion-item>
 @if ((plantForm$ | async)?.pruning?.enabled) {
-  <ion-input
+  <app-range-slider
     class="ion-padding-start"
     label="Wann"
-    placeholder="Enter text"
-    [value]="(plantForm$ | async)?.pruning?.time"
-    (ionChange)="plantFormService.update('pruning.time', $event.detail.value ?? '')"
+    [range]="monthRange"
+    [value]="(plantForm$ | async)?.pruning!.time"
+    (valueChange)="plantFormService.update('pruning.time', $event)"
   />
   <ion-input
     class="ion-padding-start"
     label="Wie viel"
-    placeholder="Enter text"
+    placeholder="z.B. 1/3"
     [value]="(plantForm$ | async)?.pruning?.amount"
     (ionChange)="plantFormService.update('pruning.amount', $event.detail.value ?? '')"
   />

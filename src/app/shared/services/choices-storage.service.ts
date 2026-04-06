@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import type { ChoiceEntry, ChoiceName } from '@/shared/enums/ChoiceEntry';
-import { db } from '@/shared/services/app-database.service';
+import type { ChoiceEntry, ChoiceName } from '../enums/ChoiceEntry';
+import { db } from './app-database.service';
 
 @Injectable({
   providedIn: 'root',

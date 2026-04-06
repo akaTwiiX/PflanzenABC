@@ -37,8 +37,8 @@ import {
   settingsOutline,
   trashOutline,
 } from 'ionicons/icons';
-import { AppComponent } from '@/app.component';
-import { routes } from '@/app.routes';
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
 
 addIcons({
   'add-circle-outline': addCircleOutline,

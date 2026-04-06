@@ -18,7 +18,7 @@ import {
   ModalController,
   ToastController,
 } from '@ionic/angular/standalone';
-import { AuthService } from '@/shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-authentication-modal',

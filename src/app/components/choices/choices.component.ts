@@ -16,8 +16,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import type { ChoiceName } from '@/shared/enums/ChoiceEntry';
-import { ChoicesStorageService } from '@/shared/services/choices-storage.service';
+import type { ChoiceName } from '../../shared/enums/ChoiceEntry';
+import { ChoicesStorageService } from '../../shared/services/choices-storage.service';
 
 @Component({
   selector: 'app-choices',

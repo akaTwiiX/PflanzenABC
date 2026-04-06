@@ -32,9 +32,11 @@
           (ionChange)="plantFormService.update('nameGerman', $event.detail.value ?? '')"
         />
       </ion-item>
+      
       <ion-item lines="none">
         <app-plant-type />
       </ion-item>
+      
       <ion-item lines="none">
         <app-range-slider
           label="Höhe:"
@@ -53,13 +55,6 @@
       </ion-item>
 
       <ion-item lines="none">
-        <!-- <ion-input
-          label="Wachstum:"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [value]="(plantForm$ | async)?.growth"
-          (ionChange)="plantFormService.update('growth', $event.detail.value ?? '')"
-        /> -->
         <app-range-slider
           label="Wachstum:"
           [range]="growthRange"
@@ -74,18 +69,31 @@
 
       <ion-item lines="none">
         <app-range-slider
-          label="Blüte-/Erntezeit:"
+          label="Blütezeit:"
           [range]="monthRange"
           [value]="(plantForm$ | async)?.bloomTime!"
           (valueChange)="plantFormService.update('bloomTime', $event)"
         />
       </ion-item>
-
+      
       <ion-item lines="none">
-        <app-color-choices
+        <app-range-slider
+          label="Erntezeit:"
+          [range]="monthRange"
+          [value]="(plantForm$ | async)?.harvestTime!"
+          (valueChange)="plantFormService.update('harvestTime', $event)"
+          />
+        </ion-item>
+        
+        <ion-item lines="none">
+          <app-color-choices
           [title]="'Blütefarbe:'"
           [choiceName]="'bloomColor'"
-        />
+          />
+      </ion-item>
+        
+      <ion-item lines="none">
+        <app-fruit />
       </ion-item>
 
       <ion-item lines="none">
@@ -94,7 +102,7 @@
 
       <ion-item lines="none">
         <app-color-choices
-          [title]="'Blätterfarbe:'"
+          [title]="'Blattfarbe:'"
           [choiceName]="'leafColor'"
         />
       </ion-item>
@@ -127,10 +135,6 @@
 
       <ion-item lines="none">
         <app-light-selector />
-      </ion-item>
-
-      <ion-item lines="none">
-        <app-fruit />
       </ion-item>
 
       @for( field of checkboxFields; track field){

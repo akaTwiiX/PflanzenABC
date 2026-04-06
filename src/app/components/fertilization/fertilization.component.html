@@ -17,11 +17,10 @@
     [selected]="(plantForm$ | async)?.fertilization?.type"
     (selectedChange)="plantFormService.update('fertilization.type', $event)"
   />
-  <ion-input
-    class="ion-padding-start"
-    label="Zeitpunkt"
-    placeholder="Enter text"
-    [value]="(plantForm$ | async)?.fertilization?.time"
-    (ionChange)="plantFormService.update('fertilization.time', $event.detail.value ?? '')"
+  <app-range-slider
+    label="Zeitpunkt:"
+    [range]="monthRange"
+    [value]="(plantForm$ | async)?.fertilization?.time!"
+    (valueChange)="plantFormService.update('fertilization.time', $event)"
   />
 }

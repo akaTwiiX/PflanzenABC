@@ -1,10 +1,11 @@
 import type { Table } from 'dexie';
 import Dexie from 'dexie';
-import type { ChoiceEntry } from '@/shared/enums/ChoiceEntry';
-import type { ImageEntry } from '@/shared/enums/ImageEntry';
-import { BackupStateService } from '@/shared/services/backup-state.service';
-import type { Collection } from '@/shared/types/Collection';
-import type { Plant } from '@/shared/types/PlantType';
+
+import type { ChoiceEntry } from '../enums/ChoiceEntry';
+import type { ImageEntry } from '../enums/ImageEntry';
+import type { Collection } from '../types/Collection';
+import type { Plant } from '../types/PlantType';
+import { BackupStateService } from './backup-state.service';
 
 export class AppDatabase extends Dexie {
   plants!: Table<Plant, number>;

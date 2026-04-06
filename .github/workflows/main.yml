@@ -30,12 +30,12 @@ jobs:
     needs: build-deps
     uses: ./.github/workflows/web.yml
 
-  android-debug:
-    if: github.ref_type == 'branch'
-    needs: build-deps
-    uses: ./.github/workflows/android-debug.yml
-    secrets:
-      FIREBASE_JSON: ${{ secrets.FIREBASE_JSON_DEBUG }}
+  # android-debug:
+  #   if: github.ref_type == 'branch'
+  #   needs: build-deps
+  #   uses: ./.github/workflows/android-debug.yml
+  #   secrets:
+  #     FIREBASE_JSON: ${{ secrets.FIREBASE_JSON_DEBUG }}
 
   android-release:
     if: github.ref_type == 'tag'
