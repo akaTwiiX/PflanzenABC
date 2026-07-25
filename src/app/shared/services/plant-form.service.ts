@@ -11,7 +11,7 @@ export class PlantFormService {
   private initialState: Plant = {
     nameGerman: '',
     nameLatin: '',
-    pruning: { enabled: false, time: { start: 'Januar', end: 'Dezember' }, amount: '' },
+    pruning: { enabled: false, type: [], amount: '' },
     fertilization: { enabled: false, type: [], time: { start: 'Januar', end: 'Dezember' } },
     soil: '',
     distance: { enabled: false, value: { start: 0, end: 10 } },
@@ -41,6 +41,8 @@ export class PlantFormService {
     toxic: false,
     fragrant: false,
     buckets: false,
+    windFriendly: false,
+    stoloniferous: false,
     notice: '',
     imageUrl: '',
     updatedAt: '',
@@ -50,6 +52,7 @@ export class PlantFormService {
   readonly plantForm$ = this.state$.asObservable();
 
   update(path: string, value: any) {
+    console.log(path, value);
     const keys = path.split('.');
     const current = structuredClone(this.state$.value);
 

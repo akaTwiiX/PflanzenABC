@@ -9,6 +9,8 @@ export const CHECKBOX_FIELDS = [
   'bugsFriendly',
   'birdFriendly',
   'regional',
+  'windFriendly',
+  'stoloniferous',
 ] as const;
 
 export type BooleanPlantKeys = (typeof CHECKBOX_FIELDS)[number];
@@ -20,10 +22,12 @@ export const CHECKBOX_LABELS: Record<BooleanPlantKeys, string> = {
   edible: 'Essbar',
   toxic: 'Giftig',
   fragrant: 'Duftend',
-  buckets: 'Topfgeeignet',
+  buckets: 'Kübelgeeignet',
   bugsFriendly: 'Insektenfreundlich',
   birdFriendly: 'Vogelnährgehölz',
   regional: 'Einheimisch',
+  windFriendly: 'Windverträglich',
+  stoloniferous: 'Ausläuferbildend',
 };
 
 export interface CheckboxItem {

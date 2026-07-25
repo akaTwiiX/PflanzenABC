@@ -44,7 +44,7 @@
               <h2 [ngClass]="{ 'collection-title': item.type === 'collection' }">
                 {{ item.displayName }}
               </h2>
-              <p>{{ item.type === 'collection' ? 'Kategorie' : 'Pflanze' }}</p>
+              <p>{{ item.type === 'collection' ? 'Kategorie' : item.nameGerman }}</p>
             </div>
           </ion-item>
         </ng-container>

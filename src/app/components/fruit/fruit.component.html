@@ -23,6 +23,15 @@
     [choiceName]="'fruit.color'"
   />
 
+  <ion-item lines="none">
+    <app-range-slider
+      label="Erntezeit:"
+      [range]="monthRange"
+      [value]="(plantForm$ | async)?.harvestTime!"
+      (valueChange)="plantFormService.update('harvestTime', $event)"
+    />
+  </ion-item>
+
   <ion-item
     lines="none"
     class="ion-no-padding bg-transparent"

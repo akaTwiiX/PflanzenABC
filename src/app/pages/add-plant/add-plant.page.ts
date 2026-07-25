@@ -17,6 +17,7 @@ import {
   IonLabel,
   IonList,
   IonModal,
+  IonRouterOutlet,
   IonTextarea,
   IonTitle,
   IonToolbar,
@@ -98,6 +99,7 @@ export class AddPlantPage {
   route = inject(ActivatedRoute);
   navCtrl = inject(NavController);
   alertCtrl = inject(AlertController);
+  private routerOutlet = inject(IonRouterOutlet);
   plantForm$ = this.plantFormService.plantForm$;
   monthRange = monthRange;
   distanceRange = distanceRange;
@@ -205,9 +207,16 @@ export class AddPlantPage {
     this.modal.dismiss();
   }
 
-  saveAndView() {
+  async saveAndView() {
     this.plantFormService.reset();
-    this.navCtrl.navigateForward(['/plant', this.lastAddedPlantId]);
+    await this.navCtrl.navigateRoot(['/home'], {
+      animated: false, // invisbible in the background
+    });
+
+    await this.navCtrl.navigateForward(['/plant', this.lastAddedPlantId], {
+      animated: true,
+      animationDirection: 'forward',
+    });
     this.lastAddedPlantId = null;
     this.modal.dismiss();
   }
@@ -224,9 +233,6 @@ export class AddPlantPage {
     }
 
     if (plant.pruning.enabled) {
-      if (!plant.pruning.time?.start || !plant.pruning.time?.end) {
-        errors.push('Zeit darf nicht leer sein, wenn Rückschnitt aktiviert ist.');
-      }
       if (!plant.pruning.amount?.trim()) {
         errors.push('Menge darf nicht leer sein, wenn Rückschnitt aktiviert ist.');
       }

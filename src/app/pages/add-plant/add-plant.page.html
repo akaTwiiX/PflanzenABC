@@ -56,7 +56,7 @@
 
       <ion-item lines="none">
         <app-range-slider
-          label="Wachstum:"
+          label="Wachstum pro Jahr:"
           [range]="growthRange"
           [value]="(plantForm$ | async)?.growth!"
           (valueChange)="plantFormService.update('growth', $event)"
@@ -75,15 +75,6 @@
           (valueChange)="plantFormService.update('bloomTime', $event)"
         />
       </ion-item>
-      
-      <ion-item lines="none">
-        <app-range-slider
-          label="Erntezeit:"
-          [range]="monthRange"
-          [value]="(plantForm$ | async)?.harvestTime!"
-          (valueChange)="plantFormService.update('harvestTime', $event)"
-          />
-        </ion-item>
         
         <ion-item lines="none">
           <app-color-choices

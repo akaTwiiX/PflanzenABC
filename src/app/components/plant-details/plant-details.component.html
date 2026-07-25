@@ -75,12 +75,8 @@
       <strong>Blütezeit</strong>
       <div class="value">{{ plant.bloomTime.start }} – {{ plant.bloomTime.end }}</div>
     </div>
-    <div class="info-card">
-      <strong>Erntezeit</strong>
-      <div class="value">{{ plant.harvestTime.start }} – {{ plant.harvestTime.end }}</div>
-    </div>
 
-    @if (plant.leafShape) {
+    @if (plant.leafShape.length > 0) {
       <div class="info-card">
         <strong>Blattform</strong>
         <div class="value">{{ plant.leafShape }}</div>
@@ -97,7 +93,7 @@
 
     @if (plant.growth) {
       <div class="info-card">
-        <strong>Wachstum</strong>
+        <strong>Wachstum pro Jahr</strong>
         @if (plant.growth.start === plant.growth.end) {
           <div class="value">{{ plant.growth.start | commaDecimal }} m</div>
         } @else {
@@ -120,7 +116,7 @@
     @if (plant.pruning.enabled) {
       <div class="full-width-card">
         <strong>Beschneidung</strong>
-        <div class="value">{{ plant.pruning.amount }} – {{ plant.pruning.time }}</div>
+        <div class="value">{{ plant.pruning.amount }} </div>
       </div>
     }
 
@@ -184,6 +180,10 @@
             }
           </div>
         }
+        <div class="">
+          <strong>Erntezeit</strong>
+          <div class="value">{{ plant.harvestTime.start }} – {{ plant.harvestTime.end }}</div>
+        </div>
         @if(plant.fruit.selfFertilizing) {
           <div class="value" style="margin-top: 8px">Selbstbefruchtend</div>
         } @else if (plant.fruit.fertilizationType.length > 0) {

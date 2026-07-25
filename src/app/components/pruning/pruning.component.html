@@ -11,13 +11,35 @@
   />
 </ion-item>
 @if ((plantForm$ | async)?.pruning?.enabled) {
-  <app-range-slider
+  <!-- <app-range-slider
     class="ion-padding-start"
     label="Wann"
     [range]="monthRange"
     [value]="(plantForm$ | async)?.pruning!.time"
     (valueChange)="plantFormService.update('pruning.time', $event)"
-  />
+  /> -->
+  <!-- <app-choices
+    [multiple]="true"
+    [choiceName]="monthRange"
+    [selected]="(plantForm$ | async)?.pruning?.type ?? []"
+    (selectedChange)="plantFormService.update('pruning.type', $event)"
+  /> -->
+
+  <ion-select
+    multiple="true"  
+    placeholder="Auswahl der Monate"
+    [value]="(plantForm$ | async)?.pruning!.type"
+    (ionChange)="plantFormService.update('pruning.type', $event.detail.value)"
+    okText="OK"
+    cancelText="Abbrechen"
+    class="custom-select"
+  >
+    @for (option of monthRange; track $index) {
+      <ion-select-option [value]="option">
+        {{ option }}
+      </ion-select-option>
+    }
+  </ion-select>
   <ion-input
     class="ion-padding-start"
     label="Wie viel"

@@ -54,7 +54,7 @@ ionic serve
 ### 3. Run on Android (Debug)
 
 ```bash
-pnpm star:android
+pnpm start:android
 ```
 
 ### 4. Build for Production
@@ -97,7 +97,7 @@ Publishes the artifact as a GitHub Release asset.
 
 Create an .env or configure environment.ts with your Firebase credentials:
 
-```bash
+```json
 export const environment = {
   production: false,
   BACKUP_SECRET_KEY: "YOUR_BACKUP_SECRET_KEY",

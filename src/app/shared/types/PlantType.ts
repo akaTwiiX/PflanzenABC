@@ -20,12 +20,14 @@ interface ActionWithRangeTime extends Omit<ActionWithDetails, 'time'> {
   time: RangeSliderType;
 }
 
+type Pruning = Omit<ActionWithDetails, 'time'>;
+
 export interface Plant {
   id?: number;
   initialId?: string;
   nameGerman: string;
   nameLatin: string;
-  pruning: ActionWithRangeTime;
+  pruning: Pruning;
   fertilization: ActionWithRangeTime;
   soil: string;
   distance: ActionWithSlider;
@@ -55,6 +57,8 @@ export interface Plant {
   toxic: boolean;
   fragrant: boolean;
   buckets: boolean;
+  windFriendly: boolean;
+  stoloniferous: boolean;
   notice?: string;
   imageUrl?: string;
   collectionId?: number;

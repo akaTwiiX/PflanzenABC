@@ -79,6 +79,7 @@ export class PlantDetailsComponent implements OnInit {
       bugsFriendly: 'bug.png',
       birdFriendly: 'bird.png',
       regional: 'home.png',
+      stoloniferous: 'stoloniferous.png',
     };
 
     this.icons = Object.entries(iconMap)

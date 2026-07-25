@@ -26,6 +26,7 @@ export const routes: Routes = [
       {
         path: 'add-plant',
         loadComponent: () => import('./pages/add-plant/add-plant.page').then(m => m.AddPlantPage),
+        data: { skipStack: true },
       },
       {
         path: 'collection/:id',

@@ -13,6 +13,7 @@ addEventListener('message', ({ data }) => {
   const mappedPlants = plants.map((p: any) => ({
     id: p.id,
     displayName: p.nameLatin,
+    nameGerman: p.nameGerman,
     type: 'plant',
     path: '/plant',
   }));
