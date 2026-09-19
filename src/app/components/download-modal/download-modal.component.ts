@@ -35,12 +35,11 @@ export class DownloadModalComponent {
   async ionViewDidEnter() {
     this.downloading.set(true);
     try {
-      await this.updater.downloadAndInstall(this.url, (p) => {
+      await this.updater.downloadAndInstall(this.url, p => {
         this.progress.set(p / 100);
       });
 
-      if (this.updater.cancelled())
-        return;
+      if (this.updater.cancelled()) return;
 
       await this.showAlert({
         header: 'Update installiert',
@@ -48,8 +47,7 @@ export class DownloadModalComponent {
         buttons: ['OK'],
       });
     } catch (e) {
-      if (this.updater.cancelled())
-        return;
+      if (this.updater.cancelled()) return;
 
       console.error('Download/Install failed:', e);
 

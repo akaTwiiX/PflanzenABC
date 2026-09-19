@@ -32,14 +32,12 @@ export class UpdaterService {
 
     const release = res.data;
 
-    if (release.prerelease || release.draft)
-      return { available: false };
+    if (release.prerelease || release.draft) return { available: false };
 
     const latest = res.data.tag_name?.replace(this.VERSION_PREFIX_REGEX, '');
     const asset = res.data.assets?.find((a: any) => a.name.endsWith('.apk'));
 
-    if (!latest || !asset)
-      return { available: false };
+    if (!latest || !asset) return { available: false };
 
     const isNewer = this.compareSemver(latest, info.version) > 0;
 
@@ -54,12 +52,9 @@ export class UpdaterService {
     const [aMajor, aMinor, aPatch] = parse(a);
     const [bMajor, bMinor, bPatch] = parse(b);
 
-    if (Number.isNaN(aMajor) || Number.isNaN(bMajor))
-      return 0;
-    if (aMajor !== bMajor)
-      return aMajor - bMajor;
-    if (aMinor !== bMinor)
-      return aMinor - bMinor;
+    if (Number.isNaN(aMajor) || Number.isNaN(bMajor)) return 0;
+    if (aMajor !== bMajor) return aMajor - bMajor;
+    if (aMinor !== bMinor) return aMinor - bMinor;
     return aPatch - bPatch;
   }
 
@@ -99,12 +94,10 @@ export class UpdaterService {
 
     await this.cleanup();
 
-    this.listener = await FileTransfer.addListener('progress', (progress) => {
-      if (!progress.contentLength)
-        return;
+    this.listener = await FileTransfer.addListener('progress', progress => {
+      if (!progress.contentLength) return;
 
-      if (this.cancelled())
-        throw new Error('Download cancelled');
+      if (this.cancelled()) throw new Error('Download cancelled');
 
       const percent = Math.round((progress.bytes / progress.contentLength) * 100);
       onProgress(Math.min(percent, 100));
@@ -122,11 +115,9 @@ export class UpdaterService {
         progress: true,
       });
 
-      if (this.cancelled())
-        return;
+      if (this.cancelled()) return;
 
-      if (!result.path)
-        throw new Error('Download failed: No file path returned');
+      if (!result.path) throw new Error('Download failed: No file path returned');
 
       await FileOpener.open({
         filePath: result.path,

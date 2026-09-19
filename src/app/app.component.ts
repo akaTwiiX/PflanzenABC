@@ -43,7 +43,7 @@ export class AppComponent {
         this.navCtrl.back();
       });
 
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, user => {
         this.authService.currentUser.set(user);
         if (user) {
           if (!user.emailVerified) {
@@ -91,7 +91,7 @@ export class AppComponent {
 
   private setupScrollToTop() {
     let lastPath = '';
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentPath = event.urlAfterRedirects.split('?')[0];
 

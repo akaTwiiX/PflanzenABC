@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IonLabel } from '@ionic/angular/standalone';
-import { icons, LightRequirement, LightRequirementLabel } from '../../shared/enums/LightRequirements';
+import {
+  icons,
+  LightRequirement,
+  LightRequirementLabel,
+} from '../../shared/enums/LightRequirements';
 import { PlantFormService } from '../../shared/services/plant-form.service';
 import type { SelectorOption } from '../selector/selector.component';
 import { SelectorComponent } from '../selector/selector.component';
@@ -23,8 +27,7 @@ export class LightSelectorComponent {
   }));
 
   onChange(value: string[]) {
-    if (value.length === 0)
-      return;
+    if (value.length === 0) return;
 
     this.plantFormService.update('light', [...value]);
   }

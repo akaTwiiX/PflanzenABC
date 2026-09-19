@@ -22,7 +22,7 @@ import { PlantFormService } from '../../shared/services/plant-form.service';
 import { PlantStorageService } from '../../shared/services/plant-storage.service';
 import type { Plant } from '../../shared/types/PlantType';
 
-function migratePlant(plant: any, defaults: any): { plant: any, changed: boolean, } {
+function migratePlant(plant: any, defaults: any): { plant: any; changed: boolean } {
   let changed = false;
   for (const key of Object.keys(defaults)) {
     if (plant[key] === undefined || plant[key] === null) {
@@ -34,16 +34,15 @@ function migratePlant(plant: any, defaults: any): { plant: any, changed: boolean
       plant[key] = plant[key] !== '' ? [plant[key]] : [];
       changed = true;
     } else if (
-      typeof defaults[key] === 'object'
-      && !Array.isArray(defaults[key])
-      && defaults[key] !== null
-      && typeof plant[key] === 'object'
-      && !Array.isArray(plant[key])
+      typeof defaults[key] === 'object' &&
+      !Array.isArray(defaults[key]) &&
+      defaults[key] !== null &&
+      typeof plant[key] === 'object' &&
+      !Array.isArray(plant[key])
     ) {
       // Nested object → recurse
       const result = migratePlant(plant[key], defaults[key]);
-      if (result.changed)
-        changed = true;
+      if (result.changed) changed = true;
     }
   }
   return { plant, changed };
@@ -188,17 +187,17 @@ export class PlantPage implements OnInit {
   }
 
   async moveToCollection(targetCollectionId: number) {
-    if (!this.plant)
-      return;
-    if (this.plant.collectionId === targetCollectionId)
-      return;
+    if (!this.plant) return;
+    if (this.plant.collectionId === targetCollectionId) return;
 
     const oldCollectionId = this.plant.collectionId;
 
     if (oldCollectionId && oldCollectionId !== targetCollectionId) {
       const oldCollection = await this.collectionStorageService.getCollection(oldCollectionId);
       if (oldCollection) {
-        const updatedIds = (oldCollection.plantIds ?? []).filter((id: number) => id !== this.plantId);
+        const updatedIds = (oldCollection.plantIds ?? []).filter(
+          (id: number) => id !== this.plantId,
+        );
         await this.collectionStorageService.updateCollection(oldCollectionId, {
           plantIds: updatedIds,
         });

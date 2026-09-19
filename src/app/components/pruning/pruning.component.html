@@ -26,7 +26,7 @@
   /> -->
 
   <ion-select
-    multiple="true"  
+    multiple="true"
     placeholder="Auswahl der Monate"
     [value]="(plantForm$ | async)?.pruning!.type"
     (ionChange)="plantFormService.update('pruning.type', $event.detail.value)"

@@ -10,7 +10,7 @@ export async function encryptData(data: any, password: string): Promise<string> 
         worker.terminate();
       }
     };
-    worker.onerror = (err) => {
+    worker.onerror = err => {
       reject(err);
       worker.terminate();
     };
@@ -30,7 +30,7 @@ export async function decryptData(encryptedData: string, password: string): Prom
         worker.terminate();
       }
     };
-    worker.onerror = (err) => {
+    worker.onerror = err => {
       reject(err);
       worker.terminate();
     };

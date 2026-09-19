@@ -14,8 +14,7 @@ export class CollectionStorageService {
 
   async addChild(parentId: number, childId: number, type: 'collection' | 'plant') {
     const parent = await this.table.get(parentId);
-    if (!parent)
-      return;
+    if (!parent) return;
 
     if (type === 'collection') {
       const updatedIds = [...(parent.collectionIds ?? []), childId];

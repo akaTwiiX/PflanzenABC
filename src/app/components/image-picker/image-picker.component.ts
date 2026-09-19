@@ -1,15 +1,5 @@
-import type {
-  OnChanges,
-  SimpleChange,
-  SimpleChanges,
-} from '@angular/core';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import type { OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import {
@@ -76,7 +66,9 @@ export class ImagePickerComponent implements OnChanges {
 
       switch (type) {
         case 'index':
-          this.image = await db.images.get(Number(this.value)).then(entry => entry ? URL.createObjectURL(entry.data) : undefined);
+          this.image = await db.images
+            .get(Number(this.value))
+            .then(entry => (entry ? URL.createObjectURL(entry.data) : undefined));
           break;
         case 'filesystem':
           this.image = await loadNativeImage(this.value);

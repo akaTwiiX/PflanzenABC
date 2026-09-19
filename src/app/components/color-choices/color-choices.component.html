@@ -6,13 +6,15 @@
 @if (plant) {
   <div class="color-grid">
     @for (color of colors; track $index) {
-      <div
+      <button
         class="color-swatch"
         [class.selected]="isSelected(getColors(plant), color)"
         [style.background]="color"
         [style.--swatch-color]="color"
         (click)="toggleColor(color, getColors(plant))"
-      ></div>
+      >
+        -
+      </button>
     }
   </div>
 }

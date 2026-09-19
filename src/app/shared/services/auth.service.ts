@@ -1,8 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { ToastController } from '@ionic/angular/standalone';
-import type {
-  User,
-} from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -16,7 +14,7 @@ export class AuthService {
 
   currentUser = signal<User | null>(null);
 
-  async register(email: string, password: string): Promise<{ success: boolean, message: string, }> {
+  async register(email: string, password: string): Promise<{ success: boolean; message: string }> {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       const user = result.user;
@@ -40,7 +38,7 @@ export class AuthService {
   async login(
     email: string,
     password: string,
-  ): Promise<{ success: boolean, message: string, code?: string, }> {
+  ): Promise<{ success: boolean; message: string; code?: string }> {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const user = result.user;

@@ -19,7 +19,8 @@ addEventListener('message', ({ data }) => {
   }));
 
   const mergedItems = [...mappedCollections, ...mappedPlants].sort((a: any, b: any) =>
-    a.displayName.localeCompare(b.displayName));
+    a.displayName.localeCompare(b.displayName),
+  );
 
   postMessage(mergedItems);
 });

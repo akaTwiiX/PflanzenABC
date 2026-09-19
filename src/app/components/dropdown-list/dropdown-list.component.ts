@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import type {
-  AfterViewInit,
-  OnDestroy,
-  QueryList,
-} from '@angular/core';
+import type { AfterViewInit, OnDestroy, QueryList } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -105,10 +101,8 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   private async reconnectObservers() {
-    if (this.observer)
-      this.observer.disconnect();
-    if (this.activeObserver)
-      this.activeObserver.disconnect();
+    if (this.observer) this.observer.disconnect();
+    if (this.activeObserver) this.activeObserver.disconnect();
 
     this.initObservers();
   }
@@ -131,7 +125,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   private observeSections() {
-    this.sections.forEach((section) => {
+    this.sections.forEach(section => {
       this.observer.observe(section.nativeElement);
     });
   }
@@ -140,8 +134,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
     for (const entry of entries) {
       if (entry.isIntersecting) {
         const letter = entry.target.getAttribute('data-letter');
-        if (letter)
-          this.loadDataForLetter(letter);
+        if (letter) this.loadDataForLetter(letter);
       }
     }
   }
@@ -151,8 +144,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
     const index = currentData.findIndex(x => x.letter === letter);
     const entry = currentData[index];
 
-    if (!entry || entry.loaded || entry.isLoading)
-      return;
+    if (!entry || entry.loaded || entry.isLoading) return;
 
     const updated = [...currentData];
     updated[index] = { ...entry, isLoading: true };
@@ -211,27 +203,24 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   public filterPlants(plants: Plant[], filter: Partial<Plant>): Plant[] {
-    return plants.filter((plant) => {
+    return plants.filter(plant => {
       return Object.entries(filter).every(([key, value]) => {
         const plantValue = (plant as any)[key];
 
-        if (value === undefined)
-          return true;
+        if (value === undefined) return true;
 
         if (
-          typeof value === 'object'
-          && value !== null
-          && 'start' in value
-          && value.start
-          && 'end' in value
-          && value.end
+          typeof value === 'object' &&
+          value !== null &&
+          'start' in value &&
+          value.start &&
+          'end' in value &&
+          value.end
         ) {
-          if (!plantValue)
-            return false;
+          if (!plantValue) return false;
 
           const rangeArray = this.getRangeArrayForKey(key);
-          if (!rangeArray)
-            return false;
+          if (!rangeArray) return false;
 
           const filterStart = rangeArray.indexOf(value.start);
           const filterEnd = rangeArray.indexOf(value.end);
@@ -239,8 +228,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
           const plantStart = rangeArray.indexOf(plantValue.start);
           const plantEnd = rangeArray.indexOf(plantValue.end);
 
-          if (filterStart < 0 || filterEnd < 0 || plantStart < 0 || plantEnd < 0)
-            return false;
+          if (filterStart < 0 || filterEnd < 0 || plantStart < 0 || plantEnd < 0) return false;
           return plantStart >= filterStart && plantEnd <= filterEnd;
         }
 
@@ -281,7 +269,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
       threshold: 0,
     });
 
-    this.sections.forEach((section) => {
+    this.sections.forEach(section => {
       this.activeObserver.observe(section.nativeElement);
     });
   }
@@ -303,8 +291,7 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
       el => el.nativeElement.getAttribute('data-letter') === letter,
     );
 
-    if (!target)
-      return;
+    if (!target) return;
 
     this.content.scrollToPoint(0, target.nativeElement.offsetTop, 400);
   }
@@ -323,10 +310,8 @@ export class DropdownListComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.observer)
-      this.observer.disconnect();
-    if (this.activeObserver)
-      this.activeObserver.disconnect();
+    if (this.observer) this.observer.disconnect();
+    if (this.activeObserver) this.activeObserver.disconnect();
     this.destroy$.next();
     this.destroy$.complete();
   }

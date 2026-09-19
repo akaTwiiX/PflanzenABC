@@ -34,8 +34,7 @@ export class PlantDetailsComponent implements OnInit {
 
   get fertilizationTypeDisplay(): string {
     const type = this.plant.fertilization.type;
-    if (!type)
-      return '';
+    if (!type) return '';
     return Array.isArray(type) ? type.join(', ') : type;
   }
 
@@ -67,7 +66,7 @@ export class PlantDetailsComponent implements OnInit {
   }
 
   buildIcons() {
-    const iconMap: { [key: string]: string, } = {
+    const iconMap: { [key: string]: string } = {
       evergreen: 'leaf.png',
       dryTolerance: 'cactus.png',
       buckets: 'flower-pot.png',
@@ -84,7 +83,7 @@ export class PlantDetailsComponent implements OnInit {
 
     this.icons = Object.entries(iconMap)
       .filter(([key]) => this.resolvePath(this.plant, key))
-      .map(([_, icon]) => icon);
+      .map(([icon]) => icon);
   }
 
   private resolvePath(obj: any, path: string): any {

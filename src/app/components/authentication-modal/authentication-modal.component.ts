@@ -70,7 +70,7 @@ export class AuthenticationModalComponent {
       return this.showToast('Die Passwörter stimmen nicht überein.', 'danger');
     }
 
-    let result: { success: boolean, message: string, code?: string, };
+    let result: { success: boolean; message: string; code?: string };
 
     try {
       if (this.mode === 'login') {

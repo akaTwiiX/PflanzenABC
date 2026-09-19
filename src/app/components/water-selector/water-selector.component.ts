@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IonLabel } from '@ionic/angular/standalone';
-import { icons, WaterRequirement, WaterRequirementLabel } from '../../shared/enums/WaterRequirements';
+import {
+  icons,
+  WaterRequirement,
+  WaterRequirementLabel,
+} from '../../shared/enums/WaterRequirements';
 import { PlantFormService } from '../../shared/services/plant-form.service';
 import type { SelectorOption } from '../selector/selector.component';
 import { SelectorComponent } from '../selector/selector.component';

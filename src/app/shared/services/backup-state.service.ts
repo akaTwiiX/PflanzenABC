@@ -16,8 +16,7 @@ export class BackupStateService {
   }
 
   static async performBackupIfNeeded() {
-    if (!this.needsBackup())
-      return;
+    if (!this.needsBackup()) return;
 
     console.log('💾 Performing scheduled backup...');
     await IncrementalBackupService.createEncryptedBackup();

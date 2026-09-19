@@ -1,6 +1,6 @@
 <div class="container">
   @for (opt of options; track opt) {
-    <div
+    <button
       class="option"
       [class.selected]="isSelected(opt)"
       (click)="select(opt.value)"
@@ -22,6 +22,6 @@
       >
         {{ opt.label }}
       </span>
-    </div>
+    </button>
   }
 </div>

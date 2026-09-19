@@ -7,8 +7,7 @@ import { Pipe } from '@angular/core';
 })
 export class CommaDecimalPipe implements PipeTransform {
   transform(value: number | string | null | undefined): string {
-    if (value === null || value === undefined)
-      return '';
+    if (value === null || value === undefined) return '';
     return value.toString().replace('.', ',');
   }
 }

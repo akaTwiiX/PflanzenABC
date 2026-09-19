@@ -56,8 +56,8 @@
       <div class="value">
         @if (plant.height.start === plant.height.end) {
           {{ plant.height.start | commaDecimal }} m
-        } @else { 
-        {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
+        } @else {
+          {{ plant.height.start | commaDecimal }} – {{ plant.height.end | commaDecimal }} m
         }
       </div>
     </div>
@@ -67,7 +67,7 @@
         @if (plant.width.start === plant.width.end) {
           {{ plant.width.start | commaDecimal }} m
         } @else {
-        {{ plant.width.start | commaDecimal }} – {{ plant.width.end | commaDecimal }} m
+          {{ plant.width.start | commaDecimal }} – {{ plant.width.end | commaDecimal }} m
         }
       </div>
     </div>
@@ -97,7 +97,9 @@
         @if (plant.growth.start === plant.growth.end) {
           <div class="value">{{ plant.growth.start | commaDecimal }} m</div>
         } @else {
-        <div class="value">{{ plant.growth.start | commaDecimal }} – {{ plant.growth.end | commaDecimal }} m</div>
+          <div class="value">
+            {{ plant.growth.start | commaDecimal }} – {{ plant.growth.end | commaDecimal }} m
+          </div>
         }
       </div>
     }
@@ -107,8 +109,7 @@
         <strong>Dünger</strong>
         <div class="value">
           {{ fertilizationTypeDisplay }}
-          – {{ plant.fertilization.time.start }} 
-          – {{ plant.fertilization.time.end }}
+          – {{ plant.fertilization.time.start }} – {{ plant.fertilization.time.end }}
         </div>
       </div>
     }
@@ -116,7 +117,7 @@
     @if (plant.pruning.enabled) {
       <div class="full-width-card">
         <strong>Beschneidung</strong>
-        <div class="value">{{ plant.pruning.amount }} </div>
+        <div class="value">{{ plant.pruning.amount }}</div>
       </div>
     }
 
@@ -184,10 +185,18 @@
           <strong>Erntezeit</strong>
           <div class="value">{{ plant.harvestTime.start }} – {{ plant.harvestTime.end }}</div>
         </div>
-        @if(plant.fruit.selfFertilizing) {
-          <div class="value" style="margin-top: 8px">Selbstbefruchtend</div>
+        @if (plant.fruit.selfFertilizing) {
+          <div
+            class="value"
+            style="margin-top: 8px"
+          >
+            Selbstbefruchtend
+          </div>
         } @else if (plant.fruit.fertilizationType.length > 0) {
-          <div class="value" style="margin-top: 8px">
+          <div
+            class="value"
+            style="margin-top: 8px"
+          >
             Befruchtungsart: {{ plant.fruit.fertilizationType.join(', ') }}
           </div>
         }
@@ -216,9 +225,9 @@
           @if (plant.distance.value.start === plant.distance.value.end) {
             {{ plant.distance.value.start | commaDecimal }} m
           } @else {
-          {{ plant.distance.value.start | commaDecimal }} –
-          {{ plant.distance.value.end | commaDecimal }}
-          m
+            {{ plant.distance.value.start | commaDecimal }} –
+            {{ plant.distance.value.end | commaDecimal }}
+            m
           }
         </div>
       </div>
@@ -275,6 +284,7 @@
           <img
             [src]="imageSrc"
             style="width: 100%; height: 100%; object-fit: contain"
+            alt="Image"
           />
         </swiper-slide>
       </swiper-container>

@@ -77,7 +77,9 @@ export class CollectionPage {
           if (f) {
             try {
               filter = JSON.parse(f);
-            } catch {}
+            } catch {
+              console.log('Filter failed');
+            }
           }
 
           return { id, filter };
@@ -176,7 +178,7 @@ export class CollectionPage {
         color: 'danger',
         position: 'bottom',
       })
-      .then((toast) => {
+      .then(toast => {
         toast.present();
         this.navCtrl.navigateRoot(['/home']);
       });

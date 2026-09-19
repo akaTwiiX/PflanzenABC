@@ -24,7 +24,7 @@
       </div>
 
       <div class="action-grid">
-        <div
+        <button
           class="action-card"
           (click)="collectionDialog.present(); dialog.dismiss()"
         >
@@ -32,9 +32,9 @@
             <ion-icon name="folder-outline"></ion-icon>
           </div>
           <span>Sammlung</span>
-        </div>
+        </button>
 
-        <div
+        <button
           class="action-card"
           (click)="navigateToAddPlant(); dialog.dismiss()"
         >
@@ -42,7 +42,7 @@
             <ion-icon name="leaf-outline"></ion-icon>
           </div>
           <span>Pflanze</span>
-        </div>
+        </button>
       </div>
     </div>
   </ng-template>

@@ -4,9 +4,9 @@
 >
   <ion-label>Frucht</ion-label>
   <ion-checkbox
-  slot="end"
-  [checked]="(plantForm$ | async)?.fruit?.enabled"
-  (ionChange)="plantFormService.update('fruit.enabled', $event.detail.checked)"
+    slot="end"
+    [checked]="(plantForm$ | async)?.fruit?.enabled"
+    (ionChange)="plantFormService.update('fruit.enabled', $event.detail.checked)"
   />
 </ion-item>
 
@@ -44,7 +44,7 @@
     />
   </ion-item>
 
-  @if(!(plantForm$ | async)?.fruit?.selfFertilizing) {
+  @if (!(plantForm$ | async)?.fruit?.selfFertilizing) {
     <div>
       <app-choices
         [multiple]="true"

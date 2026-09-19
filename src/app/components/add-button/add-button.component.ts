@@ -48,8 +48,7 @@ export class AddButtonComponent {
       updatedAt: new Date().toISOString(),
     };
 
-    if (!this.parentCollection)
-      collection.initialId = getFirstLetter(this.newCollection);
+    if (!this.parentCollection) collection.initialId = getFirstLetter(this.newCollection);
 
     try {
       const id = await this.collectionStorageService.addCollection(collection);

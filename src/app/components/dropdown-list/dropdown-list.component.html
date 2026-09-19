@@ -44,13 +44,13 @@
     <ion-fab-list side="bottom">
       <div class="fab-letter-container">
         @for (group of dataByLetter(); track group.letter) {
-          <div
+          <button
             class="fab-letter"
             (click)="scrollToLetter(group.letter)"
             [ngClass]="{ active: activeLetter() === group.letter }"
           >
             {{ group.letter }}
-          </div>
+          </button>
         }
       </div>
     </ion-fab-list>

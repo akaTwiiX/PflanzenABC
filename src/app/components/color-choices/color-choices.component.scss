@@ -17,7 +17,7 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 10px;
-  padding: 12px; 
+  padding: 12px;
 }
 
 .color-swatch {
@@ -26,7 +26,9 @@
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  transition: opacity 0.15s ease, outline 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    outline 0.15s ease;
   border: 2px solid rgba(0, 0, 0, 0.15); // immer sichtbar → löst Weiß-Problem
   opacity: 0.5;
   flex-shrink: 0; // verhindert Schrumpfen

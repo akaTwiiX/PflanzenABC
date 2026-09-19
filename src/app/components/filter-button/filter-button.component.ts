@@ -11,7 +11,11 @@ import {
 } from '@ionic/angular/standalone';
 import { distanceRange } from '../../shared/consts/distanceRange';
 import { monthRange } from '../../shared/consts/monthRange';
-import { icons, LightRequirement, LightRequirementLabel } from '../../shared/enums/LightRequirements';
+import {
+  icons,
+  LightRequirement,
+  LightRequirementLabel,
+} from '../../shared/enums/LightRequirements';
 import { CHECKBOX_ARRAY } from '../../shared/modals/plant-checkbox.config';
 import type { Plant } from '../../shared/types/PlantType';
 import type { RangeSliderType } from '../../shared/types/RangeSliderType';
@@ -76,10 +80,10 @@ export class FilterButtonComponent {
 
   get isChecked() {
     return (
-      this.selected.length > 0
-      || this.checkboxArray.some(box => box.checked)
-      || this.height.checked
-      || this.bloomTime.checked
+      this.selected.length > 0 ||
+      this.checkboxArray.some(box => box.checked) ||
+      this.height.checked ||
+      this.bloomTime.checked
     );
   }
 
@@ -99,7 +103,7 @@ export class FilterButtonComponent {
       filter.light = this.selected;
     }
 
-    this.checkboxArray.forEach((box) => {
+    this.checkboxArray.forEach(box => {
       if (box.checked) {
         filter[box.name] = box.checked;
       }

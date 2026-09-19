@@ -121,8 +121,8 @@ export class AddPlantPage {
   ionViewWillEnter() {
     this.content?.scrollToTop(0);
     this.lastAddedPlantId = null;
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async (params) => {
-      const { parentId, editId } = params as { parentId?: string, editId?: string, };
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(async params => {
+      const { parentId, editId } = params as { parentId?: string; editId?: string };
 
       this.parentId = parentId ? Number(parentId) : null;
       this.isEditMode = !!editId;
@@ -130,8 +130,7 @@ export class AddPlantPage {
       if (this.isEditMode) {
         console.log('Edit mode activated for ID:', editId);
         const plant = await this.plantStorageService.getPlant(Number(editId));
-        if (!plant)
-          return;
+        if (!plant) return;
         this.plantFormService.setPlant(plant);
       } else {
         this.plantFormService.reset();
@@ -145,8 +144,7 @@ export class AddPlantPage {
 
   async savePlant() {
     const plant = this.plantFormService.getPlant();
-    if (!this.parentId)
-      plant.initialId = getFirstLetter(plant.nameLatin);
+    if (!this.parentId) plant.initialId = getFirstLetter(plant.nameLatin);
     else plant.collectionId = this.parentId;
 
     const errors = this.validatePlant(plant);
