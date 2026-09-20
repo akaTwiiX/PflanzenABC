@@ -71,7 +71,8 @@
   --ion-color-light-tint: #ffffff;
 
   /* Global Botanical Background */
-  --ion-background-color: #faf9f6; /* Warm Pearl / Off-white */
+  --ion-background-color: #faf9f6;
+  /* Warm Pearl / Off-white */
   --ion-background-color-rgb: 250, 249, 246;
 
   /* Global Text */
@@ -84,8 +85,11 @@
   --border-radius-lg: 20px;
   --border-radius-md: 14px;
   --app-gradient: linear-gradient(135deg, #3a5a40 0%, #203623 100%);
-  --glass-bg: rgba(250, 249, 246, 0.85); /* Matches pearl background */
-  --glass-border: rgba(58, 90, 64, 0.08); /* Faint moss border */
+  --glass-bg: rgba(250, 249, 246, 0.85);
+  /* Matches pearl background */
+  --glass-border: rgba(58, 90, 64, 0.08);
+  /* Faint moss border */
+  --selected-item: #74b816;
 }
 
 /* Dark Mode Overrides - Deep Midnight Garden */
@@ -130,5 +134,6 @@
     --ion-tab-bar-background: #121614;
     --glass-bg: rgba(18, 22, 20, 0.85);
     --glass-border: rgba(255, 255, 255, 0.05);
+    --selected-item: #74b816;
   }
 }

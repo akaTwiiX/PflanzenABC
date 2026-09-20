@@ -6,6 +6,7 @@ import { IonBadge, IonButton, IonIcon, IonImg, IonModal, IonText } from '@ionic/
 import { icons as lightIcons, LightRequirementLabel } from '../../shared/enums/LightRequirements';
 import { PlantTypeLabel } from '../../shared/enums/PlantTypes';
 import { icons as waterIcons, WaterRequirementLabel } from '../../shared/enums/WaterRequirements';
+import { CHECKBOX_ICONS } from '../../shared/modals/plant-checkbox.config';
 import { CommaDecimalPipe } from '../../shared/pipes/comma-decimal.pipe';
 import { db } from '../../shared/services/app-database.service';
 import { PlantFormService } from '../../shared/services/plant-form.service';
@@ -66,24 +67,11 @@ export class PlantDetailsComponent implements OnInit {
   }
 
   buildIcons() {
-    const iconMap: { [key: string]: string } = {
-      evergreen: 'leaf.png',
-      dryTolerance: 'cactus.png',
-      buckets: 'flower-pot.png',
-      frostResistant: 'snowflake.png',
-      edible: 'eatable.png',
-      toxic: 'skull.png',
-      fragrant: 'nose.png',
-      windFriendly: 'wind.png',
-      bugsFriendly: 'bug.png',
-      birdFriendly: 'bird.png',
-      regional: 'home.png',
-      stoloniferous: 'stoloniferous.png',
-    };
+    const iconMap = { ...CHECKBOX_ICONS };
 
     this.icons = Object.entries(iconMap)
       .filter(([key]) => this.resolvePath(this.plant, key))
-      .map(([icon]) => icon);
+      .map(([, iconPath]) => iconPath);
   }
 
   private resolvePath(obj: any, path: string): any {

@@ -11,7 +11,7 @@
       <ion-item>
         <h1>Filter</h1>
 
-        @if (isChecked) {
+        @if (isChecked()) {
           <ion-button
             slot="end"
             fill="clear"
@@ -26,8 +26,8 @@
           <ion-item>
             <app-selector
               [options]="options"
-              [value]="selected"
-              (valueChange)="selected = $event"
+              [value]="selected()"
+              (valueChange)="selected.set($event)"
             />
           </ion-item>
           <ion-item>
@@ -45,7 +45,6 @@
               </ion-item>
               @if (height.checked) {
                 <app-range-slider
-                  label=""
                   [range]="distanceRange"
                   [value]="height.range"
                   (valueChange)="height.range = $event"
@@ -68,7 +67,6 @@
               </ion-item>
               @if (bloomTime.checked) {
                 <app-range-slider
-                  label=""
                   [range]="monthRange"
                   [value]="bloomTime.range"
                   (valueChange)="bloomTime.range = $event"
@@ -76,15 +74,61 @@
               }
             </div>
           </ion-item>
-          @for (box of checkboxArray; track box.name) {
-            <ion-item>
-              <ion-label>{{ box.label }}</ion-label>
-              <ion-checkbox
-                slot="end"
-                [(ngModel)]="box.checked"
-              ></ion-checkbox>
-            </ion-item>
-          }
+          <ion-item>
+            <div class="chip-container">
+              <ion-label class="title">Typen:</ion-label>
+              <div class="chip-list">
+                @for (type of (allPlantTypes() | async) ?? []; track type) {
+                  <ion-button
+                    size="small"
+                    [fill]="filterTypes().includes(type) ? 'solid' : 'outline'"
+                    [style.--background]="
+                      filterTypes().includes(type) ? 'var(--selected-item)' : ''
+                    "
+                    (click)="toggleTypeBox(type)"
+                  >
+                    @if (filterTypes().includes(type)) {
+                      <ion-icon
+                        class="checkbox-icon"
+                        slot="start"
+                        name="checkmark"
+                      ></ion-icon>
+                    }
+                    {{ type }}
+                  </ion-button>
+                }
+              </div>
+            </div>
+          </ion-item>
+          <ion-item>
+            <div class="chip-container">
+              <ion-label class="title">Eigenschaften:</ion-label>
+              <div class="chip-list">
+                @for (box of checkboxArray(); track box.name) {
+                  <ion-button
+                    size="small"
+                    [fill]="box.checked ? 'solid' : 'outline'"
+                    [style.--background]="box.checked ? 'var(--selected-item)' : ''"
+                    (click)="toggleCheckbox(box)"
+                  >
+                    @if (box.checked) {
+                      <ion-icon
+                        class="checkbox-icon"
+                        slot="start"
+                        name="checkmark"
+                      ></ion-icon>
+                    }
+                    {{ box.label }}
+                    <ion-img
+                      class="checkbox-img"
+                      slot="end"
+                      src="assets/icons/{{ box.icon }}"
+                    ></ion-img>
+                  </ion-button>
+                }
+              </div>
+            </div>
+          </ion-item>
         </ion-list>
       </div>
       <div class="footer-buttons">
@@ -95,7 +139,7 @@
           Schließen
         </ion-button>
         <ion-button
-          [disabled]="!isChecked"
+          [disabled]="!isChecked()"
           (click)="applyFilters(); dialog.dismiss()"
         >
           Filtern

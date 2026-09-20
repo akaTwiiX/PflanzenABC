@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, EventEmitter, inject, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonButton,
   IonCheckbox,
   IonIcon,
+  IonImg,
   IonItem,
   IonLabel,
   IonList,
@@ -11,12 +13,14 @@ import {
 } from '@ionic/angular/standalone';
 import { distanceRange } from '../../shared/consts/distanceRange';
 import { monthRange } from '../../shared/consts/monthRange';
+import { ChoiceName } from '../../shared/enums/ChoiceEntry';
 import {
   icons,
   LightRequirement,
   LightRequirementLabel,
 } from '../../shared/enums/LightRequirements';
-import { CHECKBOX_ARRAY } from '../../shared/modals/plant-checkbox.config';
+import { CHECKBOX_ARRAY, type CheckboxItem } from '../../shared/modals/plant-checkbox.config';
+import { ChoicesStorageService } from '../../shared/services/choices-storage.service';
 import type { Plant } from '../../shared/types/PlantType';
 import type { RangeSliderType } from '../../shared/types/RangeSliderType';
 import { RangeSliderComponent } from '../range-slider/range-slider.component';
@@ -43,11 +47,15 @@ interface rangeFilter {
     FormsModule,
     SelectorComponent,
     RangeSliderComponent,
+    IonImg,
+    CommonModule,
   ],
 })
 export class FilterButtonComponent {
   @Output() applyFiltersFn = new EventEmitter<Partial<Plant>>();
   @Output() resetFiltersFn = new EventEmitter<void>();
+
+  choiceStorageService = inject(ChoicesStorageService);
 
   readonly options: SelectorOption[] = Object.values(LightRequirement).map(lr => ({
     value: lr,
@@ -55,12 +63,12 @@ export class FilterButtonComponent {
     icon: icons[lr],
   }));
 
-  checkboxArray = CHECKBOX_ARRAY;
+  readonly checkboxArray = signal([...CHECKBOX_ARRAY]);
 
-  selected = [];
+  readonly selected = signal([]);
 
-  distanceRange = distanceRange;
-  monthRange = monthRange;
+  readonly distanceRange = distanceRange;
+  readonly monthRange = monthRange;
 
   height: rangeFilter = {
     checked: false,
@@ -78,18 +86,41 @@ export class FilterButtonComponent {
     },
   };
 
-  get isChecked() {
+  readonly isChecked = computed(() => {
     return (
-      this.selected.length > 0 ||
-      this.checkboxArray.some(box => box.checked) ||
+      this.selected().length > 0 ||
+      this.checkboxArray().some(box => box.checked) ||
       this.height.checked ||
       this.bloomTime.checked
+    );
+  });
+
+  readonly allPlantTypes = computed(async () => {
+    const types = await this.choiceStorageService.getChoicesByName(ChoiceName.PlantType);
+
+    return types;
+  });
+
+  readonly filterTypes = signal<string[]>([]);
+
+  toggleCheckbox(item: CheckboxItem) {
+    this.checkboxArray.update(boxes =>
+      boxes.map(box => (box.name === item.name ? { ...box, checked: !box.checked } : box)),
+    );
+  }
+
+  toggleTypeBox(type: string) {
+    this.filterTypes.update(
+      types =>
+        types.includes(type)
+          ? types.filter(t => t !== type) // entfernen
+          : [...types, type], // hinzufügen
     );
   }
 
   resetFilters() {
-    this.selected = [];
-    this.checkboxArray.forEach(box => (box.checked = false));
+    this.selected.set([]);
+    this.checkboxArray.update(boxes => boxes.map(box => ({ ...box, checked: false })));
     this.height.checked = false;
     this.bloomTime.checked = false;
 
@@ -99,11 +130,11 @@ export class FilterButtonComponent {
   applyFilters() {
     const filter: Partial<Plant> = {};
 
-    if (this.selected.length > 0) {
-      filter.light = this.selected;
+    if (this.selected().length > 0) {
+      filter.light = this.selected();
     }
 
-    this.checkboxArray.forEach(box => {
+    this.checkboxArray().forEach(box => {
       if (box.checked) {
         filter[box.name] = box.checked;
       }
