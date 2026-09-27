@@ -101,46 +101,23 @@
             </div>
           </ion-item>
           <ion-item>
-            <div class="chip-container">
-              <ion-label class="title">Eigenschaften:</ion-label>
-              <div class="chip-list">
-                @for (box of checkboxArray(); track box.name) {
-                  <ion-button
-                    size="small"
-                    [fill]="box.checked ? 'solid' : 'outline'"
-                    [style.--background]="box.checked ? 'var(--selected-item)' : ''"
-                    (click)="toggleCheckbox(box)"
-                  >
-                    @if (box.checked) {
-                      <ion-icon
-                        class="checkbox-icon"
-                        slot="start"
-                        name="checkmark"
-                      ></ion-icon>
-                    }
-                    {{ box.label }}
-                    <ion-img
-                      class="checkbox-img"
-                      slot="end"
-                      src="assets/icons/{{ box.icon }}"
-                    ></ion-img>
-                  </ion-button>
-                }
-              </div>
-            </div>
+            <app-property-boxes
+              [checkboxArray]="checkboxArray()"
+              [toggleCheckbox]="toggleCheckbox"
+            />
           </ion-item>
         </ion-list>
       </div>
       <div class="footer-buttons">
         <ion-button
           fill="clear"
-          (click)="dialog.dismiss()"
+          (click)="submit(dialog)"
         >
           Schließen
         </ion-button>
         <ion-button
           [disabled]="!isChecked()"
-          (click)="applyFilters(); dialog.dismiss()"
+          (click)="submit(dialog)"
         >
           Filtern
         </ion-button>

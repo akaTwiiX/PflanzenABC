@@ -5,7 +5,6 @@ import {
   IonButton,
   IonCheckbox,
   IonIcon,
-  IonImg,
   IonItem,
   IonLabel,
   IonList,
@@ -23,6 +22,7 @@ import { CHECKBOX_ARRAY, type CheckboxItem } from '../../shared/modals/plant-che
 import { ChoicesStorageService } from '../../shared/services/choices-storage.service';
 import type { Plant } from '../../shared/types/PlantType';
 import type { RangeSliderType } from '../../shared/types/RangeSliderType';
+import { PropertyBoxesComponent } from '../property-boxes/property-boxes.component';
 import { RangeSliderComponent } from '../range-slider/range-slider.component';
 import type { SelectorOption } from '../selector/selector.component';
 import { SelectorComponent } from '../selector/selector.component';
@@ -47,8 +47,8 @@ interface rangeFilter {
     FormsModule,
     SelectorComponent,
     RangeSliderComponent,
-    IonImg,
     CommonModule,
+    PropertyBoxesComponent,
   ],
 })
 export class FilterButtonComponent {
@@ -103,18 +103,15 @@ export class FilterButtonComponent {
 
   readonly filterTypes = signal<string[]>([]);
 
-  toggleCheckbox(item: CheckboxItem) {
+  readonly toggleCheckbox = (item: CheckboxItem): void => {
     this.checkboxArray.update(boxes =>
       boxes.map(box => (box.name === item.name ? { ...box, checked: !box.checked } : box)),
     );
-  }
+  };
 
   toggleTypeBox(type: string) {
-    this.filterTypes.update(
-      types =>
-        types.includes(type)
-          ? types.filter(t => t !== type) // entfernen
-          : [...types, type], // hinzufügen
+    this.filterTypes.update(types =>
+      types.includes(type) ? types.filter(t => t !== type) : [...types, type],
     );
   }
 
@@ -151,5 +148,10 @@ export class FilterButtonComponent {
     console.log(filter);
 
     this.applyFiltersFn.emit(filter);
+  }
+
+  submit(dialog: IonModal) {
+    this.applyFilters();
+    dialog.dismiss();
   }
 }
